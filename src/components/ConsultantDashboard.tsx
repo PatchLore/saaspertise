@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Edit, Trash2, Star, MessageSquare, Eye, CheckCircle, Clock, Crown } from 'lucide-react'
+import { Plus, Trash2, Star, MessageSquare, Eye, CheckCircle, Clock, Crown } from 'lucide-react'
 import Link from 'next/link'
 
 interface Testimonial {
@@ -86,7 +86,7 @@ export default function ConsultantDashboard({ consultant }: ConsultantDashboardP
     }
   }
 
-  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: any) => (
+  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: { icon: any, title: string, value: string, subtitle: string, color?: string }) => (
     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 bg-${color}-100 rounded-xl flex items-center justify-center`}>
@@ -250,7 +250,7 @@ export default function ConsultantDashboard({ consultant }: ConsultantDashboardP
                   </div>
                   
                   <p className="text-gray-700 text-sm mb-2 leading-relaxed">
-                    "{testimonial.content}"
+                    &ldquo;{testimonial.content}&rdquo;
                   </p>
                   
                   <p className="text-xs text-gray-500">

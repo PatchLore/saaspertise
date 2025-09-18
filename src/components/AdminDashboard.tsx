@@ -78,7 +78,7 @@ export default function AdminDashboard({ data }: AdminDashboardProps) {
     }
   }
 
-  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: any) => (
+  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: { icon: any, title: string, value: string, subtitle: string, color?: string }) => (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center">
         <div className={`p-3 rounded-lg bg-${color}-100`}>

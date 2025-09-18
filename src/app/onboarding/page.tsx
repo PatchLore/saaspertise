@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Loader, Upload, X } from 'lucide-react'
+import { Loader } from 'lucide-react'
 
 const SERVICE_OPTIONS = [
   { value: 'SAAS', label: 'SaaS Development' },
@@ -99,8 +99,8 @@ export default function OnboardingPage() {
       }
 
       router.push('/dashboard?message=Profile created successfully! It will be reviewed by our team.')
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
       setIsLoading(false)
     }
@@ -404,7 +404,7 @@ export default function OnboardingPage() {
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <p className="text-blue-800 text-sm">
                     <strong>Note:</strong> Your profile will be reviewed by our team before being published. 
-                    You'll receive an email notification once it's approved.
+                    You&apos;ll receive an email notification once it&apos;s approved.
                   </p>
                 </div>
               </div>

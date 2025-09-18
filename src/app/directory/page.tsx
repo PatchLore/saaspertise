@@ -27,7 +27,12 @@ async function getConsultants(searchParams: SearchParams) {
   const skip = (parseInt(page) - 1) * pageSize
 
   // Build where clause
-  const where: any = {
+  const where: {
+    isApproved: boolean
+    region?: string
+    services?: { hasSome: string[] }
+    industries?: { hasSome: string[] }
+  } = {
     isApproved: true
   }
 
