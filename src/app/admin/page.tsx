@@ -28,7 +28,7 @@ async function getAdminData() {
         where: { isApproved: true },
         include: {
           user: {
-            select: { name: true, email: true }
+            select: { name: true, email: true, createdAt: true }
           }
         },
         orderBy: { updatedAt: 'desc' },

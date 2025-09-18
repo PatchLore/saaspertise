@@ -49,7 +49,7 @@ export default async function ConsultantPage({ params }: ConsultantPageProps) {
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">Services</h2>
         <div className="flex gap-2">
-          {consultant.services.map(service => (
+          {consultant.services.map((service: string) => (
             <span key={service} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
               {service}
             </span>
