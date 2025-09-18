@@ -6,15 +6,6 @@ import { Crown, MapPin, ExternalLink, Mail, Phone, Calendar, Star, Send, ArrowLe
 import ContactConsultantForm from './ContactConsultantForm'
 import { getPricingDisplay } from '../../lib/pricing-utils'
 
-interface Testimonial {
-  id: string
-  clientName: string
-  clientTitle?: string | null
-  clientCompany?: string | null
-  content: string
-  rating: number
-  createdAt: Date
-}
 
 interface PortfolioItem {
   id: string
@@ -277,7 +268,7 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                     <span className="text-sm text-gray-600 ml-2">5.0</span>
                   </div>
                   <p className="text-gray-800 font-medium mb-3 leading-relaxed">
-                    "Exceptional AI implementation expertise. Delivered our machine learning project ahead of schedule and provided excellent ongoing support."
+                    &ldquo;Exceptional AI implementation expertise. Delivered our machine learning project ahead of schedule and provided excellent ongoing support.&rdquo;
                   </p>
                   <p className="text-sm text-gray-600 font-medium">
                     — Sarah Chen, Tech Director at FinTech Innovations
@@ -292,7 +283,7 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                     <span className="text-sm text-gray-600 ml-2">5.0</span>
                   </div>
                   <p className="text-gray-800 font-medium mb-3 leading-relaxed">
-                    "Outstanding communication and technical skills. Transformed our entire SaaS architecture. Would definitely work with again."
+                    &ldquo;Outstanding communication and technical skills. Transformed our entire SaaS architecture. Would definitely work with again.&rdquo;
                   </p>
                   <p className="text-sm text-gray-600 font-medium">
                     — James Wilson, CTO at Healthcare Solutions Ltd

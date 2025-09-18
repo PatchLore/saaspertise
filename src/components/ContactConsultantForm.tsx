@@ -49,8 +49,8 @@ export default function ContactConsultantForm({ consultant, onClose }: ContactCo
       }
 
       setIsSubmitted(true)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
       setIsLoading(false)
     }

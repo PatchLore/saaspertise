@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Search, Filter, Crown, MapPin, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -29,7 +29,7 @@ interface DirectoryData {
 
 interface DirectoryClientProps {
   initialData: DirectoryData
-  searchParams: any
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export default function DirectoryClient({ initialData, searchParams }: DirectoryClientProps) {
