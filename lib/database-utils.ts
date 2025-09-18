@@ -1,6 +1,6 @@
 // Utility functions to handle database differences between SQLite and PostgreSQL
 
-export function parseArrayField(field: any): string[] {
+export function parseArrayField(field: string | string[] | null | undefined): string[] {
   if (!field) return []
   
   // If it's already an array (PostgreSQL), return as is
@@ -20,7 +20,7 @@ export function parseArrayField(field: any): string[] {
   return []
 }
 
-export function normalizeConsultant(consultant: any) {
+export function normalizeConsultant(consultant: { services: string | string[], industries: string | string[], [key: string]: any }) {
   return {
     ...consultant,
     services: parseArrayField(consultant.services),
@@ -28,6 +28,6 @@ export function normalizeConsultant(consultant: any) {
   }
 }
 
-export function normalizeConsultants(consultants: any[]) {
+export function normalizeConsultants(consultants: { services: string | string[], industries: string | string[], [key: string]: any }[]) {
   return consultants.map(normalizeConsultant)
 }

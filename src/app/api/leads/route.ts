@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url)
-    const consultantId = searchParams.get('consultantId')
+    // const consultantId = searchParams.get('consultantId') // Currently unused
 
     let leads
 
