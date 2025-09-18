@@ -5,7 +5,7 @@ import { prisma } from '../../../../../../lib/prisma'
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -18,7 +18,8 @@ export async function PATCH(
     }
 
     const { action } = await request.json()
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     if (!['approve', 'reject'].includes(action)) {
       return NextResponse.json(
