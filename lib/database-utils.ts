@@ -20,7 +20,7 @@ export function parseArrayField(field: string | string[] | null | undefined): st
   return []
 }
 
-export function normalizeConsultant(consultant: { services: string | string[], industries: string | string[], [key: string]: any }) {
+export function normalizeConsultant(consultant: { services: string | string[], industries: string | string[], [key: string]: unknown }) {
   return {
     ...consultant,
     services: parseArrayField(consultant.services),
@@ -28,6 +28,6 @@ export function normalizeConsultant(consultant: { services: string | string[], i
   }
 }
 
-export function normalizeConsultants(consultants: { services: string | string[], industries: string | string[], [key: string]: any }[]) {
+export function normalizeConsultants(consultants: { services: string | string[], industries: string | string[], [key: string]: unknown }[]) {
   return consultants.map(normalizeConsultant)
 }
