@@ -146,14 +146,14 @@ export default function ConsultantDashboard({ consultant }: ConsultantDashboardP
         <StatCard
           icon={MessageSquare}
           title="Total Leads"
-          value={consultant.leads.length}
+          value={consultant.leads.length.toString()}
           subtitle="All time"
           color="blue"
         />
         <StatCard
           icon={Star}
           title="Testimonials"
-          value={consultant.testimonials.length}
+          value={consultant.testimonials.length.toString()}
           subtitle="Client reviews"
           color="yellow"
         />

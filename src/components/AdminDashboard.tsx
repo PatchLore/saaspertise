@@ -100,27 +100,28 @@ export default function AdminDashboard({ data }: AdminDashboardProps) {
         <StatCard
           icon={Users}
           title="Total Consultants"
-          value={data.stats.totalConsultants}
+          value={data.stats.totalConsultants.toString()}
           subtitle={`${data.stats.approvedConsultants} approved`}
           color="blue"
         />
         <StatCard
           icon={CheckCircle}
           title="Approved"
-          value={data.stats.approvedConsultants}
+          value={data.stats.approvedConsultants.toString()}
           subtitle={`${data.pendingConsultants.length} pending`}
           color="green"
         />
         <StatCard
           icon={Crown}
           title="Premium"
-          value={data.stats.premiumConsultants}
+          value={data.stats.premiumConsultants.toString()}
+          subtitle="Paid listings"
           color="yellow"
         />
         <StatCard
           icon={MessageSquare}
           title="Total Leads"
-          value={data.stats.totalLeads}
+          value={data.stats.totalLeads.toString()}
           subtitle={`${data.stats.recentLeads} this month`}
           color="purple"
         />

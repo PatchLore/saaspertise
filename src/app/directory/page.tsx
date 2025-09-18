@@ -4,6 +4,20 @@ import { normalizeConsultants, parseArrayField } from '../../../lib/database-uti
 import DirectoryClient from '@/components/DirectoryClient'
 import { ServiceType } from '@prisma/client'
 
+// Import Consultant type from DirectoryClient
+type Consultant = {
+  id: string
+  name: string
+  logo?: string | null
+  shortDescription?: string | null
+  description: string
+  region: string
+  services: string[]
+  industries: string[]
+  isPremium: boolean
+  website?: string | null
+}
+
 interface SearchParams {
   search?: string
   service?: string
@@ -11,6 +25,7 @@ interface SearchParams {
   region?: string
   premium?: string
   page?: string
+  [key: string]: string | string[] | undefined
 }
 
 async function getConsultants(searchParams: SearchParams) {
@@ -99,7 +114,7 @@ async function getConsultants(searchParams: SearchParams) {
     ])
 
     return {
-      consultants: parsedConsultants,
+      consultants: parsedConsultants as unknown as Consultant[],
       total,
       industries,
       regions,

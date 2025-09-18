@@ -6,6 +6,9 @@ import { signIn, getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Eye, EyeOff, Loader } from 'lucide-react'
 
+// Disable static generation for this page
+export const dynamic = 'force-dynamic'
+
 export default function SignInPage() {
   const router = useRouter()
   const searchParams = useSearchParams()

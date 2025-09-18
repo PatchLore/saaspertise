@@ -28,6 +28,10 @@ export function normalizeConsultant<T extends { services: string | string[], ind
   }
 }
 
-export function normalizeConsultants(consultants: { services: string | string[], industries: string | string[], [key: string]: unknown }[]) {
-  return consultants.map(normalizeConsultant)
+export function normalizeConsultants<T extends { services: string | string[], industries: string | string[] }>(consultants: T[]): T[] {
+  return consultants.map(consultant => ({
+    ...consultant,
+    services: parseArrayField(consultant.services),
+    industries: parseArrayField(consultant.industries)
+  }))
 }
