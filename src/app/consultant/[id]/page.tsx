@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
-import { prisma } from '../../../../lib/prisma'
-import { normalizeConsultant } from '../../../../lib/database-utils'
+// TODO: Re-enable Prisma + DATABASE_URL for production
+// import { prisma } from '../../../../lib/prisma'
+// import { normalizeConsultant } from '../../../../lib/database-utils'
+import { getConsultantById, MockConsultant } from '@/data/mockConsultants'
 import ConsultantProfile from '@/components/ConsultantProfile'
 
 interface ConsultantPageProps {
@@ -9,42 +11,15 @@ interface ConsultantPageProps {
   }>
 }
 
-async function getConsultant(id: string) {
-  try {
-    const consultant = await prisma.consultant.findUnique({
-      where: {
-        id: id,
-        isApproved: true
-      },
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true
-          }
-        },
-        portfolioItems: {
-          where: { isPublic: true },
-          orderBy: { displayOrder: 'asc' }
-        }
-      }
-    })
-
-    if (!consultant) {
-      return null
-    }
-
-    // Normalize consultant for both PostgreSQL arrays and SQLite JSON
-    return normalizeConsultant(consultant)
-  } catch (error) {
-    console.error('Error fetching consultant:', error)
-    return null
-  }
+function getConsultant(id: string): MockConsultant | null {
+  // For demo purposes, using mock data (no database calls)
+  return getConsultantById(id)
 }
 
-export default async function ConsultantPage({ params }: ConsultantPageProps) {
-  const resolvedParams = await params
-  const consultant = await getConsultant(resolvedParams.id)
+export default function ConsultantPage({ params }: ConsultantPageProps) {
+  // For demo purposes, using mock data (no async needed)
+  const resolvedParams = params as unknown as { id: string }
+  const consultant = getConsultant(resolvedParams.id)
 
   if (!consultant) {
     notFound()
@@ -53,10 +28,11 @@ export default async function ConsultantPage({ params }: ConsultantPageProps) {
   return <ConsultantProfile consultant={consultant} />
 }
 
-export async function generateMetadata({ params }: ConsultantPageProps) {
-  const resolvedParams = await params
-  const consultant = await getConsultant(resolvedParams.id)
-  
+export function generateMetadata({ params }: ConsultantPageProps) {
+  // For demo purposes, using mock data (no async needed)
+  const resolvedParams = params as unknown as { id: string }
+  const consultant = getConsultant(resolvedParams.id)
+
   if (!consultant) {
     return {
       title: 'Consultant Not Found'

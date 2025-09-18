@@ -1,8 +1,10 @@
 import { Suspense } from 'react'
-import { prisma } from '../../../lib/prisma'
-import { normalizeConsultants, parseArrayField } from '../../../lib/database-utils'
+// TODO: Re-enable Prisma + DATABASE_URL for production
+// import { prisma } from '../../../lib/prisma'
+// import { normalizeConsultants, parseArrayField } from '../../../lib/database-utils'
+import { getAllConsultants, MockConsultant } from '@/data/mockConsultants'
 import DirectoryClient from '@/components/DirectoryClient'
-import { ServiceType } from '@prisma/client'
+// import { ServiceType } from '@prisma/client'
 
 // Import Consultant type from DirectoryClient
 type Consultant = {
@@ -28,7 +30,7 @@ interface SearchParams {
   [key: string]: string | string[] | undefined
 }
 
-async function getConsultants(searchParams: SearchParams) {
+function getConsultants(searchParams: SearchParams) {
   const {
     search,
     service,
@@ -38,109 +40,70 @@ async function getConsultants(searchParams: SearchParams) {
     page = '1'
   } = searchParams
 
-  const pageSize = 12
-  const skip = (parseInt(page) - 1) * pageSize
+  // For demo purposes, using mock data (no database calls)
+  let consultants = getAllConsultants()
 
-  // Build where clause
-  const where: Record<string, unknown> = {
-    isApproved: true
-  }
-
+  // Apply filters
   if (search) {
-    where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { description: { contains: search, mode: 'insensitive' } },
-      { industries: { has: search } }
-    ]
+    const searchLower = search.toLowerCase()
+    consultants = consultants.filter(c => 
+      c.name.toLowerCase().includes(searchLower) ||
+      c.description.toLowerCase().includes(searchLower) ||
+      c.industries.some(i => i.toLowerCase().includes(searchLower))
+    )
   }
 
   if (service && service !== 'ALL') {
-    where.services = {
-      has: service as ServiceType
-    }
+    consultants = consultants.filter(c => c.services.includes(service))
   }
 
   if (industry) {
-    where.industries = {
-      has: industry
-    }
+    consultants = consultants.filter(c => c.industries.includes(industry))
   }
 
   if (region) {
-    where.region = {
-      contains: region,
-      mode: 'insensitive'
-    }
+    consultants = consultants.filter(c => c.region.toLowerCase().includes(region.toLowerCase()))
   }
 
   if (premium === 'true') {
-    where.isPremium = true
+    consultants = consultants.filter(c => c.isPremium)
   }
 
-  try {
-    const [consultants, total] = await Promise.all([
-      prisma.consultant.findMany({
-        where,
-        skip,
-        take: pageSize,
-        orderBy: [
-          { isPremium: 'desc' },
-          { isFeatured: 'desc' },
-          { createdAt: 'desc' }
-        ]
-      }),
-      prisma.consultant.count({ where })
-    ])
+  // Sort consultants
+  consultants.sort((a, b) => {
+    if (a.isPremium !== b.isPremium) return b.isPremium ? 1 : -1
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
 
-    // Normalize consultants for both PostgreSQL arrays and SQLite JSON
-    const parsedConsultants = normalizeConsultants(consultants)
+  const total = consultants.length
+  const pageSize = 12
+  const currentPage = parseInt(page)
+  const startIndex = (currentPage - 1) * pageSize
+  const endIndex = startIndex + pageSize
+  const paginatedConsultants = consultants.slice(startIndex, endIndex)
 
-    // Get unique industries and regions for filters
-    const [industries, regions] = await Promise.all([
-      prisma.consultant.findMany({
-        where: { isApproved: true },
-        select: { industries: true }
-      }).then(results => {
-        const allIndustries = results.flatMap(r => parseArrayField(r.industries))
-        return [...new Set(allIndustries)].sort()
-      }),
-      prisma.consultant.findMany({
-        where: { isApproved: true },
-        select: { region: true }
-      }).then(results => {
-        const allRegions = results.map(r => r.region)
-        return [...new Set(allRegions)].sort()
-      })
-    ])
+  // Get unique industries and regions for filters
+  const allIndustries = [...new Set(consultants.flatMap(c => c.industries))].sort()
+  const allRegions = [...new Set(consultants.map(c => c.region))].sort()
 
-    return {
-      consultants: parsedConsultants as unknown as Consultant[],
-      total,
-      industries,
-      regions,
-      currentPage: parseInt(page),
-      totalPages: Math.ceil(total / pageSize)
-    }
-  } catch (error) {
-    console.error('Error fetching consultants:', error)
-    return {
-      consultants: [],
-      total: 0,
-      industries: [],
-      regions: [],
-      currentPage: 1,
-      totalPages: 0
-    }
+  return {
+    consultants: paginatedConsultants as Consultant[],
+    total,
+    industries: allIndustries,
+    regions: allRegions,
+    currentPage,
+    totalPages: Math.ceil(total / pageSize)
   }
 }
 
-export default async function DirectoryPage({
+export default function DirectoryPage({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const resolvedSearchParams = await searchParams
-  const data = await getConsultants(resolvedSearchParams)
+  // For demo purposes, using mock data (no async needed)
+  const resolvedSearchParams = searchParams as unknown as SearchParams
+  const data = getConsultants(resolvedSearchParams)
 
   return (
     <div className="min-h-screen bg-gray-50">
