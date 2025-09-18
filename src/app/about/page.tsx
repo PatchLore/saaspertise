@@ -11,8 +11,8 @@ export default function AboutPage() {
             About Consultants Directory
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            The UK's premier platform connecting businesses with expert SaaS and AI consultants. 
-            We're building the future of digital transformation, one connection at a time.
+            The UK&apos;s premier platform connecting businesses with expert SaaS and AI consultants. 
+            We&apos;re building the future of digital transformation, one connection at a time.
           </p>
         </div>
       </div>
@@ -32,8 +32,8 @@ export default function AboutPage() {
               with the most skilled consultants across the UK.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              From startups in London's tech scene to established enterprises in Manchester, 
-              Birmingham, and beyond – we're here to accelerate your digital journey.
+              From startups in London&apos;s tech scene to established enterprises in Manchester, 
+              Birmingham, and beyond – we&apos;re here to accelerate your digital journey.
             </p>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Specialist Expertise</h3>
               <p className="text-gray-600">
                 Focused exclusively on SaaS development and AI implementation – 
-                the technologies driving tomorrow's businesses.
+                the technologies driving tomorrow&apos;s businesses.
               </p>
             </div>
             <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
@@ -99,7 +99,7 @@ export default function AboutPage() {
               and direct contact with the experts they need.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Today, we're proud to be the go-to platform for SaaS and AI expertise across 
+              Today, we&apos;re proud to be the go-to platform for SaaS and AI expertise across 
               the UK, from the innovation hubs of London and Manchester to the emerging 
               tech scenes in Bristol, Edinburgh, and beyond.
             </p>

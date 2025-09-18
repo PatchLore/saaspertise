@@ -86,7 +86,7 @@ export default function ConsultantDashboard({ consultant }: ConsultantDashboardP
     }
   }
 
-  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: { icon: any, title: string, value: string, subtitle: string, color?: string }) => (
+  const StatCard = ({ icon: Icon, title, value, subtitle, color = 'blue' }: { icon: React.ComponentType<{ className?: string }>, title: string, value: string, subtitle: string, color?: string }) => (
     <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 bg-${color}-100 rounded-xl flex items-center justify-center`}>
