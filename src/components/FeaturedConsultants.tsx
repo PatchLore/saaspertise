@@ -49,9 +49,9 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
           {consultants.map((consultant) => (
             <div
               key={consultant.id}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col h-full"
             >
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 {/* Premium Badge */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
@@ -101,55 +101,59 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  {consultant.shortDescription || consultant.description}
-                </p>
+                <div className="flex-grow">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {consultant.shortDescription || consultant.description}
+                  </p>
 
-                {/* Services */}
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {consultant.services.slice(0, 3).map((service) => (
-                      <span
-                        key={service}
-                        className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
-                      >
-                        {service}
-                      </span>
-                    ))}
-                    {consultant.services.length > 3 && (
-                      <span className="text-xs text-gray-500">
-                        +{consultant.services.length - 3} more
-                      </span>
-                    )}
+                  {/* Services */}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-2">
+                      {consultant.services.slice(0, 3).map((service) => (
+                        <span
+                          key={service}
+                          className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+                        >
+                          {service}
+                        </span>
+                      ))}
+                      {consultant.services.length > 3 && (
+                        <span className="text-xs text-gray-500">
+                          +{consultant.services.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Industries */}
+                  <div className="mb-6">
+                    <div className="flex flex-wrap gap-2">
+                      {consultant.industries.slice(0, 2).map((industry) => (
+                        <span
+                          key={industry}
+                          className="text-xs font-medium bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
+                        >
+                          {industry}
+                        </span>
+                      ))}
+                      {consultant.industries.length > 2 && (
+                        <span className="text-xs text-gray-500">
+                          +{consultant.industries.length - 2} more
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                {/* Industries */}
-                <div className="mb-6">
-                  <div className="flex flex-wrap gap-2">
-                    {consultant.industries.slice(0, 2).map((industry) => (
-                      <span
-                        key={industry}
-                        className="text-xs font-medium bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
-                      >
-                        {industry}
-                      </span>
-                    ))}
-                    {consultant.industries.length > 2 && (
-                      <span className="text-xs text-gray-500">
-                        +{consultant.industries.length - 2} more
-                      </span>
-                    )}
-                  </div>
+                {/* View Profile Button - Always at bottom */}
+                <div className="mt-auto">
+                  <Link
+                    href={`/consultant/${consultant.id}`}
+                    className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    View Profile
+                  </Link>
                 </div>
-
-                {/* View Profile Button */}
-                <Link
-                  href={`/consultant/${consultant.id}`}
-                  className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                >
-                  View Profile
-                </Link>
               </div>
             </div>
           ))}

@@ -43,3 +43,5 @@ export function getPricingDisplay(consultant: {
   
   return pricing.length > 0 ? pricing.join(' • ') : 'Contact for rates'
 }
+
+

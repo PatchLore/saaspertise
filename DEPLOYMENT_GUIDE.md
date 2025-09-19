@@ -159,3 +159,5 @@ Consider adding:
 **Your SaaS + AI Consultants Directory is now live!** 🎉
 
 Share the URL with potential consultants to start building your community.
+
+

@@ -355,3 +355,5 @@ export function getAllConsultants(): MockConsultant[] {
 export function getConsultantById(id: string): MockConsultant | null {
   return mockConsultants.find(c => c.id === id) || null
 }
+
+
