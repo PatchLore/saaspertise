@@ -26,7 +26,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
           </div>
           <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
-            <p className="text-lg text-gray-700 leading-relaxed">
+            <p className="text-lg text-gray-700 leading-relaxed text-center">
               At our core, we are driven by a simple but powerful belief: world-class expertise should be accessible to every business, and brilliant consultants should have a platform to thrive. We exist to bridge this gap. Our mission is to empower SaaS and AI consultants, providing them with the visibility, credibility, and opportunities they need to connect with ambitious businesses. We&apos;re not just creating a platform; we&apos;re building a marketplace where expertise meets opportunity, helping companies and consultants achieve their full potential.
             </p>
           </div>
