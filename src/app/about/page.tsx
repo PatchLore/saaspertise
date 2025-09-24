@@ -26,14 +26,8 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
           </div>
           <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              We believe that every business deserves access to world-class SaaS and AI expertise. 
-              Our mission is to democratise digital transformation by connecting innovative companies 
-              with the most skilled consultants across the UK.
-            </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              From startups in London&apos;s tech scene to established enterprises in Manchester, 
-              Birmingham, and beyond – we&apos;re here to accelerate your digital journey.
+              Our mission is to empower SaaS and AI consultants by giving them greater visibility, credibility, and opportunities to work with ambitious businesses. We believe every company deserves access to world-class expertise, and every consultant deserves a platform to showcase their skills and grow their practice.
             </p>
           </div>
         </div>
