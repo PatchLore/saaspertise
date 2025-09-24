@@ -31,7 +31,7 @@ export default function TermsOfServicePage() {
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Businesses and consultants are solely responsible for engagements formed through the platform.</li>
               <li>No guarantees are made regarding outcomes, performance, or suitability.</li>
-              <li>Users agree not to misuse the platform or infringe upon others' rights.</li>
+              <li>Users agree not to misuse the platform or infringe upon others&apos; rights.</li>
             </ul>
           </section>
 
@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
 
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">Disclaimers</h2>
-            <p className="text-gray-700 leading-relaxed">The service is provided on an "as is" and "as available" basis without warranties of any kind. We disclaim all implied warranties to the fullest extent permitted by law.</p>
+            <p className="text-gray-700 leading-relaxed">The service is provided on an &quot;as is&quot; and &quot;as available&quot; basis without warranties of any kind. We disclaim all implied warranties to the fullest extent permitted by law.</p>
           </section>
 
           <section>
