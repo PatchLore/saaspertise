@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../../../lib/auth'
-import { prisma } from '../../../../lib/prisma'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,9 +55,47 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // TODO: Send email notification to consultant
-    // This would be implemented with Resend/SendGrid
-    console.log(`New lead for ${consultant.name}: ${lead.id}`)
+    // Send email notification to consultant
+    if (process.env.RESEND_API_KEY && process.env.FROM_EMAIL) {
+      try {
+        await resend.emails.send({
+          from: process.env.FROM_EMAIL,
+          to: consultant.email,
+          subject: `New Lead from Saaspertise - ${name}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2>New Lead from Saaspertise</h2>
+              <p>You have received a new lead inquiry:</p>
+              
+              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>Contact Information:</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+              </div>
+              
+              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>Message:</h3>
+                <p style="white-space: pre-wrap;">${message}</p>
+              </div>
+              
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                <p><strong>Lead ID:</strong> ${lead.id}</p>
+                <p><strong>Received:</strong> ${new Date().toLocaleString()}</p>
+              </div>
+              
+              <p style="margin-top: 20px; color: #666; font-size: 14px;">
+                This lead was generated through your Saaspertise profile. 
+                Please respond directly to the client's email address.
+              </p>
+            </div>
+          `
+        })
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError)
+        // Don't fail the request if email fails
+      }
+    }
 
     return NextResponse.json(
       { 

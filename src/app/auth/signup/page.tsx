@@ -1,63 +1,35 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { Eye, EyeOff, Loader } from 'lucide-react'
+import { Loader } from 'lucide-react'
 
 // Disable static generation for this page
 export const dynamic = 'force-dynamic'
 
 export default function SignUpPage() {
-  const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    // passwords removed for magic link flow
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      setIsLoading(false)
-      return
-    }
-
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long')
-      setIsLoading(false)
-      return
-    }
-
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Something went wrong')
+      // For magic link flow, we just send the sign-in email
+      const res = await signIn('email', { email: formData.email, redirect: true, callbackUrl: '/dashboard' })
+      if (res?.error) {
+        setError('We had trouble sending your email. Please try again or contact support.')
+      } else {
+        setMessage("We've sent a secure sign-in link to your email. Click the link to access your dashboard.")
       }
-
-      // Redirect to sign in page
-      router.push('/auth/signin?message=Account created successfully')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
@@ -94,6 +66,11 @@ export default function SignUpPage() {
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
                 {error}
+              </div>
+            )}
+            {message && (
+              <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-md text-sm">
+                {message}
               </div>
             )}
 
@@ -134,54 +111,7 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="new-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Create a password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Confirm your password"
-                />
-              </div>
-            </div>
+            {/* Password fields removed for magic link flow */}
 
             <div>
               <button
@@ -192,7 +122,7 @@ export default function SignUpPage() {
                 {isLoading ? (
                   <Loader className="h-4 w-4 animate-spin" />
                 ) : (
-                  'Create Account'
+                  'Send magic link'
                 )}
               </button>
             </div>
@@ -201,10 +131,7 @@ export default function SignUpPage() {
           <div className="mt-6">
             <div className="text-center">
               <span className="text-sm text-gray-600">
-                Already have an account?{' '}
-                <Link href="/auth/signin" className="font-medium text-blue-600 hover:text-blue-500">
-                  Sign in
-                </Link>
+                Already have an account? Use the sign-in form to get a new link.
               </span>
             </div>
           </div>

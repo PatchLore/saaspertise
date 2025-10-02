@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 // TODO: Re-enable Prisma + DATABASE_URL for production
-// import { prisma } from '../../../../lib/prisma'
-// import { normalizeConsultant } from '../../../../lib/database-utils'
+// import { prisma } from '@/lib/prisma'
+// import { normalizeConsultant } from '@/lib/database-utils'
 import { getConsultantById, MockConsultant } from '@/data/mockConsultants'
 import ConsultantProfile from '@/components/ConsultantProfile'
 

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 // TODO: Re-enable Prisma + DATABASE_URL for production
-// import { prisma } from '../../../lib/prisma'
-// import { normalizeConsultants, parseArrayField } from '../../../lib/database-utils'
+// import { prisma } from '@/lib/prisma'
+// import { normalizeConsultants, parseArrayField } from '@/lib/database-utils'
 import { getAllConsultants, MockConsultant } from '@/data/mockConsultants'
 import DirectoryClient from '@/components/DirectoryClient'
 // import { ServiceType } from '@prisma/client'
@@ -96,13 +96,13 @@ function getConsultants(searchParams: SearchParams) {
   }
 }
 
-export default function DirectoryPage({
+export default async function DirectoryPage({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  // For demo purposes, using mock data (no async needed)
-  const resolvedSearchParams = searchParams as unknown as SearchParams
+  // Await searchParams in Next.js 15
+  const resolvedSearchParams = await searchParams
   const data = getConsultants(resolvedSearchParams)
 
   return (

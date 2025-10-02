@@ -6,27 +6,23 @@ import { useRouter } from 'next/navigation'
 import { Loader } from 'lucide-react'
 
 const SERVICE_OPTIONS = [
-  { value: 'SAAS', label: 'SaaS Development' },
-  { value: 'AI', label: 'AI Implementation' },
-  { value: 'BOTH', label: 'Both SaaS & AI' }
+  { value: 'SaaS Development', label: 'SaaS Development' },
+  { value: 'AI Implementation', label: 'AI Implementation' },
+  { value: 'Cloud Migration', label: 'Cloud Migration' },
+  { value: 'API Development', label: 'API Development' },
+  { value: 'Machine Learning', label: 'Machine Learning' },
+  { value: 'Data Science', label: 'Data Science' },
+  { value: 'Microservices', label: 'Microservices' },
+  { value: 'Performance Optimization', label: 'Performance Optimization' },
+  { value: 'DevOps', label: 'DevOps' }
 ]
 
 const REGION_OPTIONS = [
-  'Greater London',
-  'South East England',
-  'Greater Manchester', 
-  'West Midlands (Birmingham)',
   'Central Scotland (Edinburgh/Glasgow)',
-  'Leeds & Yorkshire',
-  'Liverpool & Merseyside',
-  'Bristol & South West',
-  'Cardiff & South Wales',
-  'Belfast & Northern Ireland',
-  'Newcastle & North East',
-  'Sheffield & South Yorkshire',
-  'North Wales',
-  'Remote/UK-wide',
-  'Channel Islands',
+  'London & South East',
+  'Manchester & North West',
+  'Birmingham & Midlands',
+  'Europe',
   'International'
 ]
 
@@ -84,7 +80,7 @@ export default function OnboardingPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('/api/consultant/create', {
+      const res = await fetch('/api/consultants', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { authOptions } from '../../../lib/auth'
-import { prisma } from '../../../lib/prisma'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
 import ConsultantDashboard from '@/components/ConsultantDashboard'
 
 async function getConsultantData(userId: string) {
@@ -66,6 +66,16 @@ export default async function DashboardPage() {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 // TODO: Re-enable DB integration for production
-// import { prisma } from '../../lib/prisma'
-// import { normalizeConsultants } from '../../lib/database-utils'
+// import { prisma } from '@/lib/prisma'
+// import { normalizeConsultants } from '@/lib/database-utils'
 import { getFeaturedConsultants, MockConsultant } from '@/data/mockConsultants'
 import HeroSection from '@/components/HeroSection'
 import FeaturedConsultants from '@/components/FeaturedConsultants'

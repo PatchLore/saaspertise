@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -40,8 +41,8 @@ model Consultant {
   email         String
   phone         String?
   region        String
-  industries    String // JSON string for SQLite compatibility
-  services      String // JSON string for SQLite compatibility
+  industries    String[] // Array of industry strings
+  services      String[] // Array of service strings
   hourlyRate    Int?      // Hourly rate in pence (e.g., 10000 = £100/hr)
   projectRateMin Int?     // Minimum project rate in pence
   projectRateMax Int?     // Maximum project rate in pence
@@ -59,6 +60,8 @@ model Consultant {
   payments      Payment[]
   testimonials  Testimonial[]
   portfolioItems PortfolioItem[]
+  caseStudies   CaseStudy[]
+  ratings       Rating[]
 
   @@map("consultants")
 }
@@ -124,7 +127,7 @@ model PortfolioItem {
   title         String
   description   String
   metrics       String?   // e.g., "30% cost reduction", "10k concurrent users"
-  technologies  String    // JSON string for SQLite compatibility
+  technologies  String[]  // Array of technology strings
   projectType   String?   // e.g., "SaaS Platform", "AI Implementation"
   clientType    String?   // e.g., "Healthcare Startup", "Fortune 500"
   duration      String?   // e.g., "3 months", "6 weeks"
@@ -210,4 +213,47 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model CaseStudy {
+  id            String    @id @default(cuid())
+  consultantId  String
+  title         String
+  description   String
+  challenge     String    // What was the challenge/problem
+  solution      String    // How it was solved
+  results       String    // What were the results
+  technologies  String[]  // Technologies used
+  industry      String?
+  clientSize    String?   // e.g., "Startup", "Enterprise"
+  duration      String?   // e.g., "3 months"
+  budget        String?   // e.g., "$50k-100k" or "Confidential"
+  attachments   String[]  // Array of file URLs
+  isPublic      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  consultant    Consultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
+
+  @@map("case_studies")
+}
+
+model Rating {
+  id            String    @id @default(cuid())
+  consultantId  String
+  clientName    String
+  clientEmail   String?
+  rating        Int       // 1-5 stars
+  review        String?   // Optional written review
+  categories    Json      // JSON object with category ratings (e.g., {"communication": 5, "delivery": 4, "value": 5})
+  isVerified    Boolean   @default(false) // Whether the rating is verified
+  isPublic      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  consultant    Consultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
+
+  @@map("ratings")
 }

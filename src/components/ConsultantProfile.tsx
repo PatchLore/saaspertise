@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Crown, MapPin, ExternalLink, Mail, Phone, Calendar, Star, Send, ArrowLeft, Linkedin, Twitter, Github, CheckCircle, Briefcase, DollarSign, Award, Clock } from 'lucide-react'
 import ContactConsultantForm from './ContactConsultantForm'
-import { getPricingDisplay } from '../../lib/pricing-utils'
+import { getPricingDisplay } from '@/lib/pricing-utils'
 
 
 interface PortfolioItem {

@@ -1,61 +1,33 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { signIn, getSession } from 'next-auth/react'
-import Link from 'next/link'
-import { Eye, EyeOff, Loader } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+import { Loader } from 'lucide-react'
 
-// Disable static generation for this page
 export const dynamic = 'force-dynamic'
 
 function SignInForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  })
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     const urlMessage = searchParams.get('message')
-    if (urlMessage) {
-      setMessage(urlMessage)
-    }
+    if (urlMessage) setMessage(urlMessage)
   }, [searchParams])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setMessage('')
     setIsLoading(true)
-
     try {
-      const result = await signIn('credentials', {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      })
-
-      if (result?.error) {
-        setError('Invalid email or password')
-      } else {
-        // Get the session to check user role
-        const session = await getSession()
-        
-        // Redirect based on user role
-        if (session?.user?.role === 'ADMIN') {
-          router.push('/admin')
-        } else if (session?.user?.consultantId) {
-          router.push('/dashboard')
-        } else {
-          router.push('/onboarding')
-        }
-      }
+      const res = await signIn('email', { email, redirect: true, callbackUrl: '/dashboard' })
+      if (res?.error) setError('We had trouble sending your email. Please try again or contact support.')
+      else setMessage("We've sent a secure sign-in link to your email. Click the link to access your dashboard.")
     } catch {
       setError('Something went wrong. Please try again.')
     } finally {
@@ -63,126 +35,51 @@ function SignInForm() {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">CD</span>
+            <span className="text-white font-bold text-lg">S</span>
           </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-          Sign in to your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Access your consultant dashboard
-        </p>
+        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">Sign in to your account</h2>
+        <p className="mt-2 text-center text-sm text-gray-600">Access your consultant dashboard</p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-                {error}
-              </div>
-            )}
-            
-            {message && (
-              <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-md text-sm">
-                {message}
-              </div>
-            )}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm mb-4">{error}</div>
+          )}
+          {message && (
+            <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-md text-sm mb-4">{message}</div>
+          )}
 
+          <form className="space-y-4" onSubmit={handleMagicLink}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
+              <div className="mt-1 flex gap-2">
                 <input
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
                   required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your password"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="you@company.com"
                 />
                 <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
+                  type="submit"
+                  disabled={isLoading || !email}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
+                  {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : 'Send magic link'}
                 </button>
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <Link href="/auth/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </Link>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                  <Loader className="h-4 w-4 animate-spin" />
-                ) : (
-                  'Sign in'
-                )}
-              </button>
-            </div>
           </form>
-
-          <div className="mt-6">
-            <div className="text-center">
-              <span className="text-sm text-gray-600">
-                Don&apos;t have an account?{' '}
-                <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500">
-                  Sign up
-                </Link>
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
