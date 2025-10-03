@@ -463,9 +463,14 @@ export const mockConsultants: MockConsultant[] = [
   }
 ]
 
-// Helper function to get featured consultants (premium + first 6)
+// Helper function to get featured consultants (only real companies)
 export function getFeaturedConsultants(): MockConsultant[] {
-  return mockConsultants.filter(c => c.isPremium).slice(0, 6)
+  // Only show real companies in featured section
+  const realCompanyIds = [
+    'worxwide-consulting-001',
+    'this-is-ai-now-001'
+  ]
+  return mockConsultants.filter(c => realCompanyIds.includes(c.id))
 }
 
 // Helper function to get all consultants
