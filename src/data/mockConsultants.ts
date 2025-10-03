@@ -338,6 +338,67 @@ export const mockConsultants: MockConsultant[] = [
       avgResponseTime: "2h",
       clientRating: 4.8
     }
+  },
+  {
+    id: "worxwide-consulting-001",
+    name: "Worxwide Consulting",
+    logo: null,
+    profilePhoto: null,
+    shortDescription: "AI-enabled sales transformation and UX-led experience design for digital growth",
+    description: "Worxwide Consulting is a digital growth consulting firm specializing in AI-enabled sales transformation, UX-led experience design, and full-funnel automation. With over 60 experts across the U.S., U.K., and India, we help businesses across Manufacturing, Financial Services, Consumer Goods, Healthcare, and IT sectors transform their digital operations and drive growth.",
+    region: "London",
+    services: ["AI Implementation", "Sales Transformation", "UX Design", "Digital Automation", "SaaS Development"],
+    industries: ["Manufacturing", "Financial Services", "Consumer Goods", "Healthcare", "IT"],
+    isPremium: true,
+    website: "http://www.worxwide.com",
+    email: "consult@worxwide.com",
+    phone: "+1-571-210-5955",
+    hourlyRate: 12000, // £120/hour
+    projectRateMin: 180000, // £1,800
+    projectRateMax: 600000, // £6,000
+    showRates: true,
+    createdAt: new Date("2024-02-15"),
+    portfolioItems: [
+      {
+        id: "portfolio-worxwide-1",
+        title: "AI-Enabled Sales Transformation",
+        description: "Implemented AI-driven sales automation platform for a leading manufacturing company",
+        metrics: "Increased sales conversion rates by 45% and reduced sales cycle time by 30%",
+        technologies: ["AI/ML", "Sales Automation", "CRM Integration", "Analytics"],
+        projectType: "AI Implementation",
+        clientType: "Manufacturing Company",
+        duration: "6 months",
+        displayOrder: 1
+      },
+      {
+        id: "portfolio-worxwide-2",
+        title: "UX-Led Digital Experience Platform",
+        description: "Designed and developed comprehensive UX platform for financial services client",
+        metrics: "Improved user engagement by 60% and increased customer satisfaction scores by 40%",
+        technologies: ["UX/UI Design", "React", "Node.js", "User Research"],
+        projectType: "UX Design",
+        clientType: "Financial Services",
+        duration: "4 months",
+        displayOrder: 2
+      }
+    ],
+    testimonials: [
+      {
+        id: "testimonial-worxwide-1",
+        clientName: "Sarah Mitchell",
+        clientTitle: "Digital Transformation Director",
+        clientCompany: "Global Manufacturing Corp",
+        content: "Worxwide's AI-enabled sales transformation exceeded our expectations. Their innovative approach and global expertise made all the difference.",
+        rating: 5,
+        createdAt: new Date("2024-03-20")
+      }
+    ],
+    certifications: ["AI/ML Specialization", "UX Design Certification", "Sales Automation Expert"],
+    stats: {
+      projectsCompleted: 45,
+      avgResponseTime: "2h",
+      clientRating: 4.9
+    }
   }
 ]
 
