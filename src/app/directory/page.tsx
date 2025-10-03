@@ -73,7 +73,44 @@ function getConsultants(searchParams: SearchParams) {
   }
 
   if (region) {
-    consultants = consultants.filter(c => c.region.toLowerCase() === region.toLowerCase())
+    consultants = consultants.filter(c => {
+      const consultantRegion = c.region.toLowerCase()
+      const selectedRegion = region.toLowerCase()
+      
+      // Map specific cities to broader regions
+      const regionMapping: { [key: string]: string[] } = {
+        'greater london': ['london'],
+        'south east england': ['london', 'brighton', 'oxford', 'cambridge'],
+        'greater manchester': ['manchester'],
+        'west midlands (birmingham)': ['birmingham'],
+        'central scotland (edinburgh/glasgow)': ['edinburgh', 'glasgow'],
+        'leeds & yorkshire': ['leeds', 'york', 'sheffield'],
+        'liverpool & merseyside': ['liverpool'],
+        'bristol & south west': ['bristol', 'bath', 'plymouth'],
+        'cardiff & south wales': ['cardiff', 'swansea'],
+        'belfast & northern ireland': ['belfast'],
+        'newcastle & north east': ['newcastle', 'sunderland'],
+        'sheffield & south yorkshire': ['sheffield'],
+        'north wales': ['bangor', 'wrexham'],
+        'remote/uk-wide': ['remote', 'uk-wide'],
+        'channel islands': ['jersey', 'guernsey'],
+        'europe': ['europe'],
+        'international': ['international']
+      }
+      
+      // Check if consultant's region matches the selected region directly
+      if (consultantRegion === selectedRegion) {
+        return true
+      }
+      
+      // Check if consultant's region is in the mapping for the selected region
+      const mappedCities = regionMapping[selectedRegion]
+      if (mappedCities) {
+        return mappedCities.some(city => consultantRegion.includes(city))
+      }
+      
+      return false
+    })
   }
 
   if (premium === 'true') {

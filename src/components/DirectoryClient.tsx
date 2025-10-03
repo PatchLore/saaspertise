@@ -158,11 +158,23 @@ export default function DirectoryClient({ initialData, searchParams }: Directory
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="">All Regions</option>
-                  {initialData.regions.map((region) => (
-                    <option key={region} value={region}>
-                      {region}
-                    </option>
-                  ))}
+                  <option value="Greater London">Greater London</option>
+                  <option value="South East England">South East England</option>
+                  <option value="Greater Manchester">Greater Manchester</option>
+                  <option value="West Midlands (Birmingham)">West Midlands (Birmingham)</option>
+                  <option value="Central Scotland (Edinburgh/Glasgow)">Central Scotland (Edinburgh/Glasgow)</option>
+                  <option value="Leeds & Yorkshire">Leeds & Yorkshire</option>
+                  <option value="Liverpool & Merseyside">Liverpool & Merseyside</option>
+                  <option value="Bristol & South West">Bristol & South West</option>
+                  <option value="Cardiff & South Wales">Cardiff & South Wales</option>
+                  <option value="Belfast & Northern Ireland">Belfast & Northern Ireland</option>
+                  <option value="Newcastle & North East">Newcastle & North East</option>
+                  <option value="Sheffield & South Yorkshire">Sheffield & South Yorkshire</option>
+                  <option value="North Wales">North Wales</option>
+                  <option value="Remote/UK-wide">Remote/UK-wide</option>
+                  <option value="Channel Islands">Channel Islands</option>
+                  <option value="Europe">Europe</option>
+                  <option value="International">International</option>
                 </select>
               </div>
 
