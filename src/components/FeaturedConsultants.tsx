@@ -49,66 +49,75 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
           {consultants.map((consultant) => (
             <div
               key={consultant.id}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col h-full"
+              className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col min-h-[400px]"
             >
-              <div className="p-6 flex flex-col flex-grow">
-                {/* Premium Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Crown className="h-5 w-5 text-yellow-500" />
-                    <span className="text-sm font-medium text-yellow-600 bg-yellow-50 px-2 py-1 rounded-full">
-                      Premium
-                    </span>
-                  </div>
-                  {consultant.website && (
-                    <a
-                      href={consultant.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  )}
-                </div>
-
-                {/* Profile Photo and Name */}
-                <div className="text-center mb-4">
-                  {consultant.profilePhoto ? (
-                    <img
-                      src={consultant.profilePhoto}
-                      alt={consultant.name}
-                      className="w-16 h-16 mx-auto rounded-full object-cover mb-3"
-                    />
-                  ) : consultant.logo ? (
-                    <img
-                      src={consultant.logo}
-                      alt={`${consultant.name} logo`}
-                      className="w-24 h-24 mx-auto rounded-xl object-cover mb-3 shadow-md"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3">
-                      <span className="text-white text-xl font-bold">
-                        {consultant.name.charAt(0)}
+              <div className="p-6 flex flex-col justify-between h-full">
+                {/* Top Content Section */}
+                <div className="flex-1 flex flex-col">
+                  {/* Premium Badge - Fixed height */}
+                  <div className="h-8 flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
+                      <Crown className="h-5 w-5 text-yellow-500" />
+                      <span className="text-sm font-medium text-yellow-600 bg-yellow-50 px-2 py-1 rounded-full">
+                        Premium
                       </span>
                     </div>
-                  )}
-                  <h3 className="text-xl font-bold text-gray-900">{consultant.name}</h3>
-                  <div className="flex items-center justify-center gap-1 text-gray-500 mt-1">
-                    <MapPin className="h-4 w-4" />
-                    <span className="text-sm">{consultant.region}</span>
+                    {consultant.website && (
+                      <a
+                        href={consultant.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-blue-600 transition-colors"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
                   </div>
-                </div>
 
-                {/* Description */}
-                <div className="flex-grow">
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {consultant.shortDescription || consultant.description}
-                  </p>
+                  {/* Logo - Fixed size container */}
+                  <div className="flex justify-center mb-6 h-20">
+                    <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full shadow-md border-2 border-gray-100">
+                      {consultant.profilePhoto ? (
+                        <img
+                          src={consultant.profilePhoto}
+                          alt={consultant.name}
+                          className="w-16 h-16 rounded-full object-cover"
+                        />
+                      ) : consultant.logo ? (
+                        <img
+                          src={consultant.logo}
+                          alt={`${consultant.name} logo`}
+                          className="w-full h-full object-contain p-3"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                          <span className="text-white text-xl font-bold">
+                            {consultant.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                  {/* Services */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                  {/* Company Name and Location - Fixed height */}
+                  <div className="text-center mb-6 h-16 flex flex-col justify-center">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{consultant.name}</h3>
+                    <div className="flex items-center justify-center gap-1 text-gray-500">
+                      <MapPin className="h-4 w-4" />
+                      <span className="text-sm">{consultant.region}</span>
+                    </div>
+                  </div>
+
+                  {/* Description - Fixed height */}
+                  <div className="mb-6 h-12">
+                    <p className="text-gray-600 text-sm line-clamp-2 text-center">
+                      {consultant.shortDescription || consultant.description}
+                    </p>
+                  </div>
+
+                  {/* Services - Fixed height */}
+                  <div className="mb-6 h-16">
+                    <div className="flex flex-wrap gap-2 justify-center">
                       {consultant.services.slice(0, 3).map((service) => (
                         <span
                           key={service}
@@ -125,9 +134,9 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                     </div>
                   </div>
 
-                  {/* Industries */}
-                  <div className="mb-6">
-                    <div className="flex flex-wrap gap-2">
+                  {/* Industries - Fixed height */}
+                  <div className="mb-0 h-12">
+                    <div className="flex flex-wrap gap-2 justify-center">
                       {consultant.industries.slice(0, 2).map((industry) => (
                         <span
                           key={industry}
@@ -146,7 +155,7 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                 </div>
 
                 {/* View Profile Button - Always at bottom */}
-                <div className="mt-auto">
+                <div className="mt-6">
                   <Link
                     href={`/consultant/${consultant.id}`}
                     className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"

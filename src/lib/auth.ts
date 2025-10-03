@@ -77,13 +77,20 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async redirect({ baseUrl }) {
-      // Always land in dashboard after successful magic-link sign in
+    async redirect({ url, baseUrl }) {
+      // If url is already absolute, use it
+      if (url.startsWith('http')) return url
+      
+      // If url starts with '/', make it absolute
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      
+      // Default to dashboard for magic link sign-ins
       return `${baseUrl}/dashboard`
     }
   },
   pages: {
-    signIn: '/auth/signin'
+    signIn: '/auth/signin',
+    verifyRequest: '/auth/verify-request'
   }
 }
 

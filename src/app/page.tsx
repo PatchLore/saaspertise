@@ -1,18 +1,49 @@
-// TODO: Re-enable DB integration for production
-// import { prisma } from '@/lib/prisma'
-// import { normalizeConsultants } from '@/lib/database-utils'
-import { getFeaturedConsultants, MockConsultant } from '@/data/mockConsultants'
+import { prisma } from '@/lib/prisma'
 import HeroSection from '@/components/HeroSection'
 import FeaturedConsultants from '@/components/FeaturedConsultants'
 
-// For demo purposes, using mock data
-function getFeaturedConsultantsData(): MockConsultant[] {
-  return getFeaturedConsultants()
+async function getFeaturedConsultantsData() {
+  try {
+    const consultants = await prisma.consultant.findMany({
+      where: {
+        isFeatured: true,
+        isApproved: true
+      },
+      include: {
+        user: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    // Transform the data to match the expected interface
+    return consultants.map(consultant => ({
+      id: consultant.id,
+      name: consultant.name,
+      logo: consultant.logo,
+      profilePhoto: consultant.profilePhoto,
+      shortDescription: consultant.shortDescription,
+      description: consultant.description,
+      region: consultant.region,
+      services: consultant.services,
+      industries: consultant.industries,
+      isPremium: consultant.isPremium,
+      isApproved: consultant.isApproved,
+      isFeatured: consultant.isFeatured,
+      email: consultant.email,
+      phone: consultant.phone,
+      website: consultant.website
+    }))
+  } catch (error) {
+    console.error('Error fetching featured consultants:', error)
+    return []
+  }
 }
 
-export default function Home() {
-  // For demo purposes, using mock data (no async needed)
-  const featuredConsultants = getFeaturedConsultantsData()
+export default async function Home() {
+  // Fetch real data from database
+  const featuredConsultants = await getFeaturedConsultantsData()
 
   return (
     <div className="min-h-screen">

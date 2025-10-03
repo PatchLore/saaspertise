@@ -37,6 +37,12 @@ export default function Navbar() {
             >
               About
             </Link>
+            <Link
+              href="/pricing"
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+            >
+              Pricing
+            </Link>
             
             {status === 'loading' ? (
               <div className="animate-pulse bg-gray-200 h-8 w-20 rounded"></div>
@@ -127,6 +133,13 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                href="/pricing"
+                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Pricing
               </Link>
               
               {session ? (

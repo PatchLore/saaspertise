@@ -61,6 +61,7 @@ A comprehensive web application for connecting businesses with expert SaaS and A
    STRIPE_PUBLISHABLE_KEY="pk_test_your_publishable_key"
    STRIPE_SECRET_KEY="sk_test_your_secret_key"
    STRIPE_WEBHOOK_SECRET="whsec_your_webhook_secret"
+   STRIPE_PRO_PRICE_ID="price_pro_placeholder"
    
    # Email
    RESEND_API_KEY="re_your_resend_api_key"
@@ -115,6 +116,8 @@ The application uses the following main entities:
 ### Payments
 - `POST /api/stripe/create-checkout-session` - Create Stripe checkout
 - `POST /api/stripe/webhook` - Handle Stripe webhooks
+- `POST /api/stripe/subscription/checkout` - Create subscription checkout
+- `POST /api/stripe/test` - Test subscription upgrade/downgrade
 
 ## Deployment
 
@@ -157,9 +160,14 @@ The application uses the following main entities:
 
 ### 🚧 In Progress
 - [ ] Individual consultant profile pages
-- [ ] Stripe payment integration
 - [ ] Contact/lead form with email notifications
 - [ ] Admin dashboard
+
+### ✅ Recently Completed
+- [x] Subscription billing with Stripe
+- [x] Pricing page with Free/Pro/Enterprise plans
+- [x] Plan access control and feature gating
+- [x] User dashboard with plan status
 
 ### 📋 Planned
 - [ ] Advanced search with location-based filtering

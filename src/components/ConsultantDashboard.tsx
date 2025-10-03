@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Trash2, Star, MessageSquare, Eye, CheckCircle, Clock, Crown } from 'lucide-react'
+import { Plus, Trash2, Star, MessageSquare, Eye, CheckCircle, Clock, Crown, Zap, Building } from 'lucide-react'
 import Link from 'next/link'
+import { getPlanDisplayName, getUpgradeSuggestion } from '@/lib/plan-access'
 
 interface Testimonial {
   id: string
@@ -43,11 +44,24 @@ interface Consultant {
   testimonials: Testimonial[]
 }
 
-interface ConsultantDashboardProps {
-  consultant: Consultant
+interface User {
+  id: string
+  name?: string | null
+  email: string
+  plan: 'FREE' | 'PRO' | 'ENTERPRISE'
+  subscription?: {
+    status: string
+    currentPeriodEnd: Date
+    cancelAtPeriodEnd: boolean
+  } | null
 }
 
-export default function ConsultantDashboard({ consultant }: ConsultantDashboardProps) {
+interface ConsultantDashboardProps {
+  consultant: Consultant
+  user: User
+}
+
+export default function ConsultantDashboard({ consultant, user }: ConsultantDashboardProps) {
   const [showAddTestimonial, setShowAddTestimonial] = useState(false)
   const [newTestimonial, setNewTestimonial] = useState({
     clientName: '',
@@ -139,6 +153,70 @@ export default function ConsultantDashboard({ consultant }: ConsultantDashboardP
             View Public Profile
           </Link>
         </div>
+      </div>
+
+      {/* Plan Status */}
+      <div className="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Subscription Plan</h2>
+            <div className="flex items-center gap-4">
+              <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+                user.plan === 'FREE' ? 'bg-gray-100 text-gray-800' :
+                user.plan === 'PRO' ? 'bg-blue-100 text-blue-800' :
+                'bg-purple-100 text-purple-800'
+              }`}>
+                {user.plan === 'FREE' && <Zap className="h-4 w-4" />}
+                {user.plan === 'PRO' && <Crown className="h-4 w-4" />}
+                {user.plan === 'ENTERPRISE' && <Building className="h-4 w-4" />}
+                {getPlanDisplayName(user.plan)}
+              </div>
+              
+              {user.subscription && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  {user.subscription.cancelAtPeriodEnd ? (
+                    <span className="text-orange-600">Cancels at period end</span>
+                  ) : (
+                    <span>Renews {new Date(user.subscription.currentPeriodEnd).toLocaleDateString()}</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex gap-3">
+            {user.plan === 'FREE' && (
+              <Link
+                href="/pricing"
+                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <Crown className="h-4 w-4" />
+                Upgrade to Pro
+              </Link>
+            )}
+            {user.plan === 'PRO' && (
+              <Link
+                href="/pricing"
+                className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                <Building className="h-4 w-4" />
+                Upgrade to Enterprise
+              </Link>
+            )}
+            {user.plan === 'ENTERPRISE' && (
+              <div className="flex items-center gap-2 bg-gray-100 text-gray-600 px-4 py-2 rounded-lg">
+                <Building className="h-4 w-4" />
+                Highest Plan
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {getUpgradeSuggestion(user.plan) && (
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-sm text-blue-700">{getUpgradeSuggestion(user.plan)}</p>
+          </div>
+        )}
       </div>
 
       {/* Stats Grid */}

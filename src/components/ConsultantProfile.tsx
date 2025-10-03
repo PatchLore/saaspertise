@@ -41,6 +41,10 @@ interface Consultant {
   projectRateMax?: number | null
   showRates: boolean
   createdAt: Date
+  responseRate?: number | null
+  responseTime?: number | null
+  projectsCompleted?: number | null
+  clientRating?: number | null
   portfolioItems?: PortfolioItem[]
   user?: {
     name: string | null
@@ -367,17 +371,17 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
               <div className="space-y-5">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Response Rate</span>
-                  <span className="font-bold text-green-600 text-lg">95%</span>
+                  <span className="font-bold text-green-600 text-lg">{consultant.responseRate || 95}%</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Response Time</span>
-                  <span className="font-bold text-gray-900">2 hours</span>
+                  <span className="font-bold text-gray-900">{consultant.responseTime || 2} hours</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Projects</span>
-                  <span className="font-bold text-gray-900">47+</span>
+                  <span className="font-bold text-gray-900">{consultant.projectsCompleted || 25}+</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
@@ -388,7 +392,7 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                         <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    <span className="font-bold text-gray-900">4.9</span>
+                    <span className="font-bold text-gray-900">{consultant.clientRating || 4.8}</span>
                   </div>
                 </div>
               </div>
@@ -426,21 +430,21 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                       <Briefcase className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Projects Completed</span>
                     </div>
-                    <span className="font-bold text-gray-900">47+</span>
+                    <span className="font-bold text-gray-900">{consultant.projectsCompleted || 25}+</span>
                   </div>
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Avg. Response Time</span>
                     </div>
-                    <span className="font-bold text-gray-900">2h</span>
+                    <span className="font-bold text-gray-900">{consultant.responseTime || 2}h</span>
                   </div>
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Client Rating</span>
                     </div>
-                    <span className="font-bold text-gray-900">4.9</span>
+                    <span className="font-bold text-gray-900">{consultant.clientRating || 4.8}</span>
                   </div>
                 </div>
               </div>

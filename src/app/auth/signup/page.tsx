@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import Link from 'next/link'
 import { Loader } from 'lucide-react'
 
 // Disable static generation for this page
@@ -23,12 +22,41 @@ export default function SignUpPage() {
     setError('')
     setIsLoading(true)
     try {
-      // For magic link flow, we just send the sign-in email
-      const res = await signIn('email', { email: formData.email, redirect: true, callbackUrl: '/dashboard' })
-      if (res?.error) {
-        setError('We had trouble sending your email. Please try again or contact support.')
+      // First, create the user account
+      const signupResponse = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: 'magic-link-auth' // Placeholder since we're using magic links
+        }),
+      })
+
+      const signupData = await signupResponse.json()
+
+      if (!signupResponse.ok) {
+        if (signupData.message?.includes('already exists')) {
+          // User exists, just send magic link
+          const res = await signIn('email', { email: formData.email, redirect: false, callbackUrl: '/dashboard' })
+          if (res?.error) {
+            setError('We had trouble sending your email. Please try again or contact support.')
+          } else {
+            setMessage("We've sent a secure sign-in link to your email. Click the link to access your dashboard.")
+          }
+        } else {
+          setError(signupData.message || 'Failed to create account')
+        }
       } else {
-        setMessage("We've sent a secure sign-in link to your email. Click the link to access your dashboard.")
+        // User created successfully, now send magic link
+        const res = await signIn('email', { email: formData.email, redirect: false, callbackUrl: '/dashboard' })
+        if (res?.error) {
+          setError('Account created but we had trouble sending your email. Please try signing in.')
+        } else {
+          setMessage("Account created! We've sent a secure sign-in link to your email. Click the link to access your dashboard.")
+        }
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred')

@@ -77,6 +77,41 @@ export async function createCheckoutSession(
   }
 }
 
+// Create subscription checkout session for user plans
+export async function createSubscriptionCheckoutSession(
+  userId: string,
+  priceId: string,
+  successUrl: string,
+  cancelUrl: string
+) {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.')
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      metadata: {
+        userId,
+      },
+    })
+
+    return session
+  } catch (error) {
+    console.error('Error creating subscription checkout session:', error)
+    throw error
+  }
+}
+
 // Create customer portal session for subscription management
 export async function createCustomerPortalSession(
   customerId: string,
@@ -109,7 +144,7 @@ export const STRIPE_WEBHOOK_EVENTS = {
   CUSTOMER_SUBSCRIPTION_DELETED: 'customer.subscription.deleted',
 } as const
 
-// Future pricing tiers for the platform
+// SaaS platform pricing tiers
 export const PRICING_TIERS = {
   FREE: {
     name: 'Free',
@@ -121,15 +156,17 @@ export const PRICING_TIERS = {
       'Standard support'
     ]
   },
-  PREMIUM: {
-    name: 'Premium',
-    price: 49, // $49/month
+  PRO: {
+    name: 'Pro',
+    price: 29, // $29/month
+    priceId: process.env.STRIPE_PRO_PRICE_ID || 'price_pro_placeholder',
     features: [
       'Featured listing priority',
       'Unlimited portfolio items',
       'Advanced analytics',
       'Priority support',
-      'Lead management tools'
+      'Lead management tools',
+      'Custom branding'
     ]
   },
   ENTERPRISE: {

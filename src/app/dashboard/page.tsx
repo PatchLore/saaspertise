@@ -36,6 +36,22 @@ async function getConsultantData(userId: string) {
   }
 }
 
+async function getUserData(userId: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        subscription: true
+      }
+    })
+
+    return user
+  } catch (error) {
+    console.error('Error fetching user data:', error)
+    return null
+  }
+}
+
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
 
@@ -48,6 +64,7 @@ export default async function DashboardPage() {
   }
 
   const consultant = await getConsultantData(session.user.id)
+  const user = await getUserData(session.user.id)
 
   if (!consultant) {
     redirect('/onboarding')
@@ -61,11 +78,12 @@ export default async function DashboardPage() {
           <p className="text-gray-600 mt-2">Manage your consultant profile and view leads</p>
         </div>
         
-        <ConsultantDashboard consultant={consultant} />
+        <ConsultantDashboard consultant={consultant} user={user} />
       </div>
     </div>
   )
 }
+
 
 
 
