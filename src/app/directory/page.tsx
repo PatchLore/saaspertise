@@ -1,10 +1,6 @@
 import { Suspense } from 'react'
-// TODO: Re-enable Prisma + DATABASE_URL for production
-// import { prisma } from '@/lib/prisma'
-// import { normalizeConsultants, parseArrayField } from '@/lib/database-utils'
-import { getAllConsultants, MockConsultant } from '@/data/mockConsultants'
+import { prisma } from '@/lib/prisma'
 import DirectoryClient from '@/components/DirectoryClient'
-// import { ServiceType } from '@prisma/client'
 
 // Import Consultant type from DirectoryClient
 type Consultant = {
@@ -30,7 +26,7 @@ interface SearchParams {
   [key: string]: string | string[] | undefined
 }
 
-function getConsultants(searchParams: SearchParams) {
+async function getConsultants(searchParams: SearchParams) {
   const {
     search,
     service,
@@ -40,107 +36,127 @@ function getConsultants(searchParams: SearchParams) {
     page = '1'
   } = searchParams
 
-  // For demo purposes, using mock data (no database calls)
-  let consultants = getAllConsultants()
+  try {
+    // Build where clause for database query
+    const where: {
+      isApproved: boolean
+      OR?: Array<{
+        name?: { contains: string; mode: 'insensitive' }
+        description?: { contains: string; mode: 'insensitive' }
+        industries?: { has: string }
+      }>
+      services?: { hasSome: string[] }
+      AND?: Array<{
+        services: { hasSome: string[] }
+      }>
+      industries?: { has: string }
+      region?: string | { in: string[] }
+      isPremium?: boolean
+    } = {
+      isApproved: true
+    }
 
-  // Apply filters
-  if (search) {
-    const searchLower = search.toLowerCase()
-    consultants = consultants.filter(c => 
-      c.name.toLowerCase().includes(searchLower) ||
-      c.description.toLowerCase().includes(searchLower) ||
-      c.industries.some(i => i.toLowerCase().includes(searchLower))
-    )
-  }
+    // Apply search filter
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+        { industries: { has: search } }
+      ]
+    }
 
-  if (service && service !== 'ALL') {
-    consultants = consultants.filter(c => {
+    // Apply service filter
+    if (service && service !== 'ALL') {
       if (service === 'SAAS') {
-        return c.services.some(s => s.toLowerCase().includes('saas'))
+        where.services = { hasSome: ['SaaS Development', 'SaaS', 'Cloud Migration'] }
       } else if (service === 'AI') {
-        return c.services.some(s => s.toLowerCase().includes('ai') || s.toLowerCase().includes('machine learning'))
+        where.services = { hasSome: ['AI Implementation', 'Machine Learning', 'AI Strategy'] }
       } else if (service === 'BOTH') {
-        const hasSaaS = c.services.some(s => s.toLowerCase().includes('saas'))
-        const hasAI = c.services.some(s => s.toLowerCase().includes('ai') || s.toLowerCase().includes('machine learning'))
-        return hasSaaS && hasAI
+        where.AND = [
+          { services: { hasSome: ['SaaS Development', 'SaaS', 'Cloud Migration'] } },
+          { services: { hasSome: ['AI Implementation', 'Machine Learning', 'AI Strategy'] } }
+        ]
       }
-      return false
-    })
-  }
+    }
 
-  if (industry) {
-    consultants = consultants.filter(c => c.industries.includes(industry))
-  }
+    // Apply industry filter
+    if (industry) {
+      where.industries = { has: industry }
+    }
 
-  if (region) {
-    consultants = consultants.filter(c => {
-      const consultantRegion = c.region.toLowerCase()
-      const selectedRegion = region.toLowerCase()
-      
-      // Map specific cities to broader regions
+    // Apply region filter
+    if (region) {
       const regionMapping: { [key: string]: string[] } = {
-        'greater london': ['london'],
-        'south east england': ['london', 'brighton', 'oxford', 'cambridge'],
-        'greater manchester': ['manchester'],
-        'west midlands (birmingham)': ['birmingham'],
-        'central scotland (edinburgh/glasgow)': ['edinburgh', 'glasgow'],
-        'leeds & yorkshire': ['leeds', 'york', 'sheffield'],
-        'liverpool & merseyside': ['liverpool'],
-        'bristol & south west': ['bristol', 'bath', 'plymouth'],
-        'cardiff & south wales': ['cardiff', 'swansea'],
-        'belfast & northern ireland': ['belfast'],
-        'newcastle & north east': ['newcastle', 'sunderland'],
-        'sheffield & south yorkshire': ['sheffield'],
-        'north wales': ['bangor', 'wrexham'],
-        'remote/uk-wide': ['remote', 'uk-wide'],
-        'channel islands': ['jersey', 'guernsey'],
-        'europe': ['europe'],
-        'international': ['international']
+        'greater london': ['London'],
+        'south east england': ['London', 'Brighton', 'Oxford', 'Cambridge'],
+        'greater manchester': ['Manchester'],
+        'west midlands (birmingham)': ['Birmingham'],
+        'central scotland (edinburgh/glasgow)': ['Edinburgh', 'Glasgow'],
+        'leeds & yorkshire': ['Leeds', 'York', 'Sheffield'],
+        'liverpool & merseyside': ['Liverpool'],
+        'bristol & south west': ['Bristol', 'Bath', 'Plymouth'],
+        'cardiff & south wales': ['Cardiff', 'Swansea'],
+        'belfast & northern ireland': ['Belfast'],
+        'newcastle & north east': ['Newcastle', 'Sunderland'],
+        'sheffield & south yorkshire': ['Sheffield'],
+        'north wales': ['Bangor', 'Wrexham'],
+        'remote/uk-wide': ['Remote', 'UK-wide'],
+        'channel islands': ['Jersey', 'Guernsey'],
+        'europe': ['Europe'],
+        'international': ['International']
       }
       
-      // Check if consultant's region matches the selected region directly
-      if (consultantRegion === selectedRegion) {
-        return true
+      const mappedRegions = regionMapping[region.toLowerCase()]
+      if (mappedRegions) {
+        where.region = { in: mappedRegions }
+      } else {
+        where.region = region
       }
-      
-      // Check if consultant's region is in the mapping for the selected region
-      const mappedCities = regionMapping[selectedRegion]
-      if (mappedCities) {
-        return mappedCities.some(city => consultantRegion.includes(city))
-      }
-      
-      return false
+    }
+
+    // Apply premium filter
+    if (premium === 'true') {
+      where.isPremium = true
+    }
+
+    // Get all consultants with filters
+    const consultants = await prisma.consultant.findMany({
+      where,
+      orderBy: [
+        { isPremium: 'desc' },
+        { createdAt: 'desc' }
+      ]
     })
-  }
 
-  if (premium === 'true') {
-    consultants = consultants.filter(c => c.isPremium)
-  }
+    const total = consultants.length
+    const pageSize = 12
+    const currentPage = parseInt(page)
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+    const paginatedConsultants = consultants.slice(startIndex, endIndex)
 
-  // Sort consultants
-  consultants.sort((a, b) => {
-    if (a.isPremium !== b.isPremium) return b.isPremium ? 1 : -1
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  })
+    // Get unique industries and regions for filters
+    const allIndustries = [...new Set(consultants.flatMap(c => c.industries))].sort()
+    const allRegions = [...new Set(consultants.map(c => c.region))].sort()
 
-  const total = consultants.length
-  const pageSize = 12
-  const currentPage = parseInt(page)
-  const startIndex = (currentPage - 1) * pageSize
-  const endIndex = startIndex + pageSize
-  const paginatedConsultants = consultants.slice(startIndex, endIndex)
-
-  // Get unique industries and regions for filters
-  const allIndustries = [...new Set(consultants.flatMap(c => c.industries))].sort()
-  const allRegions = [...new Set(consultants.map(c => c.region))].sort()
-
-  return {
-    consultants: paginatedConsultants as Consultant[],
-    total,
-    industries: allIndustries,
-    regions: allRegions,
-    currentPage,
-    totalPages: Math.ceil(total / pageSize)
+    return {
+      consultants: paginatedConsultants as Consultant[],
+      total,
+      industries: allIndustries,
+      regions: allRegions,
+      currentPage,
+      totalPages: Math.ceil(total / pageSize)
+    }
+  } catch (error) {
+    console.error('Error fetching consultants:', error)
+    return {
+      consultants: [],
+      total: 0,
+      industries: [],
+      regions: [],
+      currentPage: 1,
+      totalPages: 0
+    }
   }
 }
 
@@ -151,7 +167,7 @@ export default async function DirectoryPage({
 }) {
   // Await searchParams in Next.js 15
   const resolvedSearchParams = await searchParams
-  const data = getConsultants(resolvedSearchParams)
+  const data = await getConsultants(resolvedSearchParams)
 
   return (
     <div className="min-h-screen bg-gray-50">

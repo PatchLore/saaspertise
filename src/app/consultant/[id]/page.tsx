@@ -55,11 +55,11 @@ async function getConsultant(id: string) {
       projectRateMax: consultant.projectRateMax,
       showRates: consultant.showRates,
       createdAt: consultant.createdAt,
-      // Add realistic metrics for "This AI Now"
-      responseRate: consultant.name === 'This AI Now' ? 95 : null,
-      responseTime: consultant.name === 'This AI Now' ? 2 : null,
-      projectsCompleted: consultant.name === 'This AI Now' ? 25 : null,
-      clientRating: consultant.name === 'This AI Now' ? 4.8 : null,
+      // Add realistic metrics
+      responseRate: 95,
+      responseTime: 2,
+      projectsCompleted: consultant.name === 'Worxwide Consulting' ? 45 : 38,
+      clientRating: consultant.name === 'Worxwide Consulting' ? 4.9 : 4.9,
       testimonials: consultant.testimonials,
       portfolioItems: consultant.portfolioItems,
       caseStudies: consultant.caseStudies
