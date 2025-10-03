@@ -54,7 +54,18 @@ function getConsultants(searchParams: SearchParams) {
   }
 
   if (service && service !== 'ALL') {
-    consultants = consultants.filter(c => c.services.includes(service))
+    consultants = consultants.filter(c => {
+      if (service === 'SAAS') {
+        return c.services.some(s => s.toLowerCase().includes('saas'))
+      } else if (service === 'AI') {
+        return c.services.some(s => s.toLowerCase().includes('ai') || s.toLowerCase().includes('machine learning'))
+      } else if (service === 'BOTH') {
+        const hasSaaS = c.services.some(s => s.toLowerCase().includes('saas'))
+        const hasAI = c.services.some(s => s.toLowerCase().includes('ai') || s.toLowerCase().includes('machine learning'))
+        return hasSaaS && hasAI
+      }
+      return false
+    })
   }
 
   if (industry) {
@@ -62,7 +73,7 @@ function getConsultants(searchParams: SearchParams) {
   }
 
   if (region) {
-    consultants = consultants.filter(c => c.region.toLowerCase().includes(region.toLowerCase()))
+    consultants = consultants.filter(c => c.region.toLowerCase() === region.toLowerCase())
   }
 
   if (premium === 'true') {
