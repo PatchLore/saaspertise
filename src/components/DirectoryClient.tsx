@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Filter, Crown, MapPin, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, Filter, MapPin, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Consultant {
   id: string
@@ -225,15 +225,6 @@ export default function DirectoryClient({ initialData, searchParams }: Directory
                   className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
                 >
                   <div className="p-6">
-                    {/* Premium Badge */}
-                    {consultant.isPremium && (
-                      <div className="flex items-center gap-2 mb-4">
-                        <Crown className="h-4 w-4 text-yellow-500" />
-                        <span className="text-xs font-medium text-yellow-600 bg-yellow-50 px-2 py-1 rounded-full">
-                          Premium
-                        </span>
-                      </div>
-                    )}
 
                     {/* Logo and Name */}
                     <div className="flex items-center gap-3 mb-4">

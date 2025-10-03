@@ -399,6 +399,67 @@ export const mockConsultants: MockConsultant[] = [
       avgResponseTime: "2h",
       clientRating: 4.9
     }
+  },
+  {
+    id: "this-is-ai-now-001",
+    name: "This is AI Now",
+    logo: null,
+    profilePhoto: null,
+    shortDescription: "Cutting-edge AI solutions and automation for modern businesses",
+    description: "This is AI Now specializes in implementing cutting-edge artificial intelligence solutions for businesses looking to stay ahead in the digital transformation era. We provide comprehensive AI strategy, implementation, and optimization services across various industries.",
+    region: "London",
+    services: ["AI Implementation", "Machine Learning", "Automation", "Data Analytics", "AI Strategy"],
+    industries: ["Technology", "Healthcare", "Finance", "Retail", "Manufacturing"],
+    isPremium: true,
+    website: "https://thisisainow.com",
+    email: "hello@thisisainow.com",
+    phone: "+44 20 7123 4567",
+    hourlyRate: 14000, // £140/hour
+    projectRateMin: 200000, // £2,000
+    projectRateMax: 700000, // £7,000
+    showRates: true,
+    createdAt: new Date("2024-02-20"),
+    portfolioItems: [
+      {
+        id: "portfolio-thisisai-1",
+        title: "AI-Powered Customer Service Automation",
+        description: "Implemented intelligent chatbot system with natural language processing for customer service automation",
+        metrics: "Reduced customer service costs by 50% and improved response time by 80%",
+        technologies: ["NLP", "Machine Learning", "Python", "TensorFlow"],
+        projectType: "AI Implementation",
+        clientType: "E-commerce Platform",
+        duration: "5 months",
+        displayOrder: 1
+      },
+      {
+        id: "portfolio-thisisai-2",
+        title: "Predictive Analytics Platform",
+        description: "Developed comprehensive predictive analytics system for retail inventory management",
+        metrics: "Improved inventory accuracy by 35% and reduced waste by 25%",
+        technologies: ["Machine Learning", "Python", "Pandas", "Scikit-learn"],
+        projectType: "Data Analytics",
+        clientType: "Retail Chain",
+        duration: "4 months",
+        displayOrder: 2
+      }
+    ],
+    testimonials: [
+      {
+        id: "testimonial-thisisai-1",
+        clientName: "Lisa Thompson",
+        clientTitle: "CTO",
+        clientCompany: "TechForward Ltd",
+        content: "This is AI Now transformed our operations with their innovative AI solutions. Their expertise and delivery exceeded all expectations.",
+        rating: 5,
+        createdAt: new Date("2024-03-25")
+      }
+    ],
+    certifications: ["AI/ML Specialization", "Data Science Certification", "Cloud AI Engineer"],
+    stats: {
+      projectsCompleted: 38,
+      avgResponseTime: "1h",
+      clientRating: 4.9
+    }
   }
 ]
 
