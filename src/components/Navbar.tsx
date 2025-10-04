@@ -32,6 +32,12 @@ export default function Navbar() {
               Browse Consultants
             </Link>
             <Link
+              href="/solutions"
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+            >
+              Solutions
+            </Link>
+            <Link
               href="/about"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
             >
@@ -126,6 +132,13 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 Browse Consultants
+              </Link>
+              <Link
+                href="/solutions"
+                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Solutions
               </Link>
               <Link
                 href="/about"
