@@ -26,16 +26,16 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              href="/directory"
-              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-            >
-              Browse Consultants
-            </Link>
-            <Link
               href="/solutions"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
             >
               Solutions
+            </Link>
+            <Link
+              href="/directory"
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+            >
+              Browse Consultants
             </Link>
             <Link
               href="/about"
@@ -127,18 +127,18 @@ export default function Navbar() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
               <Link
-                href="/directory"
-                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Browse Consultants
-              </Link>
-              <Link
                 href="/solutions"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 Solutions
+              </Link>
+              <Link
+                href="/directory"
+                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Browse Consultants
               </Link>
               <Link
                 href="/about"
