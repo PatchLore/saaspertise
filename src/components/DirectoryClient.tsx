@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, Filter, MapPin, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Consultant {
@@ -229,9 +230,11 @@ export default function DirectoryClient({ initialData, searchParams }: Directory
                     {/* Logo and Name */}
                     <div className="flex items-center gap-3 mb-4">
                       {consultant.logo ? (
-                        <img
+                        <Image
                           src={consultant.logo}
                           alt={`${consultant.name} logo`}
+                          width={48}
+                          height={48}
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (

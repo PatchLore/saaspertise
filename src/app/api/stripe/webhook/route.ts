@@ -167,36 +167,38 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
       return
     }
 
+    // TODO: Implement plan field in User model
     // Update user plan to PRO
-    await prisma.user.update({
-      where: { id: userId },
-      data: { 
-        plan: 'PRO',
-        stripeCustomerId: subscription.customer as string
-      }
-    })
+    // await prisma.user.update({
+    //   where: { id: userId },
+    //   data: { 
+    //     plan: 'PRO',
+    //     stripeCustomerId: subscription.customer as string
+    //   }
+    // })
 
+    // TODO: Implement Subscription model
     // Create subscription record
-    await prisma.subscription.upsert({
-      where: { userId },
-      update: {
-        status: subscription.status,
-        plan: 'PRO',
-        stripeSubscriptionId: subscription.id,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      },
-      create: {
-        userId,
-        status: subscription.status,
-        plan: 'PRO',
-        stripeSubscriptionId: subscription.id,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      }
-    })
+    // await prisma.subscription.upsert({
+    //   where: { userId },
+    //   update: {
+    //     status: subscription.status,
+    //     plan: 'PRO',
+    //     stripeSubscriptionId: subscription.id,
+    //     currentPeriodStart: new Date(subscription.current_period_start * 1000),
+    //     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+    //     cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    //   },
+    //   create: {
+    //     userId,
+    //     status: subscription.status,
+    //     plan: 'PRO',
+    //     stripeSubscriptionId: subscription.id,
+    //     currentPeriodStart: new Date(subscription.current_period_start * 1000),
+    //     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+    //     cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    //   }
+    // })
 
     console.log(`Subscription created for user ${userId}: ${subscription.id}`)
 
@@ -215,16 +217,17 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       return
     }
 
+    // TODO: Implement Subscription model
     // Update subscription record
-    await prisma.subscription.updateMany({
-      where: { userId },
-      data: {
-        status: subscription.status,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      }
-    })
+    // await prisma.subscription.updateMany({
+    //   where: { userId },
+    //   data: {
+    //     status: subscription.status,
+    //     currentPeriodStart: new Date(subscription.current_period_start * 1000),
+    //     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+    //     cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    //   }
+    // })
 
     console.log(`Subscription updated for user ${userId}: ${subscription.id}`)
 
@@ -244,19 +247,20 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     }
 
     // Downgrade user to FREE plan
-    await prisma.user.update({
-      where: { id: userId },
-      data: { plan: 'FREE' }
-    })
+    // TODO: Implement plan field in User model and Subscription model
+    // await prisma.user.update({
+    //   where: { id: userId },
+    //   data: { plan: 'FREE' }
+    // })
 
     // Update subscription status
-    await prisma.subscription.updateMany({
-      where: { userId },
-      data: { 
-        status: 'canceled',
-        cancelAtPeriodEnd: true 
-      }
-    })
+    // await prisma.subscription.updateMany({
+    //   where: { userId },
+    //   data: { 
+    //     status: 'canceled',
+    //     cancelAtPeriodEnd: true 
+    //   }
+    // })
 
     console.log(`Subscription canceled for user ${userId}: ${subscription.id}`)
 

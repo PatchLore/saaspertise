@@ -62,17 +62,17 @@ async function getAdminData() {
       ])
     ])
 
-    // Parse JSON strings for consultants
+    // Services and industries are already arrays from Prisma
     const parsedPendingConsultants = pendingConsultants.map(consultant => ({
       ...consultant,
-      services: JSON.parse(consultant.services || '[]'),
-      industries: JSON.parse(consultant.industries || '[]')
+      services: Array.isArray(consultant.services) ? consultant.services : [],
+      industries: Array.isArray(consultant.industries) ? consultant.industries : []
     }))
 
     const parsedApprovedConsultants = approvedConsultants.map(consultant => ({
       ...consultant,
-      services: JSON.parse(consultant.services || '[]'),
-      industries: JSON.parse(consultant.industries || '[]')
+      services: Array.isArray(consultant.services) ? consultant.services : [],
+      industries: Array.isArray(consultant.industries) ? consultant.industries : []
     }))
 
     const [totalConsultants, approvedCount, premiumCount, totalLeads, recentLeadsCount] = stats
@@ -90,7 +90,10 @@ async function getAdminData() {
       }
     }
   } catch (error) {
-    console.error('Error fetching admin data:', error)
+    // Log error for debugging but don't expose in production
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error fetching admin data:', error)
+    }
     return {
       pendingConsultants: [],
       approvedConsultants: [],

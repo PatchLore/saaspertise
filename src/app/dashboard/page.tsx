@@ -27,8 +27,8 @@ async function getConsultantData(userId: string) {
     // Parse JSON strings
     return {
       ...consultant,
-      services: JSON.parse(consultant.services || '[]'),
-      industries: JSON.parse(consultant.industries || '[]')
+      services: Array.isArray(consultant.services) ? consultant.services : [],
+      industries: Array.isArray(consultant.industries) ? consultant.industries : []
     }
   } catch (error) {
     console.error('Error fetching consultant data:', error)
@@ -39,10 +39,8 @@ async function getConsultantData(userId: string) {
 async function getUserData(userId: string) {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        subscription: true
-      }
+      where: { id: userId }
+      // TODO: Add subscription include when Subscription model is implemented
     })
 
     return user
@@ -78,7 +76,7 @@ export default async function DashboardPage() {
           <p className="text-gray-600 mt-2">Manage your consultant profile and view leads</p>
         </div>
         
-        <ConsultantDashboard consultant={consultant} user={user} />
+        <ConsultantDashboard consultant={consultant} user={{...user!, plan: 'FREE' as const}} />
       </div>
     </div>
   )

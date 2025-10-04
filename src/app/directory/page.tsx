@@ -148,7 +148,10 @@ async function getConsultants(searchParams: SearchParams) {
       totalPages: Math.ceil(total / pageSize)
     }
   } catch (error) {
-    console.error('Error fetching consultants:', error)
+    // Log error for debugging but don't expose in production
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error fetching consultants:', error)
+    }
     return {
       consultants: [],
       total: 0,

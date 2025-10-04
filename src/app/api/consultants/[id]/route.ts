@@ -6,10 +6,11 @@ import { prisma } from '@/lib/prisma'
 // GET /api/consultants/[id] - Get specific consultant profile
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     const consultant = await prisma.consultant.findUnique({
       where: { id: consultantId },
@@ -83,7 +84,7 @@ export async function GET(
 // PUT /api/consultants/[id] - Update consultant profile
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -95,7 +96,8 @@ export async function PUT(
       )
     }
 
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     // Check if consultant exists
     const existingConsultant = await prisma.consultant.findUnique({
@@ -223,7 +225,7 @@ export async function PUT(
 // DELETE /api/consultants/[id] - Delete consultant profile
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -235,7 +237,8 @@ export async function DELETE(
       )
     }
 
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     // Check if consultant exists
     const existingConsultant = await prisma.consultant.findUnique({

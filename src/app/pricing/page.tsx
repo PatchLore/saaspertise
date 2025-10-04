@@ -86,7 +86,7 @@ export default function PricingPage() {
       features: PRICING_TIERS.FREE.features,
       cta: 'Current Plan',
       ctaDisabled: true,
-      highlight: session?.user?.plan === 'FREE',
+      highlight: true, // Default to FREE plan since plan field doesn't exist yet
       popular: false,
     },
     {
@@ -98,7 +98,7 @@ export default function PricingPage() {
       features: PRICING_TIERS.PRO.features,
       cta: 'Upgrade to Pro',
       ctaDisabled: false,
-      highlight: session?.user?.plan === 'PRO',
+      highlight: false, // TODO: Check actual user plan when plan field is implemented
       popular: true,
       testCta: 'Test Pro Upgrade',
     },
@@ -111,7 +111,7 @@ export default function PricingPage() {
       features: PRICING_TIERS.ENTERPRISE.features,
       cta: 'Coming Soon',
       ctaDisabled: true,
-      highlight: session?.user?.plan === 'ENTERPRISE',
+      highlight: false, // TODO: Check actual user plan when plan field is implemented
       popular: false,
       testCta: 'Test Enterprise',
     },

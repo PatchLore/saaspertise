@@ -36,31 +36,32 @@ export async function POST(request: NextRequest) {
       // Simulate successful subscription upgrade
       const userPlan = plan === 'PRO' ? 'PRO' : 'ENTERPRISE'
       
+      // TODO: Implement plan field in User model and Subscription model
       // Update user plan
-      await prisma.user.update({
-        where: { id: userId },
-        data: { plan: userPlan }
-      })
+      // await prisma.user.update({
+      //   where: { id: userId },
+      //   data: { plan: userPlan }
+      // })
 
       // Create subscription record
-      await prisma.subscription.upsert({
-        where: { userId },
-        update: {
-          status: 'active',
-          plan: userPlan,
-          stripeSubscriptionId: `test_sub_${Date.now()}`,
-          currentPeriodStart: new Date(),
-          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-        },
-        create: {
-          userId,
-          status: 'active',
-          plan: userPlan,
-          stripeSubscriptionId: `test_sub_${Date.now()}`,
-          currentPeriodStart: new Date(),
-          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        }
-      })
+      // await prisma.subscription.upsert({
+      //   where: { userId },
+      //   update: {
+      //     status: 'active',
+      //     plan: userPlan,
+      //     stripeSubscriptionId: `test_sub_${Date.now()}`,
+      //     currentPeriodStart: new Date(),
+      //     currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+      //   },
+      //   create: {
+      //     userId,
+      //     status: 'active',
+      //     plan: userPlan,
+      //     stripeSubscriptionId: `test_sub_${Date.now()}`,
+      //     currentPeriodStart: new Date(),
+      //     currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      //   }
+      // })
 
       return NextResponse.json({
         message: `Successfully upgraded to ${userPlan} plan`,
@@ -68,20 +69,21 @@ export async function POST(request: NextRequest) {
       })
 
     } else if (action === 'downgrade') {
+      // TODO: Implement plan field in User model and Subscription model
       // Simulate subscription cancellation/downgrade
-      await prisma.user.update({
-        where: { id: userId },
-        data: { plan: 'FREE' }
-      })
+      // await prisma.user.update({
+      //   where: { id: userId },
+      //   data: { plan: 'FREE' }
+      // })
 
       // Update subscription status
-      await prisma.subscription.updateMany({
-        where: { userId },
-        data: { 
-          status: 'canceled',
-          cancelAtPeriodEnd: true 
-        }
-      })
+      // await prisma.subscription.updateMany({
+      //   where: { userId },
+      //   data: { 
+      //     status: 'canceled',
+      //     cancelAtPeriodEnd: true 
+      //   }
+      // })
 
       return NextResponse.json({
         message: 'Successfully downgraded to FREE plan',

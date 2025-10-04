@@ -164,7 +164,7 @@ class EmailService {
     console.log(`⚠️ Primary provider (${this.provider}) failed, trying fallback`)
     
     // Try fallback provider - prioritize resend for reliability
-    const fallbackProvider = this.provider === 'resend' ? 'mailgun' : 'resend'
+    const fallbackProvider: 'resend' | 'mailgun' = this.provider === 'resend' ? 'mailgun' : 'resend'
     const originalProvider = this.provider
     
     this.provider = fallbackProvider
@@ -172,8 +172,6 @@ class EmailService {
     // Reinitialize for fallback
     if (fallbackProvider === 'resend' && process.env.RESEND_API_KEY) {
       this.resend = new Resend(process.env.RESEND_API_KEY)
-    } else if (fallbackProvider === 'sendgrid' && process.env.SENDGRID_API_KEY) {
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     } else if (fallbackProvider === 'mailgun' && process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN) {
       this.mailgun = new Mailgun(FormData)
     }

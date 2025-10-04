@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Crown, MapPin, ExternalLink } from 'lucide-react'
 
 interface Consultant {
@@ -78,15 +79,19 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                   <div className="flex justify-center mb-6 h-20">
                     <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full shadow-md border-2 border-gray-100">
                       {consultant.profilePhoto ? (
-                        <img
+                        <Image
                           src={consultant.profilePhoto}
                           alt={consultant.name}
+                          width={64}
+                          height={64}
                           className="w-16 h-16 rounded-full object-cover"
                         />
                       ) : consultant.logo ? (
-                        <img
+                        <Image
                           src={consultant.logo}
                           alt={`${consultant.name} logo`}
+                          width={80}
+                          height={80}
                           className="w-full h-full object-contain p-3"
                         />
                       ) : (

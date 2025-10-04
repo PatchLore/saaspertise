@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Crown, MapPin, ExternalLink, Mail, Phone, Calendar, Star, Send, ArrowLeft, Linkedin, Twitter, Github, CheckCircle, Briefcase, DollarSign, Award, Clock } from 'lucide-react'
 import ContactConsultantForm from './ContactConsultantForm'
 import { getPricingDisplay } from '@/lib/pricing-utils'
@@ -89,15 +90,19 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                 {/* Avatar */}
                 <div className="flex-shrink-0">
                   {consultant.profilePhoto ? (
-                    <img
+                    <Image
                       src={consultant.profilePhoto}
                       alt={consultant.name}
+                      width={80}
+                      height={80}
                       className="w-20 h-20 rounded-2xl object-cover shadow-lg"
                     />
                   ) : consultant.logo ? (
-                    <img
+                    <Image
                       src={consultant.logo}
                       alt={`${consultant.name} logo`}
+                      width={128}
+                      height={128}
                       className="w-32 h-32 rounded-2xl object-cover shadow-lg"
                     />
                   ) : (

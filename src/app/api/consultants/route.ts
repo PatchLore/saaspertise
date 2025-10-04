@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 // GET /api/consultants - List consultants with search and filters
 export async function GET(request: NextRequest) {
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
 
     // Build where clause
-    const where: { isApproved?: boolean; isFeatured?: boolean; OR?: unknown[] } = {}
+    const where: Prisma.ConsultantWhereInput = {}
     
     if (approved) {
       where.isApproved = true

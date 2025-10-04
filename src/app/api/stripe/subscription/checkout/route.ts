@@ -25,26 +25,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // TODO: Implement subscription model in Prisma schema
     // Check if user already has an active subscription
-    const existingSubscription = await prisma.subscription.findUnique({
+    // const existingSubscription = await prisma.subscription.findUnique({
+    //   where: { userId: session.user.id }
+    // })
+
+    // if (existingSubscription && existingSubscription.status === 'active') {
+    //   return NextResponse.json(
+    //     { message: 'User already has an active subscription' },
+    //     { status: 400 }
+    //   )
+    // }
+
+    // Get consultant details
+    const consultant = await prisma.consultant.findUnique({
       where: { userId: session.user.id }
     })
 
-    if (existingSubscription && existingSubscription.status === 'active') {
+    if (!consultant) {
       return NextResponse.json(
-        { message: 'User already has an active subscription' },
-        { status: 400 }
-      )
-    }
-
-    // Get user details
-    const user = await prisma.user.findUnique({
-      where: { id: session.user.id }
-    })
-
-    if (!user) {
-      return NextResponse.json(
-        { message: 'User not found' },
+        { message: 'Consultant profile not found' },
         { status: 404 }
       )
     }
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Stripe customer if doesn't exist
-    const customerId = user.stripeCustomerId
+    const customerId = consultant.stripeCustomerId
     
     if (!customerId) {
       // This would typically create a Stripe customer, but for now we'll use a placeholder
@@ -70,14 +71,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Create checkout session
-    const priceId = PRICING_TIERS[plan as keyof typeof PRICING_TIERS]?.priceId
+    const pricingTier = PRICING_TIERS[plan as keyof typeof PRICING_TIERS]
     
-    if (!priceId) {
+    if (!pricingTier || !('priceId' in pricingTier)) {
       return NextResponse.json(
         { message: 'Price ID not configured for this plan' },
         { status: 500 }
       )
     }
+    
+    const priceId = pricingTier.priceId
 
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
     const successUrl = `${baseUrl}/dashboard?subscription=success`

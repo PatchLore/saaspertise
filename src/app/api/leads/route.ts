@@ -92,7 +92,10 @@ export async function POST(request: NextRequest) {
           `
         })
       } catch (emailError) {
-        console.error('Failed to send email notification:', emailError)
+        // Log error for debugging but don't expose in production
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Failed to send email notification:', emailError)
+        }
         // Don't fail the request if email fails
       }
     }

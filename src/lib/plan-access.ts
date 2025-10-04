@@ -1,4 +1,5 @@
-import { UserPlan } from '@prisma/client'
+// Define UserPlan type locally since it doesn't exist in Prisma schema yet
+export type UserPlan = 'FREE' | 'PRO' | 'ENTERPRISE'
 
 export type PlanFeature = {
   name: string

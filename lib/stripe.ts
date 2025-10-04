@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 // Initialize Stripe with your secret key (only if env var is set)
 export const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-12-18.acacia',
+      apiVersion: '2025-08-27.basil',
       typescript: true,
     })
   : null

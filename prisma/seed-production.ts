@@ -162,8 +162,8 @@ async function main() {
         phone: consultantData.phone,
         profilePhoto: consultantData.profilePhoto,
         region: consultantData.region,
-        services: JSON.stringify(consultantData.services), // Convert to JSON string for SQLite
-        industries: JSON.stringify(consultantData.industries), // Convert to JSON string for SQLite
+        services: consultantData.services, // Already an array
+        industries: consultantData.industries, // Already an array
         hourlyRate: consultantData.hourlyRate,
         projectRateMin: consultantData.projectRateMin,
         projectRateMax: consultantData.projectRateMax,
@@ -184,7 +184,7 @@ async function main() {
             title: portfolioItem.title,
             description: portfolioItem.description,
             metrics: portfolioItem.metrics,
-            technologies: JSON.stringify(portfolioItem.technologies),
+            technologies: portfolioItem.technologies, // Already an array
             projectType: portfolioItem.projectType,
             clientType: portfolioItem.clientType,
             duration: portfolioItem.duration,

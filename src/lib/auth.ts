@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       // Uses VerificationToken table via PrismaAdapter
       from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-      sendVerificationRequest: async ({ identifier, url, provider }) => {
+      sendVerificationRequest: async ({ identifier, url }) => {
         // DEMO_MODE bypass for testing
         if (process.env.DEMO_MODE === 'true') {
           console.log('🚀 DEMO_MODE: Skipping email send, auto-authenticating user:', identifier)
@@ -47,8 +47,6 @@ export const authOptions: NextAuthOptions = {
           } else {
             console.error(`❌ Email failed via ${result.provider}:`, result.error)
           }
-          
-          return result
         } catch (error) {
           console.error('❌ Email service error:', error instanceof Error ? error.message : 'Unknown error')
           // Don't throw - let NextAuth handle gracefully

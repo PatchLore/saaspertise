@@ -6,10 +6,11 @@ import { prisma } from '@/lib/prisma'
 // GET /api/case-studies/[id] - Get specific case study
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const caseStudyId = params.id
+    const resolvedParams = await params
+    const caseStudyId = resolvedParams.id
 
     const caseStudy = await prisma.caseStudy.findUnique({
       where: { id: caseStudyId },
@@ -58,7 +59,7 @@ export async function GET(
 // PUT /api/case-studies/[id] - Update case study
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -70,7 +71,8 @@ export async function PUT(
       )
     }
 
-    const caseStudyId = params.id
+    const resolvedParams = await params
+    const caseStudyId = resolvedParams.id
 
     // Check if case study exists
     const existingCaseStudy = await prisma.caseStudy.findUnique({
@@ -167,7 +169,7 @@ export async function PUT(
 // DELETE /api/case-studies/[id] - Delete case study
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -179,7 +181,8 @@ export async function DELETE(
       )
     }
 
-    const caseStudyId = params.id
+    const resolvedParams = await params
+    const caseStudyId = resolvedParams.id
 
     // Check if case study exists
     const existingCaseStudy = await prisma.caseStudy.findUnique({

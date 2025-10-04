@@ -6,10 +6,11 @@ import { prisma } from '@/lib/prisma'
 // GET /api/consultants/[id]/case-studies - Get case studies for a consultant
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
     const { searchParams } = new URL(request.url)
     const publicOnly = searchParams.get('public') !== 'false'
 
@@ -58,7 +59,7 @@ export async function GET(
 // POST /api/consultants/[id]/case-studies - Create a new case study
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -70,7 +71,8 @@ export async function POST(
       )
     }
 
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     // Verify consultant exists and user owns it
     const consultant = await prisma.consultant.findUnique({

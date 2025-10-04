@@ -23,8 +23,8 @@ async function getConsultant(id: string) {
     // Parse JSON strings for services and industries
     return {
       ...consultant,
-      services: JSON.parse(consultant.services || '[]'),
-      industries: JSON.parse(consultant.industries || '[]')
+      services: Array.isArray(consultant.services) ? consultant.services : [],
+      industries: Array.isArray(consultant.industries) ? consultant.industries : []
     }
   } catch (error) {
     console.error('Error fetching consultant:', error)

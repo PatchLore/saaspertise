@@ -9,7 +9,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 // GET /api/admin/consultants/[id] - Get specific consultant for admin
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -21,7 +21,8 @@ export async function GET(
       )
     }
 
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
 
     const consultant = await prisma.consultant.findUnique({
       where: { id: consultantId },
@@ -80,7 +81,7 @@ export async function GET(
 // PATCH /api/admin/consultants/[id] - Update consultant status/visibility
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -92,7 +93,8 @@ export async function PATCH(
       )
     }
 
-    const consultantId = params.id
+    const resolvedParams = await params
+    const consultantId = resolvedParams.id
     const { action, reason } = await request.json()
 
     // Verify consultant exists
