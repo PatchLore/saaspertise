@@ -1,6 +1,43 @@
 import { Suspense } from 'react'
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import DirectoryClient from '@/components/DirectoryClient'
+import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
+
+export const metadata: Metadata = {
+  title: "Browse Consultants",
+  description: "Browse our directory of verified SaaS and AI consultants. Filter by location, expertise, industry, and services. Find the perfect consultant for your business needs with our comprehensive search and filtering tools.",
+  keywords: [
+    "consultant directory",
+    "SaaS consultants directory",
+    "AI consultants directory", 
+    "tech consultants",
+    "business consultants",
+    "filter consultants",
+    "find consultants",
+    "consultant search"
+  ],
+  openGraph: {
+    title: "Browse SaaS & AI Consultants Directory",
+    description: "Search and filter through our directory of verified SaaS and AI consultants. Find experts by location, expertise, and industry.",
+    url: "https://www.saaspertise.com/directory",
+    images: [
+      {
+        url: "/og-directory.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Saaspertise Consultants Directory",
+      },
+    ],
+  },
+  twitter: {
+    title: "Browse SaaS & AI Consultants Directory",
+    description: "Search and filter through our directory of verified SaaS and AI consultants. Find experts by location, expertise, and industry.",
+  },
+  alternates: {
+    canonical: "/directory",
+  },
+}
 
 // Import Consultant type from DirectoryClient
 type Consultant = {
@@ -176,6 +213,7 @@ export default async function DirectoryPage({
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white border-b border-gray-200 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={breadcrumbSets.directory} className="mb-6" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Consultant Directory
           </h1>

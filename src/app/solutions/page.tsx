@@ -1,9 +1,47 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Zap, Users, BarChart3 } from 'lucide-react'
+import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
+
+export const metadata: Metadata = {
+  title: "Our Solutions",
+  description: "Discover our powerful SaaS tools designed to help businesses grow. From QuoteFlow for instant plumbing quotes to future AI-powered solutions, explore our suite of web applications built for efficiency and customer success.",
+  keywords: [
+    "SaaS tools",
+    "business software",
+    "QuoteFlow",
+    "plumbing quotes",
+    "business automation",
+    "web applications",
+    "SaaS solutions",
+    "business tools"
+  ],
+  openGraph: {
+    title: "Saaspertise Solutions - Powerful SaaS Tools for Business",
+    description: "Explore our growing suite of SaaS applications designed to save time, increase trust, and help you win more customers.",
+    url: "https://www.saaspertise.com/solutions",
+    images: [
+      {
+        url: "/og-solutions.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Saaspertise Solutions - SaaS Tools",
+      },
+    ],
+  },
+  twitter: {
+    title: "Saaspertise Solutions - Powerful SaaS Tools for Business",
+    description: "Explore our growing suite of SaaS applications designed to save time, increase trust, and help you win more customers.",
+  },
+  alternates: {
+    canonical: "/solutions",
+  },
+}
 
 export default function SolutionsPage() {
   return (
     <div className="min-h-screen bg-white">
+      <Breadcrumbs items={breadcrumbSets.solutions} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8" />
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

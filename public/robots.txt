@@ -1,11 +1,39 @@
+# Robots.txt for Saaspertise.com
+# Allow all search engines to crawl the public content
+
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://www.saaspertise.com/sitemap.xml
+Allow: /directory/
+Allow: /solutions/
+Allow: /consultant/
+Allow: /about
+Allow: /pricing
+Allow: /contact
 
 # Disallow admin and private areas
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 Disallow: /auth/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow specific search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Crawl delay for other bots
+User-agent: *
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://www.saaspertise.com/sitemap.xml
+
+# Host declaration
+Host: https://www.saaspertise.com

@@ -1,6 +1,42 @@
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import HeroSection from '@/components/HeroSection'
 import FeaturedConsultants from '@/components/FeaturedConsultants'
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Find top SaaS and AI consultants to grow your business. Browse verified consultants specializing in SaaS development, AI implementation, and digital transformation. Connect with experts who can help scale your business.",
+  keywords: [
+    "SaaS consultants",
+    "AI consultants", 
+    "business consultants",
+    "digital transformation",
+    "software development",
+    "tech consultants",
+    "consultant directory",
+    "expert consultants"
+  ],
+  openGraph: {
+    title: "Saaspertise - Find Top SaaS & AI Consultants",
+    description: "Connect with verified SaaS and AI consultants to grow your business. Browse experts by location, expertise, and industry.",
+    url: "https://www.saaspertise.com",
+    images: [
+      {
+        url: "/og-home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Saaspertise - SaaS & AI Consultants Directory Homepage",
+      },
+    ],
+  },
+  twitter: {
+    title: "Saaspertise - Find Top SaaS & AI Consultants",
+    description: "Connect with verified SaaS and AI consultants to grow your business. Browse experts by location, expertise, and industry.",
+  },
+  alternates: {
+    canonical: "/",
+  },
+}
 
 async function getFeaturedConsultantsData() {
   try {

@@ -1,5 +1,45 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Zap, Smartphone, Users, BarChart3, CheckCircle, Clock, DollarSign, Target } from 'lucide-react'
+import { QuoteFlowServiceSchema } from '@/components/StructuredData'
+import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
+
+export const metadata: Metadata = {
+  title: "QuoteFlow - Instant Plumbing Quote Calculator",
+  description: "QuoteFlow helps plumbers win more jobs with instant, transparent quotes. Generate accurate plumbing quotes in 30 seconds, capture leads automatically, and boost your conversion rates with professional quoting software.",
+  keywords: [
+    "plumbing quotes",
+    "quote calculator",
+    "plumber software",
+    "instant quotes",
+    "plumbing business",
+    "QuoteFlow",
+    "plumbing tools",
+    "quote generation",
+    "lead capture",
+    "plumbing automation"
+  ],
+  openGraph: {
+    title: "QuoteFlow - The Plumber Quote Calculator",
+    description: "Instant, transparent quotes that save plumbers time and win more jobs. Generate accurate quotes in 30 seconds with QuoteFlow.",
+    url: "https://www.saaspertise.com/solutions/quoteflow",
+    images: [
+      {
+        url: "/og-quoteflow.jpg",
+        width: 1200,
+        height: 630,
+        alt: "QuoteFlow - Plumbing Quote Calculator",
+      },
+    ],
+  },
+  twitter: {
+    title: "QuoteFlow - The Plumber Quote Calculator",
+    description: "Instant, transparent quotes that save plumbers time and win more jobs. Generate accurate quotes in 30 seconds with QuoteFlow.",
+  },
+  alternates: {
+    canonical: "/solutions/quoteflow",
+  },
+}
 
 export default function QuoteFlowPage() {
   const features = [
@@ -45,7 +85,10 @@ export default function QuoteFlowPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <QuoteFlowServiceSchema />
+      <div className="min-h-screen bg-white">
+      <Breadcrumbs items={breadcrumbSets.quoteFlow} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8" />
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -214,5 +257,6 @@ export default function QuoteFlowPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

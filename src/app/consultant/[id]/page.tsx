@@ -1,11 +1,65 @@
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import ConsultantProfile from '@/components/ConsultantProfile'
+import { ConsultantSchema } from '@/components/StructuredData'
+import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
 
 interface ConsultantPageProps {
   params: Promise<{
     id: string
   }>
+}
+
+export async function generateMetadata({ params }: ConsultantPageProps): Promise<Metadata> {
+  const resolvedParams = await params
+  const consultant = await getConsultant(resolvedParams.id)
+  
+  if (!consultant) {
+    return {
+      title: 'Consultant Not Found',
+      description: 'The requested consultant profile could not be found.',
+    }
+  }
+
+  const title = `${consultant.name} - ${consultant.services.join(', ')} Consultant`
+  const description = `${consultant.shortDescription || consultant.description.substring(0, 150)}... Located in ${consultant.region}. Specializes in ${consultant.services.join(', ')} for ${consultant.industries.join(', ')} industries.`
+
+  return {
+    title,
+    description,
+    keywords: [
+      consultant.name,
+      ...consultant.services,
+      ...consultant.industries,
+      'consultant',
+      'SaaS consultant',
+      'AI consultant',
+      consultant.region,
+      'business consultant',
+      'digital transformation'
+    ],
+    openGraph: {
+      title: `${consultant.name} - Expert Consultant`,
+      description,
+      url: `https://www.saaspertise.com/consultant/${consultant.id}`,
+      images: consultant.profilePhoto ? [
+        {
+          url: consultant.profilePhoto,
+          width: 400,
+          height: 400,
+          alt: `${consultant.name} - Consultant Profile`,
+        }
+      ] : [],
+    },
+    twitter: {
+      title: `${consultant.name} - Expert Consultant`,
+      description,
+    },
+    alternates: {
+      canonical: `/consultant/${consultant.id}`,
+    },
+  }
 }
 
 async function getConsultant(id: string) {
@@ -78,21 +132,11 @@ export default async function ConsultantPage({ params }: ConsultantPageProps) {
     notFound()
   }
 
-  return <ConsultantProfile consultant={consultant} />
-}
-
-export async function generateMetadata({ params }: ConsultantPageProps) {
-  const resolvedParams = await params
-  const consultant = await getConsultant(resolvedParams.id)
-
-  if (!consultant) {
-    return {
-      title: 'Consultant Not Found'
-    }
-  }
-
-  return {
-    title: `${consultant.name} - Saaspertise`,
-    description: consultant.shortDescription || consultant.description.substring(0, 160),
-  }
+  return (
+    <>
+      <ConsultantSchema consultant={consultant} />
+      <Breadcrumbs items={breadcrumbSets.consultant(consultant.name)} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8" />
+      <ConsultantProfile consultant={consultant} />
+    </>
+  )
 }
