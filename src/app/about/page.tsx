@@ -11,7 +11,7 @@ export default function AboutPage() {
             About Consultants Directory
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            The UK&apos;s premier platform connecting businesses with expert SaaS and AI consultants. 
+            A curated platform connecting UK businesses with expert SaaS and AI consultants. 
             We&apos;re building the future of digital transformation, one connection at a time.
           </p>
         </div>
@@ -100,30 +100,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Statistics */}
-        <div className="mb-16">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold mb-2">500+</div>
-                <div className="text-blue-100">Expert Consultants</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold mb-2">1000+</div>
-                <div className="text-blue-100">Projects Completed</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold mb-2">50+</div>
-                <div className="text-blue-100">Industries Served</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold mb-2">98%</div>
-                <div className="text-blue-100">Client Satisfaction</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Call to Action */}
         <div className="text-center">
           <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
@@ -131,7 +107,7 @@ export default function AboutPage() {
               Ready to Transform Your Business?
             </h2>
             <p className="text-gray-600 mb-6">
-              Join thousands of businesses who have found their perfect consultant match.
+              Connect with vetted SaaS and AI experts who can help transform your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
