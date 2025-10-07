@@ -201,12 +201,20 @@ export default function QuoteFlowPage() {
             <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
               See how QuoteFlow can help you save time, increase conversions, and win more jobs.
             </p>
-            <Link
-              href="/contact"
-              className="cta-button inline-block px-12 py-5 bg-gradient-to-r from-blue-600 to-blue-900 text-white text-lg md:text-xl font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <span>Request a Demo</span>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/solutions/quoteflow/pricing"
+                className="cta-button inline-block px-12 py-5 bg-gradient-to-r from-blue-600 to-blue-900 text-white text-lg md:text-xl font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <span>View Pricing</span>
+              </Link>
+              <Link
+                href="/contact?subject=QuoteFlow Demo"
+                className="inline-block px-12 py-5 bg-white border-2 border-blue-600 text-blue-600 text-lg md:text-xl font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                Request a Demo
+              </Link>
+            </div>
           </div>
         </section>
 

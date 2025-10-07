@@ -25,6 +25,7 @@ model User {
   leads         Lead[]
   accounts      Account[]
   sessions      Session[]
+  quoteFlowSubscriptions QuoteFlowSubscription[]
 
   @@map("users")
 }
@@ -257,4 +258,48 @@ model Rating {
   consultant    Consultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
 
   @@map("ratings")
+}
+
+model QuoteFlowSubscription {
+  id                    String    @id @default(cuid())
+  userId                String
+  businessName          String
+  email                 String
+  phone                 String?
+  plan                  QuoteFlowPlan
+  setupFee              Int       // Amount in pence (e.g., 24999 = £249.99)
+  monthlyFee            Int?      // Amount in pence per month (null for lifetime)
+  stripeCustomerId      String?
+  stripeSubscriptionId  String?   @unique
+  stripeSetupIntentId   String?   @unique
+  status                QuoteFlowStatus @default(PENDING)
+  websiteUrl            String?   // URL of their QuoteFlow site once deployed
+  customDomain          String?   // Custom domain if they have one
+  branding              Json?     // Store logo, colors, etc.
+  features              Json?     // Store enabled features
+  expiresAt             DateTime? // For lifetime plans (12 months from start)
+  startedAt             DateTime?
+  cancelledAt           DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("quoteflow_subscriptions")
+}
+
+enum QuoteFlowPlan {
+  ONE_PAGE
+  FULL_WEBSITE
+  LIFETIME
+}
+
+enum QuoteFlowStatus {
+  PENDING           // Order placed, awaiting payment
+  PAYMENT_RECEIVED  // Payment received, awaiting setup
+  IN_SETUP          // Website being built
+  ACTIVE            // Live and running
+  CANCELLED         // Subscription cancelled
+  EXPIRED           // Lifetime plan expired (needs renewal)
 }
