@@ -163,10 +163,10 @@ export default function ContactPage() {
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">Phone</p>
                       <a
-                        href="tel:+442071234567"
+                        href="tel:+447925990923"
                         className="text-blue-600 hover:text-blue-700"
                       >
-                        +44 20 7123 4567
+                        07925 990923
                       </a>
                     </div>
                   </div>
