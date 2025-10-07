@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Zap, Smartphone, Users, BarChart3, CheckCircle, Clock, DollarSign, Target } from 'lucide-react'
 import { QuoteFlowServiceSchema } from '@/components/StructuredData'
 import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
 
@@ -44,219 +43,175 @@ export const metadata: Metadata = {
 export default function QuoteFlowPage() {
   const features = [
     {
-      icon: <Zap className="w-6 h-6" />,
+      emoji: "⚡",
       title: "Instant Quote Generation",
       description: "Generate accurate quotes in seconds with our intelligent pricing engine."
     },
     {
-      icon: <BarChart3 className="w-6 h-6" />,
+      emoji: "🧠",
       title: "Smart Pricing Logic",
       description: "Dynamic pricing based on job complexity, materials, and local market rates."
     },
     {
-      icon: <Smartphone className="w-6 h-6" />,
+      emoji: "📱",
       title: "Mobile Optimized Experience",
       description: "Works seamlessly on any device with a responsive, touch-friendly interface."
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      emoji: "📊",
       title: "Lead Capture Dashboard",
       description: "Track all enquiries, follow up on leads, and manage your customer pipeline."
     }
   ]
 
-  const benefits = [
+  const steps = [
     {
-      icon: <Clock className="w-5 h-5" />,
-      text: "Save 15+ minutes per quote"
+      number: 1,
+      title: "Enter Job Details",
+      description: "Select job type, location, and requirements"
     },
     {
-      icon: <DollarSign className="w-5 h-5" />,
-      text: "Increase quote conversion by 40%"
+      number: 2,
+      title: "Get Instant Quote",
+      description: "Receive accurate pricing in seconds"
     },
     {
-      icon: <Target className="w-5 h-5" />,
-      text: "Capture 100% of enquiries as leads"
+      number: 3,
+      title: "Share with Customer",
+      description: "Send professional quote via email or SMS"
     },
     {
-      icon: <CheckCircle className="w-5 h-5" />,
-      text: "Professional, transparent pricing"
+      number: 4,
+      title: "Track & Follow Up",
+      description: "Monitor leads and convert more jobs"
     }
   ]
 
   return (
     <>
       <QuoteFlowServiceSchema />
-      <div className="min-h-screen bg-white">
-      <Breadcrumbs items={breadcrumbSets.quoteFlow} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8" />
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                QuoteFlow – The{' '}
-                <span className="text-blue-600">Plumber Quote Calculator</span>
-              </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Instant, transparent quotes that save plumbers time and win more jobs. 
-                Transform your quoting process with our intelligent pricing engine.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-                >
-                  Request a Demo
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  href="/solutions"
-                  className="inline-flex items-center justify-center px-8 py-4 border border-gray-300 text-lg font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
-                >
-                  Back to Solutions
-                </Link>
+      <div className="min-h-screen bg-gray-50">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 text-white py-20">
+          <div className="max-w-7xl mx-auto px-5 text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              QuoteFlow – The Plumber Quote Calculator
+            </h1>
+            <p className="text-lg md:text-xl lg:text-2xl mb-10 opacity-95 max-w-4xl mx-auto leading-relaxed">
+              Instant, transparent quotes that save plumbers time and win more jobs. Transform your quoting process with our intelligent pricing engine.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-5 mt-10">
+              <div className="hero-feature flex items-center gap-3 px-6 py-3 bg-white/10 rounded-full backdrop-blur-md">
+                <span className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full text-sm font-bold">✓</span>
+                <span className="text-base md:text-lg">Real-time pricing</span>
               </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg shadow-xl flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-20 h-20 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-6">
-                    <BarChart3 className="w-10 h-10 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-blue-600 mb-2">QuoteFlow Demo</h3>
-                  <p className="text-blue-500">Interactive Quote Calculator</p>
-                  <div className="mt-4 text-sm text-blue-400">
-                    <p>• Real-time pricing</p>
-                    <p>• Mobile responsive</p>
-                    <p>• Lead capture</p>
-                  </div>
-                </div>
+              <div className="hero-feature flex items-center gap-3 px-6 py-3 bg-white/10 rounded-full backdrop-blur-md">
+                <span className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full text-sm font-bold">✓</span>
+                <span className="text-base md:text-lg">Mobile responsive</span>
+              </div>
+              <div className="hero-feature flex items-center gap-3 px-6 py-3 bg-white/10 rounded-full backdrop-blur-md">
+                <span className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full text-sm font-bold">✓</span>
+                <span className="text-base md:text-lg">Lead capture</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Key Features Section */}
-      <div className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        {/* Key Features Section */}
+        <div className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-5 text-blue-900">
               Key Features
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">
               Everything you need to streamline your quoting process and win more jobs.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-blue-600">
-                  {feature.icon}
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {features.map((feature, index) => (
+                <div 
+                  key={index} 
+                  className="feature-card relative bg-white p-10 rounded-2xl shadow-md border-2 border-transparent overflow-hidden"
+                >
+                  <div className="feature-icon w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-900 rounded-xl flex items-center justify-center text-3xl mb-5 transition-all duration-300">
+                    {feature.emoji}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-4 text-blue-900">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Benefits Section */}
-      <div className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose QuoteFlow?
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Join hundreds of plumbers who are already saving time and winning more jobs 
-                with QuoteFlow&apos;s intelligent quoting system.
-              </p>
-              <div className="space-y-4">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 text-green-600">
-                      {benefit.icon}
-                    </div>
-                    <span className="text-lg text-gray-700">{benefit.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                How It Works
-              </h3>
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">
-                    1
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Enter Job Details</h4>
-                    <p className="text-gray-600">Select job type, location, and requirements</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">
-                    2
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Get Instant Quote</h4>
-                    <p className="text-gray-600">Receive accurate pricing in seconds</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">
-                    3
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Share with Customer</h4>
-                    <p className="text-gray-600">Send professional quote via email or SMS</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">
-                    4
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Track & Follow Up</h4>
-                    <p className="text-gray-600">Monitor leads and convert more jobs</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="bg-blue-600 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Transform Your Quoting Process?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            See how QuoteFlow can help you save time, increase conversions, and win more jobs.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-blue-600 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-lg hover:shadow-xl"
-          >
-            Request a Demo
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+        {/* Why Section */}
+        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 text-white py-20 text-center">
+          <div className="max-w-4xl mx-auto px-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+              Why Choose QuoteFlow?
+            </h2>
+            <p className="text-lg md:text-xl opacity-95 leading-relaxed">
+              Join hundreds of plumbers who are already saving time and winning more jobs with QuoteFlow&apos;s intelligent quoting system.
+            </p>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <div className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-5 text-blue-900">
+              How It Works
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto">
+              Four simple steps to transform your quoting process
+            </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+              {steps.map((step, index) => (
+                <div 
+                  key={index} 
+                  className="step-card text-center p-8 bg-white rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                >
+                  <div className="step-number w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-900 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5 transition-all duration-300">
+                    {step.number}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-blue-900">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* CTA Section */}
+        <section className="bg-white py-20 text-center">
+          <div className="max-w-4xl mx-auto px-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-blue-900">
+              Ready to Transform Your Quoting Process?
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+              See how QuoteFlow can help you save time, increase conversions, and win more jobs.
+            </p>
+            <Link
+              href="/contact"
+              className="cta-button inline-block px-12 py-5 bg-gradient-to-r from-blue-600 to-blue-900 text-white text-lg md:text-xl font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <span>Request a Demo</span>
+            </Link>
+          </div>
+        </section>
+
+        <Breadcrumbs items={breadcrumbSets.quoteFlow} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8" />
       </div>
-    </div>
     </>
   )
 }
