@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Send, CheckCircle, AlertCircle, Loader } from 'lucide-react'
 
 export default function ContactForm() {
+  const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -14,6 +16,31 @@ export default function ContactForm() {
     subject: '',
     message: ''
   })
+
+  // Pre-populate subject based on URL parameters
+  useEffect(() => {
+    const plan = searchParams.get('plan')
+    const subject = searchParams.get('subject')
+    
+    if (plan) {
+      // Convert plan slug to readable format
+      const planName = plan
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+      
+      setFormData(prev => ({
+        ...prev,
+        subject: `quoteflow-${plan}`,
+        message: `I'm interested in the ${planName} plan for QuoteFlow.\n\n`
+      }))
+    } else if (subject) {
+      setFormData(prev => ({
+        ...prev,
+        subject: subject
+      }))
+    }
+  }, [searchParams])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({
@@ -138,11 +165,18 @@ export default function ContactForm() {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">Select a topic</option>
-            <option value="demo">Request a Demo</option>
-            <option value="consultant">Consultant Inquiry</option>
-            <option value="solutions">Solutions Inquiry</option>
-            <option value="support">Support</option>
-            <option value="other">Other</option>
+            <optgroup label="QuoteFlow Plans">
+              <option value="quoteflow-one-page-website">QuoteFlow - One-Page Website (£249.99 + £20/mo)</option>
+              <option value="quoteflow-full-standalone-website">QuoteFlow - Full Standalone Website (£449.99 + £30/mo)</option>
+              <option value="quoteflow-lifetime-access">QuoteFlow - Lifetime Access (£559.99)</option>
+            </optgroup>
+            <optgroup label="General Inquiries">
+              <option value="demo">Request a Demo</option>
+              <option value="consultant">Consultant Inquiry</option>
+              <option value="solutions">Solutions Inquiry</option>
+              <option value="support">Support</option>
+              <option value="other">Other</option>
+            </optgroup>
           </select>
         </div>
 
