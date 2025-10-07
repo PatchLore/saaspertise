@@ -62,26 +62,6 @@ export default function HeroSection() {
             List Your Services
           </button>
         </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600">500+</div>
-            <div className="text-gray-600">Expert Consultants</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-purple-600">1000+</div>
-            <div className="text-gray-600">Projects Completed</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-green-600">50+</div>
-            <div className="text-gray-600">Industries Served</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-600">98%</div>
-            <div className="text-gray-600">Client Satisfaction</div>
-          </div>
-        </div>
       </div>
     </section>
   )
