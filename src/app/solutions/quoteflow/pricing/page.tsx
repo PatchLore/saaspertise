@@ -104,114 +104,125 @@ export default function QuoteFlowPricingPage() {
       {/* Pricing Cards */}
       <div className="py-16 px-5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Grid container with equal height columns */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {pricingOptions.map((option, index) => (
               <div
                 key={index}
-                className={`relative bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 hover:scale-105 ${
-                  option.popular ? 'ring-4 ring-blue-500 scale-105' : ''
+                className={`relative bg-white rounded-2xl shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col ${
+                  option.popular ? 'ring-4 ring-blue-500 md:scale-105' : ''
                 }`}
               >
-                {/* Popular Badge */}
-                {option.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-
-                {/* Best Value Badge */}
-                {option.badge && (
-                  <div className="absolute -top-4 right-4">
-                    <span className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                      {option.badge}
-                    </span>
-                  </div>
-                )}
-
-                {/* Icon */}
-                <div className="flex justify-center mb-6">
-                  <div className={`p-4 rounded-2xl ${
-                    option.color === 'purple' 
-                      ? 'bg-purple-100 text-purple-600' 
-                      : 'bg-blue-100 text-blue-600'
-                  }`}>
-                    {option.icon}
-                  </div>
-                </div>
-
-                {/* Plan Name */}
-                <h3 className="text-2xl font-bold text-center mb-2 text-gray-900">
-                  {option.name}
-                </h3>
-                <p className="text-center text-gray-600 mb-6">
-                  {option.description}
-                </p>
-
-                {/* Pricing */}
-                <div className="text-center mb-8">
-                  <div className="mb-4">
-                    <div className="flex items-baseline justify-center">
-                      <span className="text-4xl font-bold text-gray-900">
-                        £{option.setupFee}
+                {/* Badge Container - Fixed Height */}
+                <div className="h-4 mb-2">
+                  {/* Popular Badge */}
+                  {option.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                        Most Popular
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">
-                      One-time setup fee
-                    </p>
-                  </div>
-
-                  {option.monthlyFee && (
-                    <div className="pt-4 border-t border-gray-200">
-                      <div className="flex items-baseline justify-center">
-                        <span className="text-2xl font-bold text-gray-900">
-                          £{option.monthlyFee}
-                        </span>
-                        <span className="text-gray-600 ml-1">/month</span>
-                      </div>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Hosting & support
-                      </p>
-                    </div>
                   )}
 
-                  {!option.monthlyFee && (
-                    <div className="pt-4 border-t border-gray-200">
-                      <p className="text-lg font-semibold text-green-600">
-                        No monthly fees!
-                      </p>
-                      <p className="text-sm text-gray-600 mt-1">
-                        12 months hosting included
-                      </p>
+                  {/* Best Value Badge */}
+                  {option.badge && (
+                    <div className="absolute -top-4 right-4">
+                      <span className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                        {option.badge}
+                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Features */}
-                <ul className="space-y-3 mb-8">
-                  {option.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start">
-                      <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Card Content - Flex Column */}
+                <div className="flex flex-col h-full p-8">
+                  {/* Icon - Fixed Height */}
+                  <div className="flex justify-center mb-6">
+                    <div className={`p-4 rounded-2xl ${
+                      option.color === 'purple' 
+                        ? 'bg-purple-100 text-purple-600' 
+                        : 'bg-blue-100 text-blue-600'
+                    }`}>
+                      {option.icon}
+                    </div>
+                  </div>
 
-                {/* CTA Button */}
-                <Link
-                  href={`/contact?plan=${option.name.toLowerCase().replace(/\s+/g, '-')}`}
-                  className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
-                    option.color === 'purple'
-                      ? 'bg-gradient-to-r from-purple-600 to-purple-800 text-white hover:from-purple-700 hover:to-purple-900 shadow-lg hover:shadow-xl'
-                      : option.popular
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl'
-                      : 'bg-gray-900 text-white hover:bg-gray-800 shadow-lg hover:shadow-xl'
-                  }`}
-                >
-                  Get Started
-                  <ArrowRight className="inline-block ml-2 w-5 h-5" />
-                </Link>
+                  {/* Plan Name - Fixed Height */}
+                  <h3 className="text-2xl font-bold text-center mb-2 text-gray-900 min-h-[4rem] flex items-center justify-center">
+                    {option.name}
+                  </h3>
+                  
+                  {/* Description - Fixed Height */}
+                  <p className="text-center text-gray-600 mb-6 min-h-[3rem] flex items-center justify-center">
+                    {option.description}
+                  </p>
+
+                  {/* Pricing Section - Fixed Height */}
+                  <div className="text-center mb-8 min-h-[10rem] flex flex-col justify-center">
+                    <div className="mb-4">
+                      <div className="flex items-baseline justify-center min-h-[3rem]">
+                        <span className="text-4xl font-bold text-gray-900">
+                          £{option.setupFee}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-1">
+                        One-time setup fee
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-200 min-h-[4.5rem]">
+                      {option.monthlyFee ? (
+                        <>
+                          <div className="flex items-baseline justify-center">
+                            <span className="text-2xl font-bold text-gray-900">
+                              £{option.monthlyFee}
+                            </span>
+                            <span className="text-gray-600 ml-1">/month</span>
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Hosting & support
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-lg font-semibold text-green-600">
+                            No monthly fees!
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            12 months hosting included
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Features List - Flex Grow to Fill Space */}
+                  <ul className="space-y-3 mb-8 flex-grow">
+                    {option.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-start">
+                        <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button - Pinned to Bottom */}
+                  <div className="mt-auto">
+                    <Link
+                      href={`/contact?plan=${option.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
+                        option.color === 'purple'
+                          ? 'bg-gradient-to-r from-purple-600 to-purple-800 text-white hover:from-purple-700 hover:to-purple-900 shadow-lg hover:shadow-xl'
+                          : option.popular
+                          ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl'
+                          : 'bg-gray-900 text-white hover:bg-gray-800 shadow-lg hover:shadow-xl'
+                      }`}
+                    >
+                      Get Started
+                      <ArrowRight className="inline-block ml-2 w-5 h-5" />
+                    </Link>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
