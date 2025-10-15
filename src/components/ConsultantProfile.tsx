@@ -23,6 +23,15 @@ interface PortfolioItem {
   displayOrder: number
 }
 
+interface Testimonial {
+  id: string
+  content: string
+  rating: number
+  clientName: string
+  clientTitle?: string | null
+  clientCompany?: string | null
+}
+
 interface Consultant {
   id: string
   name: string
@@ -47,6 +56,7 @@ interface Consultant {
   projectsCompleted?: number | null
   clientRating?: number | null
   portfolioItems?: PortfolioItem[]
+  testimonials?: Testimonial[]
   user?: {
     name: string | null
     email: string
@@ -260,49 +270,57 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
             </div>
 
             {/* Testimonials Section */}
-            <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <Star className="h-4 w-4 text-yellow-600" />
-                </div>
-                Client Testimonials
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-blue-500">
-                  <div className="flex items-center gap-1 mb-3">
-                    {[1,2,3,4,5].map((star) => (
-                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">5.0</span>
+            {consultant.testimonials && consultant.testimonials.length > 0 ? (
+              <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <Star className="h-4 w-4 text-yellow-600" />
                   </div>
-                  <p className="text-gray-800 font-medium mb-3 leading-relaxed">
-                    &ldquo;Exceptional AI implementation expertise. Delivered our machine learning project ahead of schedule and provided excellent ongoing support.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-600 font-medium">
-                    — Sarah Chen, Tech Director at FinTech Innovations
-                  </p>
-                </div>
+                  Client Testimonials
+                </h2>
                 
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border-l-4 border-green-500">
-                  <div className="flex items-center gap-1 mb-3">
-                    {[1,2,3,4,5].map((star) => (
-                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">5.0</span>
+                <div className="space-y-6">
+                  {consultant.testimonials.map((testimonial, index) => (
+                    <div key={testimonial.id || index} className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-blue-500">
+                      <div className="flex items-center gap-1 mb-3">
+                        {[1,2,3,4,5].map((star) => (
+                          <Star key={star} className={`h-4 w-4 ${star <= testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        ))}
+                        <span className="text-sm text-gray-600 ml-2">{testimonial.rating}.0</span>
+                      </div>
+                      <p className="text-gray-800 font-medium mb-3 leading-relaxed">
+                        &ldquo;{testimonial.content}&rdquo;
+                      </p>
+                      <p className="text-sm text-gray-600 font-medium">
+                        — {testimonial.clientName}{testimonial.clientTitle ? `, ${testimonial.clientTitle}` : ''}{testimonial.clientCompany ? ` at ${testimonial.clientCompany}` : ''}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <Star className="h-4 w-4 text-yellow-600" />
                   </div>
-                  <p className="text-gray-800 font-medium mb-3 leading-relaxed">
-                    &ldquo;Outstanding communication and technical skills. Transformed our entire SaaS architecture. Would definitely work with again.&rdquo;
-                  </p>
-                  <p className="text-sm text-gray-600 font-medium">
-                    — James Wilson, CTO at Healthcare Solutions Ltd
+                  Client Testimonials
+                </h2>
+                
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Star className="h-8 w-8 text-gray-400" />
+                  </div>
+                  <p className="text-gray-600 text-lg mb-2">No testimonials yet</p>
+                  <p className="text-gray-500 text-sm max-w-md mx-auto">
+                    If you&apos;ve worked with {consultant.name}, be the first to leave feedback.
                   </p>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Portfolio Section */}
-            {consultant.portfolioItems && consultant.portfolioItems.length > 0 && (
+            {consultant.portfolioItems && consultant.portfolioItems.length > 0 ? (
               <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                   <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -361,6 +379,25 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                         )}
                       </div>
                     ))}
+                </div>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Briefcase className="h-4 w-4 text-purple-600" />
+                  </div>
+                  Portfolio & Case Studies
+                </h2>
+                
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Briefcase className="h-8 w-8 text-gray-400" />
+                  </div>
+                  <p className="text-gray-600 text-lg mb-2">Portfolio coming soon</p>
+                  <p className="text-gray-500 text-sm max-w-md mx-auto">
+                    We&apos;re working with {consultant.name} to showcase their latest projects.
+                  </p>
                 </div>
               </div>
             )}
