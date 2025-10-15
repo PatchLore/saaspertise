@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
     // Allow warnings but fail on errors
     ignoreDuringBuilds: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'framerusercontent.com',
+        port: '',
+        pathname: '/images/**',
+      },
+    ],
+  },
   // Security headers
   async headers() {
     return [
