@@ -376,29 +376,45 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
               <div className="space-y-5">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Response Rate</span>
-                  <span className="font-bold text-green-600 text-lg">{consultant.responseRate || 95}%</span>
+                  {consultant.responseRate ? (
+                    <span className="font-bold text-green-600 text-lg">{consultant.responseRate}%</span>
+                  ) : (
+                    <span className="text-gray-400 text-sm">Not yet rated</span>
+                  )}
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Response Time</span>
-                  <span className="font-bold text-gray-900">{consultant.responseTime || 2} hours</span>
+                  {consultant.responseTime ? (
+                    <span className="font-bold text-gray-900">{consultant.responseTime} hours</span>
+                  ) : (
+                    <span className="text-gray-400 text-sm">Not yet rated</span>
+                  )}
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Projects</span>
-                  <span className="font-bold text-gray-900">{consultant.projectsCompleted || 25}+</span>
+                  {consultant.projectsCompleted ? (
+                    <span className="font-bold text-gray-900">{consultant.projectsCompleted}+</span>
+                  ) : (
+                    <span className="text-gray-400 text-sm">Not yet rated</span>
+                  )}
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 font-medium">Client Rating</span>
-                  <div className="flex items-center gap-2">
-                    <div className="flex">
-                      {[1,2,3,4,5].map((star) => (
-                        <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      ))}
+                  {consultant.clientRating ? (
+                    <div className="flex items-center gap-2">
+                      <div className="flex">
+                        {[1,2,3,4,5].map((star) => (
+                          <Star key={star} className={`h-4 w-4 ${star <= Math.round(consultant.clientRating || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        ))}
+                      </div>
+                      <span className="font-bold text-gray-900">{consultant.clientRating}</span>
                     </div>
-                    <span className="font-bold text-gray-900">{consultant.clientRating || 4.8}</span>
-                  </div>
+                  ) : (
+                    <span className="text-gray-400 text-sm">Not yet rated</span>
+                  )}
                 </div>
               </div>
             </div>
@@ -435,21 +451,33 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                       <Briefcase className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Projects Completed</span>
                     </div>
-                    <span className="font-bold text-gray-900">{consultant.projectsCompleted || 25}+</span>
+                    {consultant.projectsCompleted ? (
+                      <span className="font-bold text-gray-900">{consultant.projectsCompleted}+</span>
+                    ) : (
+                      <span className="text-gray-400 text-xs">Not yet rated</span>
+                    )}
                   </div>
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Avg. Response Time</span>
                     </div>
-                    <span className="font-bold text-gray-900">{consultant.responseTime || 2}h</span>
+                    {consultant.responseTime ? (
+                      <span className="font-bold text-gray-900">{consultant.responseTime}h</span>
+                    ) : (
+                      <span className="text-gray-400 text-xs">Not yet rated</span>
+                    )}
                   </div>
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-700">Client Rating</span>
                     </div>
-                    <span className="font-bold text-gray-900">{consultant.clientRating || 4.8}</span>
+                    {consultant.clientRating ? (
+                      <span className="font-bold text-gray-900">{consultant.clientRating}</span>
+                    ) : (
+                      <span className="text-gray-400 text-xs">Not yet rated</span>
+                    )}
                   </div>
                 </div>
               </div>
