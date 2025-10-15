@@ -230,13 +230,15 @@ export default function DirectoryClient({ initialData, searchParams }: Directory
                     {/* Logo and Name */}
                     <div className="flex items-center gap-3 mb-4">
                       {consultant.logo ? (
-                        <Image
-                          src={consultant.logo}
-                          alt={`${consultant.name} logo`}
-                          width={48}
-                          height={48}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 shadow-sm p-1 flex items-center justify-center">
+                          <Image
+                            src={consultant.logo}
+                            alt={`${consultant.name} logo`}
+                            width={40}
+                            height={40}
+                            className="max-w-full max-h-full object-contain rounded-full"
+                          />
+                        </div>
                       ) : (
                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                           <span className="text-white font-bold">
