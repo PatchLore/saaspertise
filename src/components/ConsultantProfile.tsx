@@ -109,13 +109,21 @@ export default function ConsultantProfile({ consultant }: ConsultantProfileProps
                     />
                   ) : consultant.logo ? (
                     <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 shadow-lg p-2 flex items-center justify-center">
-                      <Image
-                        src={consultant.logo}
-                        alt={`${consultant.name} logo`}
-                        width={120}
-                        height={120}
-                        className="max-w-full max-h-full object-contain"
-                      />
+                      {consultant.logo.endsWith('.svg') ? (
+                        <img
+                          src={consultant.logo}
+                          alt={`${consultant.name} logo`}
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      ) : (
+                        <Image
+                          src={consultant.logo}
+                          alt={`${consultant.name} logo`}
+                          width={120}
+                          height={120}
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      )}
                     </div>
                   ) : (
                     <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">

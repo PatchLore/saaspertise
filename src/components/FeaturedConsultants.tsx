@@ -88,13 +88,21 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                         />
                       ) : consultant.logo ? (
                         <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-3 flex items-center justify-center">
-                          <Image
-                            src={consultant.logo}
-                            alt={`${consultant.name} logo`}
-                            width={80}
-                            height={80}
-                            className="max-w-full max-h-full object-contain"
-                          />
+                          {consultant.logo.endsWith('.svg') ? (
+                            <img
+                              src={consultant.logo}
+                              alt={`${consultant.name} logo`}
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          ) : (
+                            <Image
+                              src={consultant.logo}
+                              alt={`${consultant.name} logo`}
+                              width={80}
+                              height={80}
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          )}
                         </div>
                       ) : (
                         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
