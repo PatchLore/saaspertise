@@ -72,7 +72,7 @@ async function main() {
       profilePhoto: null,
       description: 'This is AI Now specializes in implementing cutting-edge artificial intelligence solutions for businesses looking to stay ahead in the digital transformation era. We provide comprehensive AI strategy, implementation, and optimization services across various industries.',
       shortDescription: 'Cutting-edge AI solutions and automation for modern businesses',
-      website: 'https://thisisainow.com',
+      website: 'https://www.thisainow.com',
       email: 'hello@thisisainow.com',
       phone: '+44 20 7123 4567',
       region: 'London',

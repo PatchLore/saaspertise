@@ -411,7 +411,7 @@ export const mockConsultants: MockConsultant[] = [
     services: ["AI Implementation", "Machine Learning", "Automation", "Data Analytics", "AI Strategy"],
     industries: ["Technology", "Healthcare", "Finance", "Retail", "Manufacturing"],
     isPremium: true,
-    website: "https://thisisainow.com",
+    website: "https://www.thisainow.com",
     email: "hello@thisisainow.com",
     phone: "+44 20 7123 4567",
     hourlyRate: 14000, // £140/hour
