@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'worxwide.com',
+        port: '',
+        pathname: '/wp-content/**',
+      },
     ],
   },
   // Security headers
