@@ -121,13 +121,6 @@ export default function Navbar() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
               <Link
-                href="/solutions"
-                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Solutions
-              </Link>
-              <Link
                 href="/directory"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
                 onClick={() => setIsOpen(false)}

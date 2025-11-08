@@ -44,11 +44,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-gray-400 hover:text-white transition-colors">
-                  Solutions
-                </Link>
-              </li>
-              <li>
                 <Link href="/auth/signup" className="text-gray-400 hover:text-white transition-colors">
                   List Your Services
                 </Link>

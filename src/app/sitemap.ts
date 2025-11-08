@@ -1,103 +1,27 @@
 import { MetadataRoute } from 'next'
-import { prisma } from '@/lib/prisma'
+
+import { getSupabaseServerClient } from '@/lib/supabase'
+import { toSlug } from '@/lib/slug'
+
+const LIMIT = 5000
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.saaspertise.com'
+  const supabase = getSupabaseServerClient()
 
-  // Static pages
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/directory`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions/quoteflow`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/auth/signin`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/auth/signup`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-  ]
+  const { data, error } = await supabase
+    .from('companies')
+    .select('name, created_at')
+    .order('created_at', { ascending: false })
+    .limit(LIMIT)
 
-  // Dynamic consultant pages
-  let consultantPages: MetadataRoute.Sitemap = []
-  
-  try {
-    const consultants = await prisma.consultant.findMany({
-      where: {
-        isApproved: true,
-      },
-      select: {
-        id: true,
-        updatedAt: true,
-      },
-    })
-
-    consultantPages = consultants.map((consultant) => ({
-      url: `${baseUrl}/consultant/${consultant.id}`,
-      lastModified: consultant.updatedAt,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }))
-  } catch (error) {
-    // If database is unavailable, just return static pages
-    console.error('Error fetching consultants for sitemap:', error)
+  if (error || !data) {
+    return []
   }
 
-  return [...staticPages, ...consultantPages]
+  return data
+    .filter((company) => company.name)
+    .map((company) => ({
+      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.saaspertise.com'}/directory/${toSlug(company.name)}`,
+      lastModified: company.created_at ? new Date(company.created_at) : new Date(),
+    }))
 }

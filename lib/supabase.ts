@@ -15,7 +15,6 @@ export function getSupabaseServerClient(): SupabaseClient {
   if (!SUPABASE_URL) {
     throw new Error('SUPABASE_URL is not defined in the environment.')
   }
-
   if (!SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY is not defined in the environment.')
   }
@@ -36,5 +35,3 @@ export function createSupabaseBrowserClient(): SupabaseClient {
 
   return createClient(NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY)
 }
-
-

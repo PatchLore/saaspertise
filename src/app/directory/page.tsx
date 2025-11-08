@@ -1,234 +1,190 @@
-import { Suspense } from 'react'
-import { Metadata } from 'next'
-import { prisma } from '@/lib/prisma'
-import DirectoryClient from '@/components/DirectoryClient'
-import Breadcrumbs, { breadcrumbSets } from '@/components/Breadcrumbs'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: "Browse Consultants",
-  description: "Browse our directory of verified SaaS and AI consultants. Filter by location, expertise, industry, and services. Find the perfect consultant for your business needs with our comprehensive search and filtering tools.",
-  keywords: [
-    "consultant directory",
-    "SaaS consultants directory",
-    "AI consultants directory", 
-    "tech consultants",
-    "business consultants",
-    "filter consultants",
-    "find consultants",
-    "consultant search"
-  ],
-  openGraph: {
-    title: "Browse SaaS & AI Consultants Directory",
-    description: "Search and filter through our directory of verified SaaS and AI consultants. Find experts by location, expertise, and industry.",
-    url: "https://www.saaspertise.com/directory",
-    images: [
-      {
-        url: "/og-directory.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Saaspertise Consultants Directory",
-      },
-    ],
-  },
-  twitter: {
-    title: "Browse SaaS & AI Consultants Directory",
-    description: "Search and filter through our directory of verified SaaS and AI consultants. Find experts by location, expertise, and industry.",
-  },
-  alternates: {
-    canonical: "/directory",
-  },
-}
+import { getSupabaseServerClient } from '@/lib/supabase'
+import { CompanyCard } from '@/components/CompanyCard'
 
-// Import Consultant type from DirectoryClient
-type Consultant = {
-  id: string
+const PAGE_SIZE = 50
+
+interface Company {
   name: string
-  logo?: string | null
-  shortDescription?: string | null
+  website: string
+  category: string
   description: string
-  region: string
-  services: string[]
-  industries: string[]
-  isPremium: boolean
-  website?: string | null
+  logo_url?: string | null
 }
 
-interface SearchParams {
-  search?: string
-  service?: string
-  industry?: string
-  region?: string
-  premium?: string
-  page?: string
-  [key: string]: string | string[] | undefined
-}
-
-async function getConsultants(searchParams: SearchParams) {
-  const {
-    search,
-    service,
-    industry,
-    region,
-    premium,
-    page = '1'
-  } = searchParams
-
-  try {
-    // Build where clause for database query
-    const where: {
-      isApproved: boolean
-      OR?: Array<{
-        name?: { contains: string; mode: 'insensitive' }
-        description?: { contains: string; mode: 'insensitive' }
-        industries?: { has: string }
-      }>
-      services?: { hasSome: string[] }
-      AND?: Array<{
-        services: { hasSome: string[] }
-      }>
-      industries?: { has: string }
-      region?: string | { in: string[] }
-      isPremium?: boolean
-    } = {
-      isApproved: true
-    }
-
-    // Apply search filter
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-        { industries: { has: search } }
-      ]
-    }
-
-    // Apply service filter
-    if (service && service !== 'ALL') {
-      if (service === 'SAAS') {
-        where.services = { hasSome: ['SaaS Development', 'SaaS', 'Cloud Migration'] }
-      } else if (service === 'AI') {
-        where.services = { hasSome: ['AI Implementation', 'Machine Learning', 'AI Strategy'] }
-      } else if (service === 'BOTH') {
-        where.AND = [
-          { services: { hasSome: ['SaaS Development', 'SaaS', 'Cloud Migration'] } },
-          { services: { hasSome: ['AI Implementation', 'Machine Learning', 'AI Strategy'] } }
-        ]
-      }
-    }
-
-    // Apply industry filter
-    if (industry) {
-      where.industries = { has: industry }
-    }
-
-    // Apply region filter
-    if (region) {
-      const regionMapping: { [key: string]: string[] } = {
-        'greater london': ['London'],
-        'south east england': ['London', 'Brighton', 'Oxford', 'Cambridge'],
-        'greater manchester': ['Manchester'],
-        'west midlands (birmingham)': ['Birmingham'],
-        'central scotland (edinburgh/glasgow)': ['Edinburgh', 'Glasgow'],
-        'leeds & yorkshire': ['Leeds', 'York', 'Sheffield'],
-        'liverpool & merseyside': ['Liverpool'],
-        'bristol & south west': ['Bristol', 'Bath', 'Plymouth'],
-        'cardiff & south wales': ['Cardiff', 'Swansea'],
-        'belfast & northern ireland': ['Belfast'],
-        'newcastle & north east': ['Newcastle', 'Sunderland'],
-        'sheffield & south yorkshire': ['Sheffield'],
-        'north wales': ['Bangor', 'Wrexham'],
-        'remote/uk-wide': ['Remote', 'UK-wide'],
-        'channel islands': ['Jersey', 'Guernsey'],
-        'europe': ['Europe'],
-        'international': ['International']
-      }
-      
-      const mappedRegions = regionMapping[region.toLowerCase()]
-      if (mappedRegions) {
-        where.region = { in: mappedRegions }
-      } else {
-        where.region = region
-      }
-    }
-
-    // Apply premium filter
-    if (premium === 'true') {
-      where.isPremium = true
-    }
-
-    // Get all consultants with filters
-    const consultants = await prisma.consultant.findMany({
-      where,
-      orderBy: [
-        { isPremium: 'desc' },
-        { createdAt: 'desc' }
-      ]
-    })
-
-    const total = consultants.length
-    const pageSize = 12
-    const currentPage = parseInt(page)
-    const startIndex = (currentPage - 1) * pageSize
-    const endIndex = startIndex + pageSize
-    const paginatedConsultants = consultants.slice(startIndex, endIndex)
-
-    // Get unique industries and regions for filters
-    const allIndustries = [...new Set(consultants.flatMap(c => c.industries))].sort()
-    const allRegions = [...new Set(consultants.map(c => c.region))].sort()
-
-    return {
-      consultants: paginatedConsultants as Consultant[],
-      total,
-      industries: allIndustries,
-      regions: allRegions,
-      currentPage,
-      totalPages: Math.ceil(total / pageSize)
-    }
-  } catch (error) {
-    // Log error for debugging but don't expose in production
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error fetching consultants:', error)
-    }
-    return {
-      consultants: [],
-      total: 0,
-      industries: [],
-      regions: [],
-      currentPage: 1,
-      totalPages: 0
-    }
+interface DirectoryPageProps {
+  searchParams: {
+    search?: string
+    category?: string
+    page?: string
   }
 }
 
-export default async function DirectoryPage({
-  searchParams
-}: {
-  searchParams: Promise<SearchParams>
-}) {
-  // Await searchParams in Next.js 15
-  const resolvedSearchParams = await searchParams
-  const data = await getConsultants(resolvedSearchParams)
+function parsePage(value?: string): number {
+  const page = Number(value)
+  return Number.isFinite(page) && page > 0 ? Math.floor(page) : 1
+}
+
+async function fetchCompanies(search?: string, category?: string, page = 1) {
+  const supabase = getSupabaseServerClient()
+
+  const offset = (page - 1) * PAGE_SIZE
+  const rangeEnd = offset + PAGE_SIZE - 1
+
+  let query = supabase
+    .from('companies')
+    .select('name, website, category, description, logo_url', { count: 'exact', head: false })
+    .order('name')
+
+  if (search) {
+    query = query.ilike('name', `%${search}%`)
+  }
+  if (category) {
+    query = query.eq('category', category)
+  }
+
+  try {
+    const { data, count, error } = await query.range(offset, rangeEnd)
+    if (error) {
+      console.error('Supabase query error', error)
+      return { companies: [] as Company[], total: 0 }
+    }
+
+    return {
+      companies: (data ?? []) as Company[],
+      total: count ?? 0,
+    }
+  } catch (err) {
+    console.error('Supabase fetch failed', err)
+    return { companies: [] as Company[], total: 0 }
+  }
+}
+
+export default async function DirectoryPage({ searchParams }: DirectoryPageProps) {
+  const search = (searchParams.search ?? '').trim() || undefined
+  const category = (searchParams.category ?? '').trim() || undefined
+  const page = parsePage(searchParams.page)
+
+  const { companies, total } = await fetchCompanies(search, category, page)
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
+  const prevPage = page > 1 ? page - 1 : null
+  const nextPage = page < totalPages ? page + 1 : null
+
+  const fallbackLogo = 'https://saaspertise.com/default-logo.png'
+
+  const buildQuery = (params: Record<string, string | number | undefined>) => {
+    const query = new URLSearchParams()
+    if (params.search) query.set('search', String(params.search))
+    if (params.category) query.set('category', String(params.category))
+    if (params.page) query.set('page', String(params.page))
+    return query.toString()
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumbs items={breadcrumbSets.directory} className="mb-6" />
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Consultant Directory
-          </h1>
-          <p className="text-gray-600">
-            Discover expert consultants specializing in SaaS and AI solutions
-          </p>
-        </div>
-      </div>
+    <main className="mx-auto max-w-6xl px-4 py-10">
+      <section className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <form className="grid gap-4 md:grid-cols-3" method="get">
+          <div className="md:col-span-2">
+            <label htmlFor="search" className="mb-2 block text-sm font-medium text-gray-700">
+              Search
+            </label>
+            <input
+              id="search"
+              name="search"
+              defaultValue={search ?? ''}
+              placeholder="Search by company name"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              type="search"
+            />
+          </div>
 
-      <Suspense fallback={<div className="flex justify-center items-center py-20">Loading...</div>}>
-        <DirectoryClient 
-          initialData={data}
-          searchParams={resolvedSearchParams}
-        />
-      </Suspense>
-    </div>
+          <div>
+            <label htmlFor="category" className="mb-2 block text-sm font-medium text-gray-700">
+              Category
+            </label>
+            <select
+              id="category"
+              name="category"
+              defaultValue={category ?? ''}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            >
+              <option value="">All categories</option>
+              <option value="AI Tool">AI Tool</option>
+              <option value="AI Agent">AI Agent</option>
+              <option value="AI Startup">AI Startup</option>
+              <option value="SaaS Company">SaaS Company</option>
+              <option value="Tech Company">Tech Company</option>
+              <option value="Free Developer Resource">Free Developer Resource</option>
+              <option value="YC Company">YC Company</option>
+              <option value="YC Startup">YC Startup</option>
+            </select>
+          </div>
+
+          <div className="md:col-span-3 flex flex-wrap gap-3 text-sm text-gray-600">
+            <button
+              type="submit"
+              className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-blue-700"
+            >
+              Apply filters
+            </button>
+
+            {(search || category) && (
+              <Link
+                href="/directory"
+                className="rounded-md border border-gray-300 px-4 py-2 text-gray-600 hover:bg-gray-50"
+              >
+                Clear filters
+              </Link>
+            )}
+          </div>
+        </form>
+      </section>
+
+      <section className="mb-6 text-sm text-gray-600">
+        Showing {(page - 1) * PAGE_SIZE + 1}–
+        {Math.min(page * PAGE_SIZE, total)} of {total.toLocaleString()} companies
+      </section>
+
+      <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {companies.map((company) => (
+          <CompanyCard
+            key={`${company.name}-${company.website}`}
+            name={company.name}
+            description={company.description}
+            category={company.category}
+            logoUrl={company.logo_url || fallbackLogo}
+            href={`/directory/${encodeURIComponent(company.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''))}`}
+            fallbackLogo={fallbackLogo}
+          />
+        ))}
+      </section>
+
+      <nav className="mt-8 flex items-center justify-between text-sm">
+        <div>
+          {prevPage && (
+            <Link
+              href={`/directory?${buildQuery({ search, category, page: prevPage })}`}
+              className="rounded-md border border-gray-300 px-3 py-2 text-gray-700 hover:bg-gray-50"
+            >
+              ← Previous
+            </Link>
+          )}
+        </div>
+        <div className="text-gray-600">Page {page} of {totalPages}</div>
+        <div>
+          {nextPage && (
+            <Link
+              href={`/directory?${buildQuery({ search, category, page: nextPage })}`}
+              className="rounded-md border border-gray-300 px-3 py-2 text-gray-700 hover:bg-gray-50"
+            >
+              Next →
+            </Link>
+          )}
+        </div>
+      </nav>
+    </main>
   )
 }
