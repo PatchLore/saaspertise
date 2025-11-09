@@ -34,6 +34,8 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
     )
   }
 
+  const FALLBACK_LOGO = 'https://saaspertise.com/default-logo.png'
+
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
@@ -78,15 +80,7 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                   {/* Logo - Fixed size container */}
                   <div className="flex justify-center mb-6 h-20">
                     <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full shadow-md border-2 border-gray-100">
-                      {consultant.profilePhoto ? (
-                        <Image
-                          src={consultant.profilePhoto}
-                          alt={consultant.name}
-                          width={64}
-                          height={64}
-                          className="w-16 h-16 rounded-full object-cover"
-                        />
-                      ) : consultant.logo ? (
+                      {consultant.logo ? (
                         <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-3 flex items-center justify-center">
                           {consultant.logo.endsWith('.svg') ? (
                             <img
@@ -96,7 +90,7 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                             />
                           ) : (
                             <Image
-                              src={consultant.logo}
+                              src={consultant.logo || FALLBACK_LOGO}
                               alt={`${consultant.name} logo`}
                               width={80}
                               height={80}
@@ -172,7 +166,7 @@ export default function FeaturedConsultants({ consultants }: FeaturedConsultants
                 {/* View Profile Button - Always at bottom */}
                 <div className="mt-6">
                   <Link
-                    href={`/consultant/${consultant.id}`}
+                    href={`/directory?search=${encodeURIComponent(consultant.name)}`}
                     className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   >
                     View Profile

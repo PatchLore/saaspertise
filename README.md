@@ -184,6 +184,17 @@ The application uses the following main entities:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## Quick Data Quality Checks
+
+After running the ingestion pipeline you can spot-check the dataset with:
+
+```bash
+grep -i "openai" data/companies_raw.csv | head -3
+grep -i ".ai" data/companies_raw.csv | wc -l
+grep -i "ycombinator.com/companies" data/companies_raw.csv | wc -l
+head -5 data/companies_raw.csv
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

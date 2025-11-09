@@ -7,7 +7,7 @@ import logging
 import re
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 import pandas as pd
@@ -264,39 +264,6 @@ def deduplicate(companies: List[Company]) -> List[Company]:
             deduped.append(company)
 
     return deduped
-
-
-def extract_domain(url: str) -> str:
-    """Extract the domain portion of a URL for Clearbit logo lookup."""
-    try:
-        parsed = urlparse(url)
-        domain = parsed.netloc or parsed.path
-        return domain.lower()
-    except Exception:  # noqa: BLE001
-        return ""
-
-
-def resolve_logo_url(website: str) -> str:
-    """Return a Clearbit logo URL when available; fallback to default image."""
-    domain = extract_domain(website)
-    if not domain:
-        return DEFAULT_LOGO
-
-    logo_url = f"https://logo.clearbit.com/{domain}"
-    try:
-        response = requests.head(logo_url, timeout=LOGO_TIMEOUT, allow_redirects=True)
-        if response.status_code == 200 and response.headers.get("Content-Type", "").startswith("image"):
-            return logo_url
-
-        # Some hosts may not support HEAD properly; try GET as fallback.
-        if response.status_code in {400, 403, 405}:
-            response = requests.get(logo_url, timeout=LOGO_TIMEOUT, stream=True)
-            if response.status_code == 200 and response.headers.get("Content-Type", "").startswith("image"):
-                return logo_url
-    except Exception as exc:  # noqa: BLE001
-        logging.debug("Logo lookup failed for %s: %s", domain, exc)
-
-    return DEFAULT_LOGO
 
 
 def enrich_logos(companies: List[Company]) -> List[Company]:

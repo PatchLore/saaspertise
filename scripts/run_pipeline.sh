@@ -22,7 +22,7 @@ fi
 
 # Step 3 — Upload
 echo "🔹 Uploading to Supabase..."
-if ! python3 scripts/upload_supabase.py; then
+if ! python3 scripts/upload_supabase_upsert.py; then
   echo "❌ Upload failed"
   exit 1
 fi
