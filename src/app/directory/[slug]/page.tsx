@@ -45,10 +45,10 @@ async function loadCompany(slug: string): Promise<Company | null> {
     const supabase = getSupabaseServerClient();
 
     // Decode the slug in case it was URL encoded
-    const decodedSlug = decodeURIComponent(slug);
+    const decodedSlug = decodeURIComponent(slug).trim();
+    const normalizedSlug = decodedSlug.toLowerCase();
 
-    // First try to find by slug column (most efficient)
-    // Try the decoded slug first
+    // Strategy 1: Try to find by slug column (most efficient)
     const { data: slugData, error: slugError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
@@ -60,53 +60,67 @@ async function loadCompany(slug: string): Promise<Company | null> {
       return slugData;
     }
 
-    // Try the original slug if different
-    if (slug !== decodedSlug) {
-      const { data: slugData2, error: slugError2 } = await supabase
-        .from("companies")
-        .select("name, website, category, description, logo_url, created_at, slug")
-        .eq("slug", slug)
-        .limit(1)
-        .maybeSingle();
+    // Strategy 2: Try case-insensitive slug match
+    const { data: slugDataCaseInsensitive } = await supabase
+      .from("companies")
+      .select("name, website, category, description, logo_url, created_at, slug")
+      .ilike("slug", decodedSlug)
+      .limit(1)
+      .maybeSingle();
 
-      if (slugData2 && !slugError2) {
-        return slugData2;
+    if (slugDataCaseInsensitive) {
+      return slugDataCaseInsensitive;
+    }
+
+    // Strategy 3: Try to find by name (slug might be generated from name)
+    // First, try to reverse-engineer the name from the slug
+    // If slug is "example-company", try to find companies with similar names
+    const nameFromSlug = decodedSlug.replace(/-/g, " ");
+    
+    const { data: nameMatches } = await supabase
+      .from("companies")
+      .select("name, website, category, description, logo_url, created_at, slug")
+      .or(`name.ilike.%${nameFromSlug}%,name.ilike.%${decodedSlug}%`)
+      .limit(50);
+
+    if (nameMatches && nameMatches.length > 0) {
+      // Find the best match by comparing generated slugs
+      const bestMatch = nameMatches.find(
+        (c) => toSlug(c.name).toLowerCase() === normalizedSlug
+      );
+      if (bestMatch) {
+        return bestMatch;
       }
     }
 
-    // Fallback: fetch companies and match by slugified name
-    // Use a more targeted query - try to find by name first if slug doesn't work
+    // Strategy 4: Fetch all and match by slugified name (last resort)
     const { data: allData, error: allError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
-      .limit(5000); // Increased limit to ensure we find the company
+      .limit(5000);
 
     if (allError || !allData) {
       console.error("Failed to load companies:", allError?.message);
       return null;
     }
 
-    // Try multiple matching strategies with better normalization
-    const normalizedSlug = decodedSlug.toLowerCase().trim();
-    const normalizedOriginalSlug = slug.toLowerCase().trim();
-
+    // Try multiple matching strategies
     const matched =
       // Exact slug match (from DB)
       allData.find((company) => company.slug?.toLowerCase().trim() === normalizedSlug) ??
-      allData.find((company) => company.slug?.toLowerCase().trim() === normalizedOriginalSlug) ??
       // Generated slug match
-      allData.find((company) => toSlug(company.name) === normalizedSlug) ??
-      allData.find((company) => toSlug(company.name) === normalizedOriginalSlug) ??
-      // Exact name match (case insensitive)
-      allData.find((company) => company.name.toLowerCase().trim() === normalizedSlug) ??
-      allData.find((company) => company.name.toLowerCase().trim() === normalizedOriginalSlug) ??
+      allData.find((company) => toSlug(company.name).toLowerCase() === normalizedSlug) ??
+      // Partial name match
+      allData.find((company) => 
+        company.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === normalizedSlug
+      ) ??
       null;
 
     if (!matched) {
       console.error(`Company not found for slug: "${slug}" (decoded: "${decodedSlug}")`);
       console.error(`Total companies in DB: ${allData.length}`);
       if (allData.length > 0) {
-        console.error("First 10 companies:", allData.slice(0, 10).map((c) => ({
+        console.error("Sample companies:", allData.slice(0, 5).map((c) => ({
           name: c.name,
           dbSlug: c.slug || "(null)",
           generatedSlug: toSlug(c.name),
