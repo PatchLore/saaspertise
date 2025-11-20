@@ -177,7 +177,6 @@ export default async function DirectoryPage({
             logoUrl={company.logo_url}
             website={company.website}
             href={`/directory/${(company.slug && company.slug.trim()) ? company.slug : toSlug(company.name)}`}
-            fallbackLogo={fallbackLogo}
           />
         ))}
       </section>
@@ -195,7 +194,7 @@ export default async function DirectoryPage({
         </div>
         <div className="text-gray-600">
           Page {page} of {totalPages}
-        </div>
+      </div>
         <div>
           {nextPage && (
             <Link
@@ -205,7 +204,7 @@ export default async function DirectoryPage({
               Next →
             </Link>
           )}
-        </div>
+    </div>
       </nav>
     </main>
   );

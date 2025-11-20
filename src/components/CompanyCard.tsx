@@ -11,7 +11,6 @@ interface CompanyCardProps {
   logoUrl?: string | null;
   website?: string | null;
   href: string;
-  fallbackLogo?: string;
 }
 
 const DEFAULT_LOGO = "https://saaspertise.com/default-logo.png";
