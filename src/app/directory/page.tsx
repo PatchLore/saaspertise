@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { getSupabaseServerClient } from "@/lib/supabase";
+import { toSlug } from "@/lib/slug";
 import { CompanyCard } from "@/components/CompanyCard";
 
 const PAGE_SIZE = 50;
@@ -175,12 +176,7 @@ export default async function DirectoryPage({
             category={company.category}
             logoUrl={company.logo_url}
             website={company.website}
-            href={`/directory/${encodeURIComponent(
-              company.name
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/(^-|-$)+/g, ""),
-            )}`}
+            href={`/directory/${toSlug(company.name)}`}
             fallbackLogo={fallbackLogo}
           />
         ))}

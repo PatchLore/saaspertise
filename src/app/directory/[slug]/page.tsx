@@ -44,6 +44,19 @@ async function loadCompany(slug: string): Promise<Company | null> {
   try {
     const supabase = getSupabaseServerClient();
 
+    // First try to find by slug column (most efficient)
+    const { data: slugData, error: slugError } = await supabase
+      .from("companies")
+      .select("name, website, category, description, logo_url, created_at")
+      .eq("slug", slug)
+      .limit(1)
+      .single();
+
+    if (slugData && !slugError) {
+      return slugData;
+    }
+
+    // Fallback: fetch all and match by slugified name (for backwards compatibility)
     const { data, error } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at");
