@@ -42,7 +42,7 @@ async function fetchCompanies(search?: string, category?: string, page = 1) {
 
     let query = supabase
       .from("companies")
-      .select("name, website, category, description, logo_url", {
+      .select("name, website, category, description, logo_url, slug", {
         count: "exact",
         head: false,
       })
@@ -176,7 +176,7 @@ export default async function DirectoryPage({
             category={company.category}
             logoUrl={company.logo_url}
             website={company.website}
-            href={`/directory/${toSlug(company.name)}`}
+            href={`/directory/${company.slug || toSlug(company.name)}`}
             fallbackLogo={fallbackLogo}
           />
         ))}

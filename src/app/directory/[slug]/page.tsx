@@ -44,13 +44,17 @@ async function loadCompany(slug: string): Promise<Company | null> {
   try {
     const supabase = getSupabaseServerClient();
 
+    // Decode the slug in case it was URL encoded
+    const decodedSlug = decodeURIComponent(slug);
+
     // First try to find by slug column (most efficient)
+    // Try both the decoded slug and the original slug
     const { data: slugData, error: slugError } = await supabase
       .from("companies")
-      .select("name, website, category, description, logo_url, created_at")
-      .eq("slug", slug)
+      .select("name, website, category, description, logo_url, created_at, slug")
+      .or(`slug.eq.${decodedSlug},slug.eq.${slug}`)
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (slugData && !slugError) {
       return slugData;
@@ -59,18 +63,29 @@ async function loadCompany(slug: string): Promise<Company | null> {
     // Fallback: fetch all and match by slugified name (for backwards compatibility)
     const { data, error } = await supabase
       .from("companies")
-      .select("name, website, category, description, logo_url, created_at");
+      .select("name, website, category, description, logo_url, created_at, slug")
+      .limit(1000); // Limit to prevent fetching too many
 
     if (error || !data) {
       console.error("Failed to load company:", error?.message);
       return null;
     }
 
-    return (
+    // Try multiple matching strategies
+    const matched =
+      data.find((company) => company.slug === decodedSlug) ??
+      data.find((company) => toSlug(company.name) === decodedSlug) ??
       data.find((company) => toSlug(company.name) === slug) ??
+      data.find((company) => company.name === decodedSlug) ??
       data.find((company) => company.name === slug) ??
-      null
-    );
+      null;
+
+    if (!matched) {
+      console.error(`Company not found for slug: ${slug} (decoded: ${decodedSlug})`);
+      console.error("Sample slugs from DB:", data.slice(0, 5).map((c) => ({ name: c.name, slug: c.slug, generated: toSlug(c.name) })));
+    }
+
+    return matched;
   } catch (err) {
     console.error("Error loading company:", err);
     return null;
