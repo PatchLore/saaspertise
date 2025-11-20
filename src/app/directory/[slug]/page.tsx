@@ -48,16 +48,30 @@ async function loadCompany(slug: string): Promise<Company | null> {
     const decodedSlug = decodeURIComponent(slug);
 
     // First try to find by slug column (most efficient)
-    // Try both the decoded slug and the original slug
-    const { data: slugData, error: slugError } = await supabase
+    // Try the decoded slug first
+    let { data: slugData, error: slugError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
-      .or(`slug.eq.${decodedSlug},slug.eq.${slug}`)
+      .eq("slug", decodedSlug)
       .limit(1)
       .maybeSingle();
 
     if (slugData && !slugError) {
       return slugData;
+    }
+
+    // Try the original slug if different
+    if (slug !== decodedSlug) {
+      const { data: slugData2, error: slugError2 } = await supabase
+        .from("companies")
+        .select("name, website, category, description, logo_url, created_at, slug")
+        .eq("slug", slug)
+        .limit(1)
+        .maybeSingle();
+
+      if (slugData2 && !slugError2) {
+        return slugData2;
+      }
     }
 
     // Fallback: fetch all and match by slugified name (for backwards compatibility)
