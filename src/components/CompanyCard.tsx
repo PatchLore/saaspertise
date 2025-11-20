@@ -33,7 +33,6 @@ export function CompanyCard({
   logoUrl,
   website,
   href,
-  fallbackLogo = DEFAULT_LOGO,
 }: CompanyCardProps) {
   const clearbitLogo = !logoUrl && website ? getClearbitLogo(website) : null;
 

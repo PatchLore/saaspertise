@@ -49,7 +49,7 @@ async function loadCompany(slug: string): Promise<Company | null> {
 
     // First try to find by slug column (most efficient)
     // Try the decoded slug first
-    let { data: slugData, error: slugError } = await supabase
+    const { data: slugData, error: slugError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
       .eq("slug", decodedSlug)
