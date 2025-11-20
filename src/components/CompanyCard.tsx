@@ -36,7 +36,6 @@ export function CompanyCard({
   fallbackLogo = DEFAULT_LOGO,
 }: CompanyCardProps) {
   const clearbitLogo = !logoUrl && website ? getClearbitLogo(website) : null;
-  const imageSrc = logoUrl || clearbitLogo || fallbackLogo;
 
   return (
     <article className="flex h-full flex-col gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">

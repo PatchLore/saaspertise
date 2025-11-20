@@ -7,9 +7,9 @@ import logging
 import os
 from pathlib import Path
 
-import pandas as pd
+import pandas as pd  # type: ignore[reportMissingImports]
 
-CSV_PATH = Path(os.getenv("COMPANY_CSV_PATH", "data/companies_raw.csv"))
+CSV_PATH = Path("data/companies_raw.csv")
 
 
 def validate(df: pd.DataFrame) -> pd.DataFrame:

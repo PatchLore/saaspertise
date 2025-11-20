@@ -74,17 +74,6 @@ export async function generateMetadata({
   };
 }
 
-function buildOrganizationJsonLd(company: Company) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: company.name,
-    url: company.website,
-    description: company.description,
-    logo: company.logo_url || FALLBACK_LOGO,
-    category: company.category,
-  };
-}
 
 export default async function CompanyPage({ params }: { params: PageParams }) {
   const company = await loadCompany(params.slug);
