@@ -1,50 +1,65 @@
-import { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Image as ImageIcon } from "lucide-react";
 
-import { getSupabaseServerClient } from '@/lib/supabase'
-import { toSlug } from '@/lib/slug'
+import { getSupabaseServerClient } from "@/lib/supabase";
+import { toSlug } from "@/lib/slug";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-const FALLBACK_LOGO = 'https://saaspertise.com/default-logo.png'
+const FALLBACK_LOGO = "https://saaspertise.com/default-logo.png";
+
+function getClearbitLogo(website: string | null | undefined): string | null {
+  if (!website) return null;
+  try {
+    const url = new URL(website);
+    return `https://logo.clearbit.com/${url.hostname}`;
+  } catch {
+    return null;
+  }
+}
 
 interface Company {
-  name: string
-  website: string
-  category: string
-  description: string
-  logo_url?: string | null
-  created_at?: string | null
+  name: string;
+  website: string;
+  category: string;
+  description: string;
+  logo_url?: string | null;
+  created_at?: string | null;
 }
 
 interface PageParams {
-  slug: string
+  slug: string;
 }
 
 async function loadCompany(slug: string): Promise<Company | null> {
-  const supabase = getSupabaseServerClient()
+  const supabase = getSupabaseServerClient();
 
   const { data, error } = await supabase
-    .from('companies')
-    .select('name, website, category, description, logo_url, created_at')
+    .from("companies")
+    .select("name, website, category, description, logo_url, created_at");
 
   if (error || !data) {
-    throw new Error(error?.message ?? 'Failed to load company.')
+    throw new Error(error?.message ?? "Failed to load company.");
   }
 
   return (
     data.find((company) => toSlug(company.name) === slug) ??
     data.find((company) => company.name === slug) ??
     null
-  )
+  );
 }
 
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
-  const company = await loadCompany(params.slug)
+export async function generateMetadata({
+  params,
+}: {
+  params: PageParams;
+}): Promise<Metadata> {
+  const company = await loadCompany(params.slug);
   if (!company) {
-    return {}
+    return {};
   }
 
   return {
@@ -56,25 +71,25 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
       url: company.website,
       images: company.logo_url ? [company.logo_url] : undefined,
     },
-  }
+  };
 }
 
 function buildOrganizationJsonLd(company: Company) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
+    "@context": "https://schema.org",
+    "@type": "Organization",
     name: company.name,
     url: company.website,
     description: company.description,
     logo: company.logo_url || FALLBACK_LOGO,
     category: company.category,
-  }
+  };
 }
 
 export default async function CompanyPage({ params }: { params: PageParams }) {
-  const company = await loadCompany(params.slug)
+  const company = await loadCompany(params.slug);
   if (!company) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -83,8 +98,8 @@ export default async function CompanyPage({ params }: { params: PageParams }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
+            "@context": "https://schema.org",
+            "@type": "Organization",
             name: company.name,
             url: company.website,
             logo: company.logo_url || FALLBACK_LOGO,
@@ -93,19 +108,40 @@ export default async function CompanyPage({ params }: { params: PageParams }) {
       />
 
       <section className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <div className="mb-6 flex items-center gap-4">
-          <div className="relative h-20 w-20 overflow-hidden rounded-full border border-gray-200 bg-gray-50">
-            <Image
-              src={company.logo_url || FALLBACK_LOGO}
-              alt={`${company.name} logo`}
-              fill
-              sizes="80px"
-              className="object-contain"
-              onError={(event) => {
-                const target = event.currentTarget as HTMLImageElement
-                target.src = FALLBACK_LOGO
-              }}
-            />
+        <div className="mb-6">
+          <div className="w-32 h-32 rounded-xl bg-gray-50 flex items-center justify-center mb-6 overflow-hidden">
+            {company.logo_url ? (
+              <Image
+                src={company.logo_url}
+                alt={`${company.name} logo`}
+                width={128}
+                height={128}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  const clearbit = getClearbitLogo(company.website);
+                  if (clearbit) {
+                    target.src = clearbit;
+                  } else {
+                    target.style.display = "none";
+                  }
+                }}
+              />
+            ) : company.website ? (
+              <Image
+                src={getClearbitLogo(company.website) || FALLBACK_LOGO}
+                alt={`${company.name} logo`}
+                width={128}
+                height={128}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.style.display = "none";
+                }}
+              />
+            ) : (
+              <ImageIcon className="w-12 h-12 text-gray-300" />
+            )}
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{company.name}</h1>
@@ -125,5 +161,5 @@ export default async function CompanyPage({ params }: { params: PageParams }) {
         </Link>
       </section>
     </main>
-  )
+  );
 }

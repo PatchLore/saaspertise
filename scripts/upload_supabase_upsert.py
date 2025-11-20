@@ -30,6 +30,21 @@ def load_environment() -> Dict[str, str]:
     return {"url": supabase_url.rstrip('/'), "key": service_key}
 
 
+def get_clearbit_logo(website: str | None) -> str | None:
+    """Generate Clearbit logo URL from website domain."""
+    if not website:
+        return None
+    try:
+        from urllib.parse import urlparse
+        parsed = urlparse(website)
+        domain = parsed.netloc or parsed.path.split('/')[0]
+        if domain:
+            return f"https://logo.clearbit.com/{domain}"
+    except Exception:
+        pass
+    return None
+
+
 def read_csv(csv_path: Path) -> pd.DataFrame:
     if not csv_path.exists():
         raise FileNotFoundError(f"CSV file not found: {csv_path}")
@@ -38,6 +53,14 @@ def read_csv(csv_path: Path) -> pd.DataFrame:
     if missing:
         raise ValueError(f"CSV missing required columns: {', '.join(missing)}")
     df = df.where(pd.notnull(df), None)
+    
+    # Add Clearbit logo fallback for rows without logo_url
+    for idx, row in df.iterrows():
+        if not row.get("logo_url") and row.get("website"):
+            clearbit_logo = get_clearbit_logo(row["website"])
+            if clearbit_logo:
+                df.at[idx, "logo_url"] = clearbit_logo
+    
     return df
 
 
@@ -73,27 +96,31 @@ def upload_batch(env: Dict[str, str], batch: List[Dict[str, str]], index: int, t
 
 
 def main() -> None:
-    env = load_environment()
-    df = read_csv(CSV_PATH)
-    records = df[REQUIRED_COLUMNS].to_dict(orient="records")
+    node_env = os.getenv("NODE_ENV", "development")
+    if node_env != "production":
+        env = load_environment()
+        df = read_csv(CSV_PATH)
+        records = df[REQUIRED_COLUMNS].to_dict(orient="records")
 
-    if not records:
-        logging.info("No records to upload. Exiting.")
-        return
+        if not records:
+            logging.info("No records to upload. Exiting.")
+            return
 
-    batches = chunk(records, BATCH_SIZE)
-    logging.info(
-        "Uploading %d records to Supabase in %d batches (size=%d).",
-        len(records),
-        len(batches),
-        BATCH_SIZE,
-    )
+        batches = chunk(records, BATCH_SIZE)
+        logging.info(
+            "Uploading %d records to Supabase in %d batches (size=%d).",
+            len(records),
+            len(batches),
+            BATCH_SIZE,
+        )
 
-    for idx, batch in enumerate(batches, start=1):
-        upload_batch(env, batch, idx, len(batches))
-        time.sleep(1)
+        for idx, batch in enumerate(batches, start=1):
+            upload_batch(env, batch, idx, len(batches))
+            time.sleep(1)
 
-    logging.info("✅ Upload complete (%d records processed)", len(records))
+        logging.info("✅ Upload complete (%d records processed)", len(records))
+    else:
+        logging.warning("⚠️ Import disabled — pipeline is paused. Enable only in development mode.")
 
 
 if __name__ == "__main__":
