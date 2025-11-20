@@ -74,29 +74,44 @@ async function loadCompany(slug: string): Promise<Company | null> {
       }
     }
 
-    // Fallback: fetch all and match by slugified name (for backwards compatibility)
-    const { data, error } = await supabase
+    // Fallback: fetch companies and match by slugified name
+    // Use a more targeted query - try to find by name first if slug doesn't work
+    const { data: allData, error: allError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
-      .limit(1000); // Limit to prevent fetching too many
+      .limit(5000); // Increased limit to ensure we find the company
 
-    if (error || !data) {
-      console.error("Failed to load company:", error?.message);
+    if (allError || !allData) {
+      console.error("Failed to load companies:", allError?.message);
       return null;
     }
 
-    // Try multiple matching strategies
+    // Try multiple matching strategies with better normalization
+    const normalizedSlug = decodedSlug.toLowerCase().trim();
+    const normalizedOriginalSlug = slug.toLowerCase().trim();
+
     const matched =
-      data.find((company) => company.slug === decodedSlug) ??
-      data.find((company) => toSlug(company.name) === decodedSlug) ??
-      data.find((company) => toSlug(company.name) === slug) ??
-      data.find((company) => company.name === decodedSlug) ??
-      data.find((company) => company.name === slug) ??
+      // Exact slug match (from DB)
+      allData.find((company) => company.slug?.toLowerCase().trim() === normalizedSlug) ??
+      allData.find((company) => company.slug?.toLowerCase().trim() === normalizedOriginalSlug) ??
+      // Generated slug match
+      allData.find((company) => toSlug(company.name) === normalizedSlug) ??
+      allData.find((company) => toSlug(company.name) === normalizedOriginalSlug) ??
+      // Exact name match (case insensitive)
+      allData.find((company) => company.name.toLowerCase().trim() === normalizedSlug) ??
+      allData.find((company) => company.name.toLowerCase().trim() === normalizedOriginalSlug) ??
       null;
 
     if (!matched) {
-      console.error(`Company not found for slug: ${slug} (decoded: ${decodedSlug})`);
-      console.error("Sample slugs from DB:", data.slice(0, 5).map((c) => ({ name: c.name, slug: c.slug, generated: toSlug(c.name) })));
+      console.error(`Company not found for slug: "${slug}" (decoded: "${decodedSlug}")`);
+      console.error(`Total companies in DB: ${allData.length}`);
+      if (allData.length > 0) {
+        console.error("First 10 companies:", allData.slice(0, 10).map((c) => ({
+          name: c.name,
+          dbSlug: c.slug || "(null)",
+          generatedSlug: toSlug(c.name),
+        })));
+      }
     }
 
     return matched;
@@ -130,8 +145,11 @@ export async function generateMetadata({
 
 
 export default async function CompanyPage({ params }: { params: PageParams }) {
-  const company = await loadCompany(params.slug);
+  // Decode the slug parameter in case it's URL encoded
+  const slug = decodeURIComponent(params.slug);
+  const company = await loadCompany(slug);
   if (!company) {
+    console.error(`404: Company not found for slug: "${slug}" (original: "${params.slug}")`);
     notFound();
   }
 
