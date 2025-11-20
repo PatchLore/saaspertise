@@ -72,59 +72,53 @@ async function loadCompany(slug: string): Promise<Company | null> {
       return slugDataCaseInsensitive;
     }
 
-    // Strategy 3: Try to find by name (slug might be generated from name)
-    // First, try to reverse-engineer the name from the slug
-    // If slug is "example-company", try to find companies with similar names
-    const nameFromSlug = decodedSlug.replace(/-/g, " ");
-    
-    const { data: nameMatches } = await supabase
-      .from("companies")
-      .select("name, website, category, description, logo_url, created_at, slug")
-      .or(`name.ilike.%${nameFromSlug}%,name.ilike.%${decodedSlug}%`)
-      .limit(50);
-
-    if (nameMatches && nameMatches.length > 0) {
-      // Find the best match by comparing generated slugs
-      const bestMatch = nameMatches.find(
-        (c) => toSlug(c.name).toLowerCase() === normalizedSlug
-      );
-      if (bestMatch) {
-        return bestMatch;
-      }
-    }
-
-    // Strategy 4: Fetch all and match by slugified name (last resort)
+    // Strategy 3: Fetch all companies and match by generated slug from name
+    // This is the most reliable fallback if slugs aren't in DB
     const { data: allData, error: allError } = await supabase
       .from("companies")
       .select("name, website, category, description, logo_url, created_at, slug")
       .limit(5000);
 
-    if (allError || !allData) {
-      console.error("Failed to load companies:", allError?.message);
+    if (allError) {
+      console.error("Failed to load companies:", allError.message);
       return null;
     }
 
-    // Try multiple matching strategies
+    if (!allData || allData.length === 0) {
+      console.error("No companies found in database");
+      return null;
+    }
+
+    // Try to match by generated slug from name (most reliable)
+    const matchedByName = allData.find(
+      (company) => toSlug(company.name).toLowerCase() === normalizedSlug
+    );
+    if (matchedByName) {
+      return matchedByName;
+    }
+
+    // Strategy 4: Try other matching strategies
     const matched =
       // Exact slug match (from DB)
       allData.find((company) => company.slug?.toLowerCase().trim() === normalizedSlug) ??
-      // Generated slug match
-      allData.find((company) => toSlug(company.name).toLowerCase() === normalizedSlug) ??
-      // Partial name match
+      // Partial name match (slug might be part of name)
       allData.find((company) => 
         company.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === normalizedSlug
       ) ??
       null;
 
     if (!matched) {
-      console.error(`Company not found for slug: "${slug}" (decoded: "${decodedSlug}")`);
+      console.error(`❌ Company not found for slug: "${slug}" (decoded: "${decodedSlug}", normalized: "${normalizedSlug}")`);
       console.error(`Total companies in DB: ${allData.length}`);
       if (allData.length > 0) {
-        console.error("Sample companies:", allData.slice(0, 5).map((c) => ({
+        const samples = allData.slice(0, 10).map((c) => ({
           name: c.name,
           dbSlug: c.slug || "(null)",
           generatedSlug: toSlug(c.name),
-        })));
+          matches: toSlug(c.name).toLowerCase() === normalizedSlug,
+        }));
+        console.error("Sample companies:", JSON.stringify(samples, null, 2));
+        console.error(`Looking for slug: "${normalizedSlug}"`);
       }
     }
 
