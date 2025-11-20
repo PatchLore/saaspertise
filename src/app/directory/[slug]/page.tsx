@@ -31,7 +31,7 @@ interface Company {
 }
 
 interface PageParams {
-  slug: string;
+  slug: Promise<string>;
 }
 
 async function loadCompany(slug: string): Promise<Company | null> {
@@ -134,7 +134,8 @@ export async function generateMetadata({
 }: {
   params: PageParams;
 }): Promise<Metadata> {
-  const company = await loadCompany(params.slug);
+  const slug = await params.slug;
+  const company = await loadCompany(slug);
   if (!company) {
     return {};
   }
@@ -153,11 +154,13 @@ export async function generateMetadata({
 
 
 export default async function CompanyPage({ params }: { params: PageParams }) {
+  // In Next.js 15, params is a Promise and must be awaited
+  const slugParam = await params.slug;
   // Decode the slug parameter in case it's URL encoded
-  const slug = decodeURIComponent(params.slug);
+  const slug = decodeURIComponent(slugParam);
   const company = await loadCompany(slug);
   if (!company) {
-    console.error(`404: Company not found for slug: "${slug}" (original: "${params.slug}")`);
+    console.error(`404: Company not found for slug: "${slug}" (original: "${slugParam}")`);
     notFound();
   }
 
