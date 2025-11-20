@@ -35,21 +35,33 @@ interface PageParams {
 }
 
 async function loadCompany(slug: string): Promise<Company | null> {
-  const supabase = getSupabaseServerClient();
-
-  const { data, error } = await supabase
-    .from("companies")
-    .select("name, website, category, description, logo_url, created_at");
-
-  if (error || !data) {
-    throw new Error(error?.message ?? "Failed to load company.");
+  // Check if Supabase is configured before attempting to connect
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Supabase environment variables not configured");
+    return null;
   }
 
-  return (
-    data.find((company) => toSlug(company.name) === slug) ??
-    data.find((company) => company.name === slug) ??
-    null
-  );
+  try {
+    const supabase = getSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("companies")
+      .select("name, website, category, description, logo_url, created_at");
+
+    if (error || !data) {
+      console.error("Failed to load company:", error?.message);
+      return null;
+    }
+
+    return (
+      data.find((company) => toSlug(company.name) === slug) ??
+      data.find((company) => company.name === slug) ??
+      null
+    );
+  } catch (err) {
+    console.error("Error loading company:", err);
+    return null;
+  }
 }
 
 export async function generateMetadata({

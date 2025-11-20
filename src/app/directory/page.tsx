@@ -27,27 +27,33 @@ function parsePage(value?: string): number {
 }
 
 async function fetchCompanies(search?: string, category?: string, page = 1) {
-  const supabase = getSupabaseServerClient();
-
-  const offset = (page - 1) * PAGE_SIZE;
-  const rangeEnd = offset + PAGE_SIZE - 1;
-
-  let query = supabase
-    .from("companies")
-    .select("name, website, category, description, logo_url", {
-      count: "exact",
-      head: false,
-    })
-    .order("name");
-
-  if (search) {
-    query = query.ilike("name", `%${search}%`);
-  }
-  if (category) {
-    query = query.eq("category", category);
+  // Check if Supabase is configured before attempting to connect
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error("Supabase environment variables not configured");
+    return { companies: [] as Company[], total: 0 };
   }
 
   try {
+    const supabase = getSupabaseServerClient();
+
+    const offset = (page - 1) * PAGE_SIZE;
+    const rangeEnd = offset + PAGE_SIZE - 1;
+
+    let query = supabase
+      .from("companies")
+      .select("name, website, category, description, logo_url", {
+        count: "exact",
+        head: false,
+      })
+      .order("name");
+
+    if (search) {
+      query = query.ilike("name", `%${search}%`);
+    }
+    if (category) {
+      query = query.eq("category", category);
+    }
+
     const { data, count, error } = await query.range(offset, rangeEnd);
     if (error) {
       console.error("Supabase query error", error);
