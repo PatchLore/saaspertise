@@ -13,7 +13,6 @@ interface CompanyCardProps {
   href: string;
 }
 
-const DEFAULT_LOGO = "https://saaspertise.com/default-logo.png";
 
 function getClearbitLogo(website: string | null | undefined): string | null {
   if (!website) return null;

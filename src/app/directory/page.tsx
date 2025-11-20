@@ -12,6 +12,7 @@ interface Company {
   category: string;
   description: string;
   logo_url?: string | null;
+  slug?: string | null;
 }
 
 interface DirectoryPageProps {
@@ -84,7 +85,6 @@ export default async function DirectoryPage({
   const prevPage = page > 1 ? page - 1 : null;
   const nextPage = page < totalPages ? page + 1 : null;
 
-  const fallbackLogo = "https://saaspertise.com/default-logo.png";
 
   const buildQuery = (params: Record<string, string | number | undefined>) => {
     const query = new URLSearchParams();
