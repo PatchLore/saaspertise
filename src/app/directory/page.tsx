@@ -176,7 +176,7 @@ export default async function DirectoryPage({
             category={company.category}
             logoUrl={company.logo_url}
             website={company.website}
-            href={`/directory/${company.slug || toSlug(company.name)}`}
+            href={`/directory/${(company.slug && company.slug.trim()) ? company.slug : toSlug(company.name)}`}
             fallbackLogo={fallbackLogo}
           />
         ))}
