@@ -247,18 +247,24 @@ export default function Home() {
         className="border-t border-white/10 px-[5%] py-12 text-center text-slate-400"
       >
         <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
-          <a href="#" className="transition-colors hover:text-indigo-500">
+          <Link
+            href="/privacy"
+            className="transition-colors hover:text-indigo-500"
+          >
             Privacy Policy
-          </a>
-          <a href="#" className="transition-colors hover:text-indigo-500">
+          </Link>
+          <Link
+            href="/terms"
+            className="transition-colors hover:text-indigo-500"
+          >
             Terms of Service
-          </a>
-          <a href="#" className="transition-colors hover:text-indigo-500">
+          </Link>
+          <Link
+            href="/contact"
+            className="transition-colors hover:text-indigo-500"
+          >
             Contact
-          </a>
-          <a href="#" className="transition-colors hover:text-indigo-500">
-            Blog
-          </a>
+          </Link>
         </div>
         <p>\u00A9 2026 SaaSpertise. All rights reserved.</p>
       </footer>

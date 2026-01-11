@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AffiliateLink } from "@/app/components/AffiliateLink";
@@ -40,6 +41,12 @@ export default function ProductPage({ params }: Props) {
 
   return (
     <Container className="py-12">
+      <Link
+        href="/gear"
+        className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
+      >
+        ← Back to all tools
+      </Link>
       <article className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         {/* Image */}
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">

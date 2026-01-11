@@ -11,7 +11,7 @@ export default function GearPage() {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
+    <div id="top" className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
       <main className="py-16 sm:py-20">
         <Container>
           {/* 1) Page intro */}
