@@ -121,7 +121,7 @@ export const products: Product[] = [
       "Only supports Qi-compatible phones",
     ],
     image: "/next.svg",
-    affiliateUrl: "https://www.amazon.com/s?k=Wireless%20Charging%20Mouse%20Pad",
+    affiliateUrl: "https://www.amazon.com/s?k=Wireless%20Charging%20Mouse%20Pad", // TODO: Awaiting confirmed ASIN from owner
     updatedAt: "2026-01-10",
   },
   {
@@ -143,7 +143,7 @@ export const products: Product[] = [
       "Cheaper models may wobble slightly",
     ],
     image: "/next.svg",
-    affiliateUrl: "https://www.amazon.com/s?k=Adjustable%20Laptop%20Stand",
+    affiliateUrl: "https://www.amazon.com/s?k=Adjustable%20Laptop%20Stand", // TODO: Awaiting confirmed ASIN from owner
     updatedAt: "2026-01-10",
   },
   {
