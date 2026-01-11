@@ -11,6 +11,11 @@ export function AffiliateLink({ href, children }: Props) {
     return null;
   }
 
+  // Avoid client-side refreshes / internal navigation due to malformed URLs
+  if (!href.startsWith("http://") && !href.startsWith("https://")) {
+    return null;
+  }
+
   return (
     <a
       href={href}

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import fs from "node:fs";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import path from "node:path";
 
 import { AffiliateLink } from "@/app/components/AffiliateLink";
 import { Container } from "@/app/components/Container";
@@ -30,6 +32,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) return {};
 
+  const fallbackImage = "/next.svg";
+  const requestedImage = (product.image || "").trim() || fallbackImage;
+  const publicFilePath = path.join(
+    process.cwd(),
+    "public",
+    requestedImage.replace(/^\//, ""),
+  );
+  const resolvedImage = fs.existsSync(publicFilePath)
+    ? requestedImage
+    : fallbackImage;
+
   return {
     title: `${product.name} Review – SaaSpertise`,
     description: product.shortDescription,
@@ -38,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: product.shortDescription,
       images: [
         {
-          url: product.image,
+          url: resolvedImage,
           width: 1200,
           height: 630,
           alt: product.name,
@@ -54,6 +67,18 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) return notFound();
 
+  const fallbackImage = "/next.svg";
+  const requestedImage = (product.image || "").trim() || fallbackImage;
+  const publicFilePath = path.join(
+    process.cwd(),
+    "public",
+    requestedImage.replace(/^\//, ""),
+  );
+  const resolvedImage = fs.existsSync(publicFilePath)
+    ? requestedImage
+    : fallbackImage;
+  const unoptimized = resolvedImage.endsWith(".svg");
+
   return (
     <Container className="py-12">
       <Link
@@ -66,11 +91,12 @@ export default async function ProductPage({ params }: Props) {
         {/* Image */}
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
           <Image
-            src={product.image}
+            src={resolvedImage}
             alt={product.name}
             fill
             className="object-cover"
             priority
+            unoptimized={unoptimized}
           />
         </div>
 
