@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -7,15 +6,20 @@ type Props = {
 };
 
 export function AffiliateLink({ href, children }: Props) {
+  // Don't render if href is missing, empty, or placeholder
+  if (!href || href === "#" || href.trim() === "") {
+    return null;
+  }
+
   return (
-    <Link
+    <a
       href={href}
       target="_blank"
-      rel="nofollow sponsored noopener"
+      rel="noopener noreferrer nofollow sponsored"
       className="inline-flex h-12 items-center justify-center rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
     >
       {children}
-    </Link>
+    </a>
   );
 }
 
