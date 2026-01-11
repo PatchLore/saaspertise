@@ -145,5 +145,110 @@ export const products: Product[] = [
     affiliateUrl: "https://www.amazon.com/dp/REPLACE_ME",
     updatedAt: "2026-01-10",
   },
+  {
+    slug: "logitech-mx-master-3s",
+    name: "Logitech MX Master 3S Wireless Performance Mouse",
+    category: "desk",
+    shortDescription:
+      "A premium, ergonomic mouse designed for fast, precise work across multiple devices.",
+    longDescription:
+      "The Logitech MX Master 3S is a comfortable, feature-rich mouse for modern work. It supports fast scrolling, precise tracking, and seamless switching between devices—ideal for long desk sessions and multi-monitor setups.",
+    pros: [
+      "Comfortable ergonomic shape",
+      "Excellent scrolling and gesture controls",
+      "Reliable multi-device support",
+    ],
+    cons: [
+      "Premium price compared to basic mice",
+      "Larger shape may not suit smaller hands",
+    ],
+    image: "/images/products/logitech-mx-master-3s.jpg",
+    affiliateUrl: "https://amzn.to/4pBt3ZD",
+    updatedAt: "2026-01-11",
+  },
+  {
+    slug: "elgato-stream-deck-mk2",
+    name: "Elgato Stream Deck MK.2",
+    category: "productivity",
+    shortDescription:
+      "A programmable controller that turns common actions into single-tap shortcuts.",
+    longDescription:
+      "The Elgato Stream Deck MK.2 helps streamline repetitive work by mapping workflows to tactile buttons. It's useful for creators and professionals who want quicker control of meetings, audio, apps, and routines.",
+    pros: [
+      "Speeds up repetitive workflows",
+      "Highly customizable setup",
+      "Works well with common productivity tools",
+    ],
+    cons: [
+      "Takes time to configure well",
+      "May be unnecessary for light usage",
+    ],
+    image: "/images/products/elgato-stream-deck-mk2.jpg",
+    affiliateUrl: "https://amzn.to/3Yvt32j",
+    updatedAt: "2026-01-11",
+  },
+  {
+    slug: "benq-screenbar-pro",
+    name: "BenQ ScreenBar Pro Monitor Light",
+    category: "desk",
+    shortDescription:
+      "A monitor-mounted light that improves desk lighting without screen glare.",
+    longDescription:
+      "The BenQ ScreenBar Pro is designed to illuminate your workspace while reducing glare and reflections. It's a clean upgrade for monitor-based setups, especially for late-night work or low-light rooms.",
+    pros: [
+      "Improves desk lighting without taking desk space",
+      "Reduces glare compared to traditional lamps",
+      "Clean, minimal look for monitor setups",
+    ],
+    cons: [
+      "Premium price versus basic desk lamps",
+      "Fit depends on monitor thickness and shape",
+    ],
+    image: "/images/products/benq-screenbar-pro.jpg",
+    affiliateUrl: "https://amzn.to/4jz8cEX",
+    updatedAt: "2026-01-11",
+  },
+  {
+    slug: "anker-555-usb-c-hub",
+    name: "Anker 555 USB-C Hub (8-in-1)",
+    category: "mobile",
+    shortDescription:
+      "An 8-in-1 USB-C hub that expands ports for laptops and travel setups.",
+    longDescription:
+      "The Anker 555 USB-C Hub adds essential ports for modern laptops—useful for hot-desking, travel, and remote work. It's a practical way to connect external displays, storage, and peripherals with a single cable.",
+    pros: [
+      "Adds multiple ports in one compact hub",
+      "Good for travel and flexible work setups",
+      "Helps reduce dongle clutter",
+    ],
+    cons: [
+      "Can run warm under heavy use",
+      "Port selection may not match every workflow",
+    ],
+    image: "/images/products/anker-555-usb-c-hub.jpg",
+    affiliateUrl: "https://amzn.to/3LcQx9o",
+    updatedAt: "2026-01-11",
+  },
+  {
+    slug: "asus-zenscreen-mb16ah",
+    name: "ASUS ZenScreen MB16AH Portable Monitor",
+    category: "remote",
+    shortDescription:
+      "A portable monitor that adds a second screen for travel and remote work.",
+    longDescription:
+      "The ASUS ZenScreen MB16AH is a lightweight secondary display that makes remote work and travel days more productive. It's a simple way to regain multi-screen workflows when you're away from a full desk setup.",
+    pros: [
+      "Enables multi-screen productivity anywhere",
+      "Compact and easy to travel with",
+      "Useful for meetings, spreadsheets, and research",
+    ],
+    cons: [
+      "Not as bright as full-size monitors",
+      "Requires careful packing to avoid damage",
+    ],
+    image: "/images/products/asus-zenscreen-mb16ah.jpg",
+    affiliateUrl: "https://amzn.to/4pBtfbj",
+    updatedAt: "2026-01-11",
+  },
 ];
 
