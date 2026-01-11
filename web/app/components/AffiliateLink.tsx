@@ -15,7 +15,7 @@ export function AffiliateLink({ href, children }: Props) {
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer nofollow sponsored"
+      rel="noopener noreferrer sponsored"
       className="inline-flex h-12 items-center justify-center rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
     >
       {children}

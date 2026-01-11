@@ -32,7 +32,7 @@ export const products: Product[] = [
     ],
     priceRange: "$30–$50",
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl: "https://www.amazon.com/s?k=ErgoLift%20Laptop%20Stand",
     updatedAt: "2026-01-10",
   },
   {
@@ -54,7 +54,8 @@ export const products: Product[] = [
       "Touch controls can take time to get used to",
     ],
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl:
+      "https://www.amazon.com/s?k=Sony%20WH-1000XM6%20Wireless%20Noise-Cancelling%20Headphones",
     updatedAt: "2026-01-10",
   },
   {
@@ -76,7 +77,7 @@ export const products: Product[] = [
       "Overkill for very light computer use",
     ],
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl: "https://www.amazon.com/s?k=Elgato%20Stream%20Deck%20Neo",
     updatedAt: "2026-01-10",
   },
   {
@@ -98,7 +99,7 @@ export const products: Product[] = [
       "High-power cables may need to be purchased separately",
     ],
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl: "https://www.amazon.com/s?k=CUKTECH%20100W%20GaN%20USB-C%20Charger",
     updatedAt: "2026-01-10",
   },
   {
@@ -120,7 +121,7 @@ export const products: Product[] = [
       "Only supports Qi-compatible phones",
     ],
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl: "https://www.amazon.com/s?k=Wireless%20Charging%20Mouse%20Pad",
     updatedAt: "2026-01-10",
   },
   {
@@ -142,7 +143,7 @@ export const products: Product[] = [
       "Cheaper models may wobble slightly",
     ],
     image: "/next.svg",
-    affiliateUrl: "#",
+    affiliateUrl: "https://www.amazon.com/s?k=Adjustable%20Laptop%20Stand",
     updatedAt: "2026-01-10",
   },
   {
