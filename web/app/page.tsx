@@ -1,154 +1,267 @@
-import { Container } from "./components/Container";
-import Image from "next/image";
+﻿"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { Container } from "./components/Container";
 
 export default function Home() {
-  const categories = [
-    { title: "Desk & Workspace Tech", href: "/gear/desk" },
-    { title: "Productivity Gadgets", href: "/gear/productivity" },
-    { title: "Mobile & Power", href: "/gear/mobile" },
-    { title: "Remote Work Gear", href: "/gear/remote" },
-  ] as const;
+  const [scrolled, setScrolled] = useState(false);
 
-  const featuredPicks = [
-    {
-      name: "ErgoLift Laptop Stand",
-      benefit: "Better posture, cleaner desk setup, and improved airflow.",
-      imageSrc: "/images/products/placeholder.png",
-      href: "/gear/ergolift-laptop-stand",
-    },
-    {
-      name: "QuietKeys Mechanical Keyboard",
-      benefit: "Comfortable typing with a calmer sound profile for shared spaces.",
-      imageSrc: "/images/products/placeholder.png",
-      href: "/gear/quietkeys-mechanical-keyboard",
-    },
-    {
-      name: "PocketCharge 10K",
-      benefit: "Reliable power for travel days and long meetings away from outlets.",
-      imageSrc: "/images/products/placeholder.png",
-      href: "/gear/pocketcharge-10k",
-    },
-  ] as const;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
-      <main className="py-16 sm:py-20">
-        <Container>
-          {/* 1) Hero */}
-          <section className="py-8 sm:py-12">
-            <div className="max-w-3xl">
-              <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                Tech tools that actually improve how you work
-              </h1>
-              <p className="mt-5 text-pretty text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                SaaSpertise reviews tech tools, gadgets, and software built for
-                productivity and modern work—so you can buy with confidence and
-                build a setup that lasts.
+    <div className="relative min-h-screen overflow-x-hidden bg-slate-950 font-sans text-slate-100">
+      <div className="animated-gradient-bg" aria-hidden />
+
+      <nav
+        id="navbar"
+        className={[
+          "fixed top-0 z-50 w-full border-b border-white/10 bg-slate-900/80 backdrop-blur-xl transition-all duration-300",
+          scrolled ? "py-4 bg-slate-900/95" : "py-6",
+        ].join(" ")}
+      >
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/"
+            className="bg-gradient-to-br from-indigo-500 to-pink-500 bg-clip-text text-2xl font-extrabold text-transparent"
+          >
+            SaaSpertise
+          </Link>
+
+          <ul className="hidden list-none items-center gap-10 md:flex">
+            {[
+              { href: "#features", label: "Features" },
+              { href: "#tools", label: "Tools" },
+              { href: "#pricing", label: "Pricing" },
+              { href: "#about", label: "About" },
+            ].map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="group relative font-medium text-slate-400 transition-colors hover:text-slate-100"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-indigo-500 to-pink-500 transition-all duration-300 group-hover:w-full" />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="/gear"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
+          >
+            Get Started
+          </Link>
+        </div>
+      </nav>
+
+      <main>
+        {/* Hero */}
+        <section className="flex min-h-screen items-center justify-center px-[5%] pb-16 pt-32">
+          <div className="w-full max-w-[1400px]">
+            <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+              <div className="text-center lg:text-left">
+                <h1 className="mb-6 text-balance text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+                  <span className="bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent">
+                    Build Your Perfect{" "}
+                  </span>
+                  <span className="bg-gradient-to-br from-indigo-500 via-pink-500 to-violet-500 bg-clip-text text-transparent">
+                    SaaS Stack
+                  </span>
+                </h1>
+                <p className="mb-10 text-pretty text-lg leading-8 text-slate-400 sm:text-xl">
+                  Discover, compare, and choose the best SaaS tools for your
+                  business. Expert reviews, unbiased comparisons, and exclusive
+                  deals\u2014all in one place.
+                </p>
+                <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                  <Link
+                    href="/gear"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
+                  >
+                    Explore Tools
+                  </Link>
+                  <a
+                    href="#features"
+                    className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/20"
+                  >
+                    Watch Demo
+                  </a>
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl animate-[float_6s_ease-in-out_infinite]">
+                  <div className="grid grid-cols-2 gap-6">
+                    {[
+                      {
+                        title: "\uD83D\uDE80 Analytics",
+                        desc: "Track & optimize performance",
+                      },
+                      {
+                        title: "\uD83D\uDCAC Communication",
+                        desc: "Collaborate seamlessly",
+                      },
+                      { title: "\uD83C\uDFA8 Design", desc: "Create stunning visuals" },
+                      {
+                        title: "\uD83D\uDCCA Automation",
+                        desc: "Save time, scale faster",
+                      },
+                    ].map((card) => (
+                      <div
+                        key={card.title}
+                        className="rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-6 transition-all duration-300 hover:-translate-y-1 hover:bg-indigo-500/20 hover:shadow-[0_10px_30px_rgba(99,102,241,0.3)]"
+                      >
+                        <h3 className="mb-2 text-base font-bold text-indigo-400">
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-slate-400">{card.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section id="features" className="py-24">
+          <Container className="max-w-[1400px]">
+            <div className="mb-16 text-center">
+              <h2 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
+                Why Choose SaaSpertise?
+              </h2>
+              <p className="text-lg text-slate-400">
+                Everything you need to make informed SaaS decisions
               </p>
-              <div className="mt-8">
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+              {[
+                {
+                  icon: "\u26A1",
+                  title: "Expert Reviews",
+                  desc: "In-depth analysis from industry professionals who've tested thousands of tools to help you make confident decisions.",
+                },
+                {
+                  icon: "\uD83C\uDFAF",
+                  title: "Smart Recommendations",
+                  desc: "Personalized tool suggestions based on your industry, team size, and specific business needs.",
+                },
+                {
+                  icon: "\uD83D\uDCB0",
+                  title: "Exclusive Deals",
+                  desc: "Access special discounts and extended trials available only through our affiliate partnerships.",
+                },
+                {
+                  icon: "\uD83D\uDCCA",
+                  title: "Side-by-Side Comparison",
+                  desc: "Compare features, pricing, and capabilities of multiple tools at once to find your perfect match.",
+                },
+                {
+                  icon: "\uD83D\uDD04",
+                  title: "Regular Updates",
+                  desc: "Stay current with the latest features, pricing changes, and new tools in the SaaS ecosystem.",
+                },
+                {
+                  icon: "\uD83E\uDD1D",
+                  title: "Community Insights",
+                  desc: "Real user reviews and ratings from a community of verified professionals sharing honest feedback.",
+                },
+              ].map((feature) => (
+                <div
+                  key={feature.title}
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-10 backdrop-blur-md transition-all duration-300 hover:-translate-y-2.5 hover:border-indigo-500/50 hover:shadow-[0_20px_60px_rgba(99,102,241,0.2)]"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+                  <div className="relative">
+                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-2xl">
+                      {feature.icon}
+                    </div>
+                    <h3 className="mb-4 text-xl font-bold">{feature.title}</h3>
+                    <p className="leading-8 text-slate-400">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* Stats (mapped to #tools for nav parity) */}
+        <section id="tools" className="border-y border-white/10 bg-indigo-500/5 py-24">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { value: "2,500+", label: "SaaS Tools Reviewed" },
+                { value: "150K+", label: "Happy Users" },
+                { value: "$2M+", label: "Saved Annually" },
+                { value: "98%", label: "Satisfaction Rate" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div className="mb-2 bg-gradient-to-br from-indigo-500 to-pink-500 bg-clip-text text-5xl font-black text-transparent sm:text-6xl">
+                    {stat.value}
+                  </div>
+                  <div className="text-base text-slate-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA (mapped to #pricing for nav parity) */}
+        <section id="pricing" className="px-[5%] py-32">
+          <div className="mx-auto max-w-[1200px] text-center">
+            <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-indigo-500/10 to-pink-500/10 px-8 py-16 backdrop-blur-xl sm:px-12">
+              <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] animate-[pulse_8s_ease-in-out_infinite]" />
+              <div className="relative">
+                <h2 className="mb-6 text-3xl font-extrabold tracking-tight sm:text-5xl">
+                  Ready to Optimize Your Stack?
+                </h2>
+                <p className="mb-10 text-lg text-slate-400 sm:text-xl">
+                  Join thousands of businesses finding their perfect SaaS
+                  solutions
+                </p>
                 <Link
                   href="/gear"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-10 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
                 >
-                  Browse Best Tools
+                  Start Free Today
                 </Link>
               </div>
             </div>
-          </section>
-
-          {/* 2) Category grid */}
-          <section className="py-10 sm:py-12">
-            <div className="flex items-end justify-between gap-6">
-              <h2 className="text-lg font-semibold tracking-tight">Browse by category</h2>
-              <Link
-                href="/gear"
-                className="text-sm font-medium text-zinc-950 hover:underline dark:text-zinc-50"
-              >
-                View all
-              </Link>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {categories.map((category) => (
-                <Link
-                  key={category.href}
-                  href={category.href}
-                  className="group rounded-2xl border border-black/[.08] bg-white p-5 transition-colors hover:bg-black/[.02] dark:border-white/[.145] dark:bg-black dark:hover:bg-[#1a1a1a]"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="text-base font-medium">{category.title}</div>
-                    <span className="text-zinc-500 transition-transform group-hover:translate-x-0.5 dark:text-zinc-400">
-                      →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* 3) Featured picks */}
-          <section className="py-10 sm:py-12">
-            <h2 className="text-lg font-semibold tracking-tight">Featured picks</h2>
-            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-              {featuredPicks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="group overflow-hidden rounded-2xl border border-black/[.08] bg-white transition-colors hover:bg-black/[.02] dark:border-white/[.145] dark:bg-black dark:hover:bg-[#1a1a1a]"
-                >
-                  <div className="relative aspect-[16/10] w-full bg-zinc-100 dark:bg-zinc-900">
-                    <Image
-                      src={item.imageSrc}
-                      alt=""
-                      fill
-                      className="object-cover opacity-95 transition-opacity group-hover:opacity-100"
-                      sizes="(min-width: 1024px) 33vw, 100vw"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="text-base font-medium text-zinc-950 dark:text-zinc-50">
-                      {item.name}
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                      {item.benefit}
-                    </p>
-                    <div className="mt-4 text-sm font-medium text-zinc-950 dark:text-zinc-50">
-                      Read the pick <span aria-hidden>→</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* 4) Editorial entry */}
-          <section className="py-10 sm:py-12">
-            <div className="rounded-2xl border border-black/[.08] bg-white p-6 dark:border-white/[.145] dark:bg-black">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <div className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                    Editorial
-                  </div>
-                  <h2 className="mt-1 text-lg font-semibold tracking-tight">
-                    Best Tech Gadgets for Modern Work (2026)
-                  </h2>
-                </div>
-                <Link
-                  href="/best/modern-work"
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-black/[.08] bg-transparent px-5 text-sm font-medium text-zinc-950 transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:text-zinc-50 dark:hover:bg-[#1a1a1a]"
-                >
-                  Read the roundup
-                </Link>
-              </div>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-400">
-                A practical, category-by-category guide to the tools that make
-                work feel smoother—picked for ergonomics, reliability, and real
-                day-to-day use.
-              </p>
-            </div>
-          </section>
-        </Container>
+          </div>
+        </section>
       </main>
+
+      {/* Footer (mapped to #about for nav parity) */}
+      <footer
+        id="about"
+        className="border-t border-white/10 px-[5%] py-12 text-center text-slate-400"
+      >
+        <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
+          <a href="#" className="transition-colors hover:text-indigo-500">
+            Privacy Policy
+          </a>
+          <a href="#" className="transition-colors hover:text-indigo-500">
+            Terms of Service
+          </a>
+          <a href="#" className="transition-colors hover:text-indigo-500">
+            Contact
+          </a>
+          <a href="#" className="transition-colors hover:text-indigo-500">
+            Blog
+          </a>
+        </div>
+        <p>\u00A9 2026 SaaSpertise. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
