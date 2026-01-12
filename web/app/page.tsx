@@ -136,12 +136,6 @@ export default function Home() {
                   >
                     Explore Tools
                   </Link>
-                  <a
-                    href="#features"
-                    className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/20"
-                  >
-                    Watch Demo
-                  </a>
                 </div>
               </div>
 
@@ -188,7 +182,7 @@ export default function Home() {
                 Why Choose SaaSpertise?
               </h2>
               <p className="text-lg text-slate-400">
-                Everything you need to make informed SaaS decisions
+                Clear, trust-first reviews for choosing tools, gear, and systems
               </p>
             </div>
 
@@ -196,33 +190,33 @@ export default function Home() {
               {[
                 {
                   icon: "\u26A1",
-                  title: "Expert Reviews",
-                  desc: "In-depth analysis from industry professionals who've tested thousands of tools to help you make confident decisions.",
+                  title: "Independent Reviews",
+                  desc: "Research-driven writeups focused on what helps in real work\u2014not hype, not sponsorships.",
                 },
                 {
                   icon: "\uD83C\uDFAF",
-                  title: "Smart Recommendations",
-                  desc: "Personalized tool suggestions based on your industry, team size, and specific business needs.",
+                  title: "Clear Fit & Tradeoffs",
+                  desc: "Straightforward guidance on who a tool is for, where it shines, and where it falls short.",
                 },
                 {
                   icon: "\uD83D\uDCB0",
-                  title: "Exclusive Deals",
-                  desc: "Access special discounts and extended trials available only through our affiliate partnerships.",
+                  title: "No Sponsored Rankings",
+                  desc: "Affiliate links may support the site, but they never decide what we recommend or how we rank.",
                 },
                 {
                   icon: "\uD83D\uDCCA",
-                  title: "Side-by-Side Comparison",
-                  desc: "Compare features, pricing, and capabilities of multiple tools at once to find your perfect match.",
+                  title: "Pros & Cons, Up Front",
+                  desc: "Balanced breakdowns so you can compare options quickly before committing time or budget.",
                 },
                 {
                   icon: "\uD83D\uDD04",
-                  title: "Regular Updates",
-                  desc: "Stay current with the latest features, pricing changes, and new tools in the SaaS ecosystem.",
+                  title: "Systems, Not Just Software",
+                  desc: "Recommendations that combine productivity hardware, tools, and workflows into a cohesive setup.",
                 },
                 {
                   icon: "\uD83E\uDD1D",
-                  title: "Community Insights",
-                  desc: "Real user reviews and ratings from a community of verified professionals sharing honest feedback.",
+                  title: "Built for Modern Work",
+                  desc: "Made for SaaS founders, consultants, and remote professionals who want reliable tools that reduce friction.",
                 },
               ].map((feature) => (
                 <div
@@ -243,27 +237,6 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Stats (mapped to #tools for nav parity) */}
-        <section id="tools" className="border-y border-white/10 bg-indigo-500/5 py-24">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { value: "2,500+", label: "SaaS Tools Reviewed" },
-                { value: "150K+", label: "Happy Users" },
-                { value: "$2M+", label: "Saved Annually" },
-                { value: "98%", label: "Satisfaction Rate" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="mb-2 bg-gradient-to-br from-indigo-500 to-pink-500 bg-clip-text text-5xl font-black text-transparent sm:text-6xl">
-                    {stat.value}
-                  </div>
-                  <div className="text-base text-slate-400">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* CTA (mapped to #pricing for nav parity) */}
         <section id="pricing" className="px-[5%] py-32">
           <div className="mx-auto max-w-[1200px] text-center">
@@ -271,17 +244,17 @@ export default function Home() {
               <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] animate-[pulse_8s_ease-in-out_infinite]" />
               <div className="relative">
                 <h2 className="mb-6 text-3xl font-extrabold tracking-tight sm:text-5xl">
-                  Ready to Optimize Your Stack?
+                  Build a Smarter SaaS Stack
                 </h2>
                 <p className="mb-10 text-lg text-slate-400 sm:text-xl">
-                  Join thousands of businesses finding their perfect SaaS
-                  solutions
+                  Compare tools, productivity hardware, and workflows before you
+                  commit\u2014so your setup supports focused, reliable work.
                 </p>
                 <Link
                   href="/gear"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-10 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
                 >
-                  Start Free Today
+                  Browse Tools
                 </Link>
               </div>
             </div>
