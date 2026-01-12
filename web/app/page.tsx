@@ -141,20 +141,31 @@ export default function Home() {
 
               <div className="relative">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl animate-[float_6s_ease-in-out_infinite]">
+                  <div className="mb-6">
+                    <h2 className="text-xl font-extrabold tracking-tight text-slate-100 sm:text-2xl">
+                      What We Review
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-slate-400 sm:text-base">
+                      Carefully selected tools and hardware that improve real-world SaaS workflows.
+                    </p>
+                  </div>
                   <div className="grid grid-cols-2 gap-6">
                     {[
                       {
-                        title: "\uD83D\uDE80 Analytics",
-                        desc: "Track & optimize performance",
+                        title: "\uD83D\uDDB1\uFE0F Productivity Hardware",
+                        desc: "Mice, keyboards, monitor accessories, and desk gear that reduce friction during long work sessions.",
                       },
                       {
-                        title: "\uD83D\uDCAC Communication",
-                        desc: "Collaborate seamlessly",
+                        title: "\u2699\uFE0F Workflow & Automation Tools",
+                        desc: "Tools that streamline daily tasks, automate repetitive work, and help teams focus on high-impact output.",
                       },
-                      { title: "\uD83C\uDFA8 Design", desc: "Create stunning visuals" },
                       {
-                        title: "\uD83D\uDCCA Automation",
-                        desc: "Save time, scale faster",
+                        title: "\uD83D\uDD0C Connectivity & Power",
+                        desc: "Hubs, chargers, and accessories that keep modern laptops, monitors, and peripherals working reliably.",
+                      },
+                      {
+                        title: "\uD83D\uDDA5\uFE0F Remote & Mobile Setups",
+                        desc: "Portable monitors and workspace gear designed for remote work, travel, and hybrid teams.",
                       },
                     ].map((card) => (
                       <div
