@@ -4,10 +4,10 @@ import { products } from "../data/products";
 
 export default function GearPage() {
   const sections = [
-    { title: "Desk & Workspace Tech", category: "desk" },
-    { title: "Productivity Gadgets", category: "productivity" },
-    { title: "Mobile & Power", category: "mobile" },
-    { title: "Remote Work Gear", category: "remote" },
+    { title: "Productivity Hardware", category: "desk" },
+    { title: "Workflow & Automation Tools", category: "productivity" },
+    { title: "Connectivity & Power", category: "mobile" },
+    { title: "Remote & Mobile Work", category: "remote" },
   ] as const;
 
   return (
@@ -18,12 +18,17 @@ export default function GearPage() {
           <section className="py-8 sm:py-12">
             <div className="max-w-3xl">
               <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Recommended Tech Tools for Modern Work
+                Productivity Gear & Tools for Modern SaaS Workflows
               </h1>
               <p className="mt-4 text-pretty text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                These picks are selected for day-to-day usefulness, build quality,
-                and long-term value. We prioritize tools that reduce friction,
-                support focused work, and hold up in real workflows.
+                Independent reviews of productivity hardware, workflow tools, and
+                work systems\u2014built for SaaS founders, consultants, and remote
+                professionals who want reliable setups that support focused,
+                repeatable work.
+              </p>
+              <p className="mt-4 text-sm leading-6 text-zinc-500 dark:text-zinc-500">
+                This page contains affiliate links. We may earn a small commission
+                at no extra cost to you.
               </p>
             </div>
           </section>
@@ -49,9 +54,8 @@ export default function GearPage() {
                     {products
                       .filter((p) => p.category === section.category)
                       .map((product) => (
-                        <Link
+                        <div
                           key={product.slug}
-                          href={`/gear/${product.slug}`}
                           className="group rounded-2xl border border-black/[.08] bg-white p-5 transition-colors hover:bg-black/[.02] dark:border-white/[.145] dark:bg-black dark:hover:bg-[#1a1a1a]"
                         >
                           <div className="flex items-start justify-between gap-4">
@@ -70,13 +74,45 @@ export default function GearPage() {
                               →
                             </span>
                           </div>
-                        </Link>
+
+                          <div className="mt-5 flex flex-wrap items-center gap-4">
+                            <Link
+                              href={`/gear/${product.slug}`}
+                              className="text-sm font-medium text-zinc-950 hover:underline dark:text-zinc-50"
+                            >
+                              View review
+                            </Link>
+                            <a
+                              href={product.affiliateUrl}
+                              target="_blank"
+                              rel="nofollow sponsored noopener"
+                              className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
+                            >
+                              Check price
+                            </a>
+                          </div>
+                        </div>
                       ))}
                   </div>
                 </section>
               ))}
             </div>
           </div>
+
+          {/* 3) Soft CTA */}
+          <section className="pt-10 sm:pt-12">
+            <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+              Explore individual reviews to see pros, cons, and who each tool is
+              best for.{" "}
+              <Link
+                href={`/gear/${products[0]?.slug ?? ""}`}
+                className="font-medium text-zinc-950 hover:underline dark:text-zinc-50"
+              >
+                Start with the first review
+              </Link>
+              .
+            </p>
+          </section>
         </Container>
       </main>
     </div>
