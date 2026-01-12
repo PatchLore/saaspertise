@@ -5,6 +5,53 @@ import { useEffect, useState } from "react";
 
 import { Container } from "./components/Container";
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is SaaSpertise?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SaaSpertise is a professional review platform that helps founders, consultants, and remote professionals choose the best SaaS tools, productivity hardware, and work systems.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does SaaSpertise make money?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SaaSpertise may earn commissions through affiliate links when users purchase products we recommend, at no extra cost to the buyer.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are the reviews on SaaSpertise unbiased?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. All recommendations are based on hands-on research, real-world use cases, and professional workflows, not sponsorships.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Who is SaaSpertise for?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SaaSpertise is built for SaaS founders, consultants, developers, and remote professionals who want reliable tools to improve productivity.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you test the products you recommend?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We evaluate products based on performance, usability, reliability, and long-term value for professional work environments.",
+      },
+    },
+  ],
+} as const;
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -73,13 +120,14 @@ export default function Home() {
                     Build Your Perfect{" "}
                   </span>
                   <span className="bg-gradient-to-br from-indigo-500 via-pink-500 to-violet-500 bg-clip-text text-transparent">
-                    SaaS Stack
+                    SaaS Work Stack
                   </span>
                 </h1>
                 <p className="mb-10 text-pretty text-lg leading-8 text-slate-400 sm:text-xl">
-                  Discover, compare, and choose the best SaaS tools for your
-                  business. Expert reviews, unbiased comparisons, and exclusive
-                  deals\u2014all in one place.
+                  Discover productivity hardware, work stack tools, and the
+                  systems that keep founders and remote professionals moving.
+                  Practical picks and clear comparisons\u2014built for real-world
+                  workflows, not just software.
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
@@ -248,6 +296,18 @@ export default function Home() {
       >
         <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
           <Link
+            href="/about"
+            className="transition-colors hover:text-indigo-500"
+          >
+            About
+          </Link>
+          <Link
+            href="/disclosure"
+            className="transition-colors hover:text-indigo-500"
+          >
+            Affiliate Disclosure
+          </Link>
+          <Link
             href="/privacy"
             className="transition-colors hover:text-indigo-500"
           >
@@ -268,6 +328,11 @@ export default function Home() {
         </div>
         <p>\u00A9 2026 SaaSpertise. All rights reserved.</p>
       </footer>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     </div>
   );
 }
