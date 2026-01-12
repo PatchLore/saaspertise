@@ -21,10 +21,9 @@ export default function GearPage() {
                 Productivity Gear & Tools for Modern SaaS Workflows
               </h1>
               <p className="mt-4 text-pretty text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                Independent reviews of productivity hardware, workflow tools, and
-                work systems\u2014built for SaaS founders, consultants, and remote
-                professionals who want reliable setups that support focused,
-                repeatable work.
+                Independent reviews of productivity hardware and workflow tools,
+                built for SaaS founders, consultants, and remote professionals
+                who want reliable setups that support focused, repeatable work.
               </p>
               <p className="mt-4 text-sm italic leading-6 text-zinc-500 dark:text-zinc-500">
                 Some links on this page are affiliate links. If you make a
