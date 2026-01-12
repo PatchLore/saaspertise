@@ -26,9 +26,9 @@ export default function GearPage() {
                 professionals who want reliable setups that support focused,
                 repeatable work.
               </p>
-              <p className="mt-4 text-sm leading-6 text-zinc-500 dark:text-zinc-500">
-                This page contains affiliate links. We may earn a small commission
-                at no extra cost to you.
+              <p className="mt-4 text-sm italic leading-6 text-zinc-500 dark:text-zinc-500">
+                Some links on this page are affiliate links. If you make a
+                purchase, we may earn a small commission at no extra cost to you.
               </p>
             </div>
           </section>
