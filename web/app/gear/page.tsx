@@ -18,7 +18,7 @@ export default function GearPage() {
           <section className="py-8 sm:py-12">
             <div className="max-w-3xl">
               <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Productivity Gear & Tools for Modern SaaS Workflows
+                Productivity Gear & Reviews for Modern SaaS Workflows
               </h1>
               <p className="mt-4 text-pretty text-base leading-7 text-zinc-600 dark:text-zinc-400">
                 Independent reviews of productivity hardware and workflow tools,

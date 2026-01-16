@@ -85,7 +85,7 @@ export default async function ProductPage({ params }: Props) {
         href="/gear"
         className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
       >
-        ← Back to all tools
+        ← Back to all reviews
       </Link>
       <article className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         {/* Image */}

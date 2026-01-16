@@ -84,18 +84,27 @@ export default function Home() {
           <ul className="hidden list-none items-center gap-10 md:flex">
             {[
               { href: "#features", label: "Features" },
-              { href: "#tools", label: "Tools" },
-              { href: "#pricing", label: "Pricing" },
+              { href: "/gear", label: "Reviews" },
               { href: "#about", label: "About" },
             ].map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="group relative font-medium text-slate-400 transition-colors hover:text-slate-100"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-indigo-500 to-pink-500 transition-all duration-300 group-hover:w-full" />
-                </a>
+                {item.href.startsWith("#") ? (
+                  <a
+                    href={item.href}
+                    className="group relative font-medium text-slate-400 transition-colors hover:text-slate-100"
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-indigo-500 to-pink-500 transition-all duration-300 group-hover:w-full" />
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="group relative font-medium text-slate-400 transition-colors hover:text-slate-100"
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-indigo-500 to-pink-500 transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -134,7 +143,7 @@ export default function Home() {
                     href="/gear"
                     className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
                   >
-                    Explore Tools
+                    Explore Reviews
                   </Link>
                 </div>
               </div>
@@ -248,8 +257,8 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* CTA (mapped to #pricing for nav parity) */}
-        <section id="pricing" className="px-[5%] py-32">
+        {/* CTA */}
+        <section id="get-started" className="px-[5%] py-32">
           <div className="mx-auto max-w-[1200px] text-center">
             <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-indigo-500/10 to-pink-500/10 px-8 py-16 backdrop-blur-xl sm:px-12">
               <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] animate-[pulse_8s_ease-in-out_infinite]" />
@@ -265,7 +274,7 @@ export default function Home() {
                   href="/gear"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-10 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
                 >
-                  Browse Tools
+                  Browse Reviews
                 </Link>
               </div>
             </div>
