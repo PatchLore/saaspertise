@@ -2,78 +2,19 @@ import Link from "next/link";
 
 import { Container } from "@/app/components/Container";
 
-const modules = [
-  {
-    title: "Module 1 — The Executive Excel Mindset",
-    points: [
-      "What senior analysts do differently (clarity, speed, and decision-ready outputs)",
-      "The 80/20 of spreadsheets: what to master, what to ignore",
-      "A simple workflow for clean, credible models under time pressure",
-    ],
-  },
-  {
-    title: "Module 2 — Fast, Clean Data (Without the Drama)",
-    points: [
-      "Reliable import and cleanup patterns you can reuse",
-      "Text-to-columns, trimming, and shape fixes that prevent downstream errors",
-      "Quick checks to catch the 5 most common data issues",
-    ],
-  },
-  {
-    title: "Module 3 — Formulas That Scale",
-    points: [
-      "Writing formulas you can hand to someone else with confidence",
-      "Lookup strategies for real models (and when not to use them)",
-      "Dynamic ranges and structured references for maintainable workbooks",
-    ],
-  },
-  {
-    title: "Module 4 — Pivots, Summaries, and Story",
-    points: [
-      "Building summaries that answer questions, not just show numbers",
-      "Pivot patterns for recurring reporting and ad hoc analysis",
-      "Turning messy tables into decision-ready views",
-    ],
-  },
-  {
-    title: "Module 5 — Presentation-Grade Output",
-    points: [
-      "Formatting that reads like a deck: hierarchy, spacing, and emphasis",
-      "Charts that earn trust (and which ones to avoid)",
-      "Templates for stakeholder-ready exports",
-    ],
-  },
-  {
-    title: "Module 6 — Speed Systems: Shortcuts, Habits, and QA",
-    points: [
-      "Keyboard-first workflows that compound over time",
-      "A lightweight QA checklist to prevent avoidable mistakes",
-      "How to ship faster without sacrificing credibility",
-    ],
-  },
-] as const;
+const PAYHIP_LAUNCH_URL = "https://payhip.com/b/XxSev";
 
 const outcomes = [
-  "Build clean, decision-ready spreadsheets that leaders trust",
-  "Move faster with a repeatable workflow for analysis and reporting",
-  "Use formulas, summaries, and pivots without creating fragile files",
-  "Present results clearly with professional formatting and chart choices",
-  "Reduce rework with simple quality checks and a consistent structure",
+  "Work faster using practical shortcuts you can apply immediately",
+  "Clean and format spreadsheets so they read clearly and earn trust",
+  "Navigate large workbooks and filtered data with less friction",
+  "Reduce avoidable mistakes by using consistent, repeatable habits",
 ] as const;
 
-const bonuses = [
-  {
-    title: "Excel QA Checklist (Printable)",
-    desc: "A quick pre-send checklist to catch errors before they reach stakeholders.",
-  },
-  {
-    title: "Formatting Framework",
-    desc: "A simple standard for spacing, hierarchy, and emphasis you can reuse in any workbook.",
-  },
-  {
-    title: "Shortcut Map",
-    desc: "A curated list of high-leverage shortcuts grouped by workflow, not by keyboard.",
-  },
+const whatYouGet = [
+  { label: "Format", value: "PDF download" },
+  { label: "Contents", value: "47 practical Excel shortcuts" },
+  { label: "Use case", value: "Daily work speed, clarity, and confidence" },
 ] as const;
 
 export default function CareerShortcutsCoursePage() {
@@ -84,43 +25,36 @@ export default function CareerShortcutsCoursePage() {
           {/* Hero */}
           <section className="py-8 sm:py-12">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium tracking-wide text-zinc-600">
-                Paid course
-              </p>
+              <p className="text-sm font-medium tracking-wide text-zinc-600">PDF download</p>
               <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
-                Career Shortcuts — Excel That Gets You Promoted
+                47 Excel Shortcuts That Make You Look Senior at Work
               </h1>
               <p className="mt-5 text-pretty text-lg leading-8 text-zinc-700">
-                Learn the Excel workflows senior analysts use to deliver
-                decision-ready work\u2014fast, clean, and credible. Built for
-                corporate environments where clarity and reliability matter more
-                than clever tricks.
+                A concise, professional cheat sheet of practical Excel shortcuts
+                used by senior analysts and managers. Built for corporate work
+                where speed, clarity, and reliability matter more than flashy
+                tricks.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <a
-                  href="#pricing"
+                  href={PAYHIP_LAUNCH_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-amber-500 px-7 text-sm font-semibold text-zinc-950 transition-colors hover:bg-amber-400"
                 >
                   Get Instant Access
                 </a>
                 <a
-                  href="#curriculum"
+                  href="#whats-inside"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-50"
                 >
-                  Preview Curriculum
+                  Preview Contents
                 </a>
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                {[
-                  {
-                    label: "Format",
-                    value: "Short modules, practical demonstrations",
-                  },
-                  { label: "Level", value: "Intermediate to advanced" },
-                  { label: "Focus", value: "Speed, clarity, credibility" },
-                ].map((item) => (
+                {whatYouGet.map((item) => (
                   <div
                     key={item.label}
                     className="rounded-2xl border border-zinc-200 bg-white p-5"
@@ -145,9 +79,8 @@ export default function CareerShortcutsCoursePage() {
                   What you\u2019ll be able to do
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-zinc-600">
-                  The goal is not to learn everything in Excel. It\u2019s to
-                  develop a professional system for producing analysis that is
-                  easy to follow, easy to update, and hard to break.
+                  This is a focused guide for working faster and producing
+                  cleaner spreadsheets in real professional environments.
                 </p>
               </div>
               <div className="lg:col-span-7">
@@ -174,19 +107,16 @@ export default function CareerShortcutsCoursePage() {
                 </h2>
                 <ul className="mt-5 space-y-3 text-sm leading-6 text-zinc-700">
                   <li>
-                    Corporate workers who want to stand out through clarity and
-                    reliability
+                    Office professionals who use Excel regularly
                   </li>
                   <li>
-                    Aspiring senior analysts who need faster, cleaner workflows
+                    Analysts, assistants, graduates, and aspiring senior analysts
                   </li>
                   <li>
-                    Professionals who build recurring reports and want fewer
-                    mistakes
+                    Anyone who wants to move faster without advanced Excel knowledge
                   </li>
                   <li>
-                    People who already use Excel and want an upgrade in
-                    structure, not shortcuts alone
+                    People who want a clean reference they can use at work
                   </li>
                 </ul>
               </div>
@@ -196,85 +126,79 @@ export default function CareerShortcutsCoursePage() {
                 </h2>
                 <ul className="mt-5 space-y-3 text-sm leading-6 text-zinc-700">
                   <li>
-                    Beginners who need the basics of cells, worksheets, and
-                    simple formulas
+                    People who never use Excel at work
                   </li>
                   <li>
-                    Anyone looking for entertainment, hacks, or novelty features
+                    Anyone looking for a long, video-first course experience
                   </li>
                   <li>
-                    People who want a theoretical course with minimal practical
-                    examples
+                    Users who want deep modeling theory rather than practical speed
                   </li>
                   <li>
-                    Teams that need enterprise training and custom onboarding
+                    Teams that need custom enterprise training and onboarding
                   </li>
                 </ul>
               </div>
             </div>
           </section>
 
-          {/* Curriculum */}
-          <section id="curriculum" className="py-10 sm:py-14 scroll-mt-24">
+          {/* What's inside */}
+          <section id="whats-inside" className="py-10 sm:py-14 scroll-mt-24">
             <div className="max-w-3xl">
               <h2 className="text-xl font-semibold tracking-tight text-zinc-950 sm:text-2xl">
-                Curriculum: 6 modules
+                What\u2019s inside
               </h2>
               <p className="mt-3 text-sm leading-6 text-zinc-600">
-                Each module is designed to be applied immediately in your
-                day-to-day work. You\u2019ll learn patterns you can reuse across
-                reports, models, and recurring analysis.
+                A curated set of shortcuts and small workflow habits that reduce
+                manual work and keep your spreadsheets clean and credible.
               </p>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {modules.map((module) => (
+              {[
+                {
+                  title: "Keyboard shortcuts that save time",
+                  points: [
+                    "High-frequency actions for navigation, selection, and editing",
+                    "Patterns that reduce mouse dependence and context switching",
+                  ],
+                },
+                {
+                  title: "Data-cleaning shortcuts",
+                  points: [
+                    "Quick fixes that make datasets usable and consistent",
+                    "Fast ways to reduce errors before analysis",
+                  ],
+                },
+                {
+                  title: "Formatting shortcuts",
+                  points: [
+                    "Create readable, professional spreadsheets quickly",
+                    "Small standards that make work easier to trust",
+                  ],
+                },
+                {
+                  title: "Two advanced shortcuts included",
+                  points: [
+                    "Filter menu open shortcut for faster analysis",
+                    "Worksheet switching for large workbooks",
+                  ],
+                },
+              ].map((block) => (
                 <div
-                  key={module.title}
+                  key={block.title}
                   className="rounded-3xl border border-zinc-200 bg-white p-8"
                 >
                   <h3 className="text-base font-semibold tracking-tight text-zinc-950">
-                    {module.title}
+                    {block.title}
                   </h3>
                   <ul className="mt-4 space-y-2 text-sm leading-6 text-zinc-700">
-                    {module.points.map((point) => (
+                    {block.points.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
                   </ul>
                 </div>
               ))}
-            </div>
-          </section>
-
-          {/* Bonus materials */}
-          <section className="py-10 sm:py-14">
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-              <div className="lg:col-span-5">
-                <h2 className="text-xl font-semibold tracking-tight text-zinc-950 sm:text-2xl">
-                  Bonus materials
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-zinc-600">
-                  Lightweight resources to help you execute consistently, even
-                  when you\u2019re busy.
-                </p>
-              </div>
-              <div className="lg:col-span-7">
-                <div className="grid gap-4">
-                  {bonuses.map((bonus) => (
-                    <div
-                      key={bonus.title}
-                      className="rounded-3xl border border-zinc-200 bg-white p-7"
-                    >
-                      <div className="text-sm font-semibold text-zinc-950">
-                        {bonus.title}
-                      </div>
-                      <div className="mt-2 text-sm leading-6 text-zinc-700">
-                        {bonus.desc}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </section>
 
@@ -287,30 +211,31 @@ export default function CareerShortcutsCoursePage() {
                     Simple pricing
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-zinc-600">
-                    Launch pricing for early students. No subscriptions, no
-                    upsells on this page.
+                    One-time purchase. Instant access after purchase.
                   </p>
                   <ul className="mt-6 space-y-3 text-sm leading-6 text-zinc-700">
-                    <li>Full access to all 6 modules</li>
-                    <li>Bonus materials included</li>
-                    <li>Designed for practical, professional workflows</li>
+                    <li>PDF download with 47 practical shortcuts</li>
+                    <li>Designed for real professional work environments</li>
+                    <li>Keep it open while you work and apply immediately</li>
                   </ul>
                 </div>
 
                 <div className="lg:col-span-5">
                   <div className="rounded-3xl border border-zinc-200 bg-zinc-50 p-8">
                     <div className="text-sm font-medium text-zinc-600">
-                      Launch price
+                      Price
                     </div>
                     <div className="mt-2 flex items-baseline gap-2">
                       <div className="text-4xl font-semibold tracking-tight text-zinc-950">
-                        £29
+                        £9
                       </div>
                       <div className="text-sm text-zinc-600">one-time</div>
                     </div>
                     <div className="mt-6 flex flex-col gap-3">
                       <a
-                        href="#pricing"
+                        href={PAYHIP_LAUNCH_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex h-12 items-center justify-center rounded-full bg-amber-500 px-7 text-sm font-semibold text-zinc-950 transition-colors hover:bg-amber-400"
                       >
                         Get Instant Access
@@ -323,7 +248,7 @@ export default function CareerShortcutsCoursePage() {
                       </Link>
                     </div>
                     <p className="mt-4 text-xs leading-5 text-zinc-500">
-                      Payment and access delivery will be provided at checkout.
+                      Checkout and delivery are handled by Payhip.
                     </p>
                   </div>
                 </div>

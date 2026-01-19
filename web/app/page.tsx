@@ -85,7 +85,7 @@ export default function Home() {
             {[
               { href: "#features", label: "Features" },
               { href: "/gear", label: "Reviews" },
-              { href: "/courses/career-shortcuts", label: "Courses" },
+              { href: "/courses", label: "Courses" },
               { href: "#about", label: "About" },
             ].map((item) => (
               <li key={item.href}>
@@ -294,7 +294,7 @@ export default function Home() {
               Learning
             </span>
             <Link
-              href="/courses/career-shortcuts"
+              href="/courses"
               className="transition-colors hover:text-indigo-500"
             >
               Courses

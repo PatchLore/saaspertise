@@ -33,10 +33,10 @@ export default function ContactPage() {
                 <p className="text-zinc-700 dark:text-zinc-300">
                   <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:hello@saaspertise.com"
+                    href="mailto:info@saaspertise.com"
                     className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
                   >
-                    hello@saaspertise.com
+                    info@saaspertise.com
                   </a>
                 </p>
               </section>
