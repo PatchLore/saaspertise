@@ -9,7 +9,7 @@ const products = [
     href: "/courses/career-shortcuts",
     title: "47 Excel Shortcuts That Make You Look Senior at Work",
     format: "PDF download",
-    price: "£9",
+    price: "$9",
     description:
       "A concise, professional cheat sheet of practical Excel shortcuts used in real corporate workflows. Designed to help you work faster, reduce manual steps, and keep spreadsheets clean and credible.",
     cta: "Get Instant Access",

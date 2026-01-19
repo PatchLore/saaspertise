@@ -224,7 +224,7 @@ export default function CareerShortcutsCoursePage() {
                     </div>
                     <div className="mt-2 flex items-baseline gap-2">
                       <div className="text-4xl font-semibold tracking-tight text-zinc-950">
-                        £9
+                        $9
                       </div>
                       <div className="text-sm text-zinc-600">One-time payment</div>
                     </div>
