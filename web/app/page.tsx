@@ -85,6 +85,7 @@ export default function Home() {
             {[
               { href: "#features", label: "Features" },
               { href: "/gear", label: "Reviews" },
+              { href: "/courses/career-shortcuts", label: "Courses" },
               { href: "#about", label: "About" },
             ].map((item) => (
               <li key={item.href}>
@@ -288,6 +289,17 @@ export default function Home() {
         className="border-t border-white/10 px-[5%] py-12 text-center text-slate-400"
       >
         <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              Learning
+            </span>
+            <Link
+              href="/courses/career-shortcuts"
+              className="transition-colors hover:text-indigo-500"
+            >
+              Courses
+            </Link>
+          </div>
           <Link
             href="/about"
             className="transition-colors hover:text-indigo-500"
