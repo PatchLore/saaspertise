@@ -25,7 +25,6 @@ export default function CareerShortcutsCoursePage() {
           {/* Hero */}
           <section className="py-8 sm:py-12">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium tracking-wide text-zinc-600">PDF download</p>
               <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
                 47 Excel Shortcuts That Make You Look Senior at Work
               </h1>
@@ -76,11 +75,10 @@ export default function CareerShortcutsCoursePage() {
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-5">
                 <h2 className="text-xl font-semibold tracking-tight text-zinc-950 sm:text-2xl">
-                  What you\u2019ll be able to do
+                  What you’ll be able to do
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-zinc-600">
-                  This is a focused guide for working faster and producing
-                  cleaner spreadsheets in real professional environments.
+                  This is a focused guide for working faster and producing cleaner spreadsheets in real professional environments.
                 </p>
               </div>
               <div className="lg:col-span-7">
@@ -132,10 +130,10 @@ export default function CareerShortcutsCoursePage() {
                     Anyone looking for a long, video-first course experience
                   </li>
                   <li>
-                    Users who want deep modeling theory rather than practical speed
+                    Users who want deep modelling theory rather than practical speed
                   </li>
                   <li>
-                    Teams that need custom enterprise training and onboarding
+                    Teams that need custom enterprise training or onboarding
                   </li>
                 </ul>
               </div>
@@ -146,11 +144,10 @@ export default function CareerShortcutsCoursePage() {
           <section id="whats-inside" className="py-10 sm:py-14 scroll-mt-24">
             <div className="max-w-3xl">
               <h2 className="text-xl font-semibold tracking-tight text-zinc-950 sm:text-2xl">
-                What\u2019s inside
+                What’s inside
               </h2>
               <p className="mt-3 text-sm leading-6 text-zinc-600">
-                A curated set of shortcuts and small workflow habits that reduce
-                manual work and keep your spreadsheets clean and credible.
+                A curated set of shortcuts and small workflow habits that reduce manual work and keep your spreadsheets clean and credible.
               </p>
             </div>
 
@@ -229,7 +226,7 @@ export default function CareerShortcutsCoursePage() {
                       <div className="text-4xl font-semibold tracking-tight text-zinc-950">
                         £9
                       </div>
-                      <div className="text-sm text-zinc-600">one-time</div>
+                      <div className="text-sm text-zinc-600">One-time payment</div>
                     </div>
                     <div className="mt-6 flex flex-col gap-3">
                       <a
@@ -244,7 +241,7 @@ export default function CareerShortcutsCoursePage() {
                         href="/contact"
                         className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-50"
                       >
-                        Questions? Contact us
+                        Questions? Contact us.
                       </Link>
                     </div>
                     <p className="mt-4 text-xs leading-5 text-zinc-500">
