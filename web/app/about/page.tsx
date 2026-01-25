@@ -15,11 +15,16 @@ export default function AboutPage() {
               ← Back to home
             </Link>
 
-            <h1 className="mb-6 text-3xl font-semibold tracking-tight sm:text-4xl">
-              About SaaSpertise
+            <h1 className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Build a Smarter SaaS Stack
             </h1>
+            <p className="mb-10 text-base leading-7 text-zinc-600 dark:text-zinc-400 sm:text-lg">
+              Compare tools, productivity hardware, and workflows before you
+              commit—so your setup supports focused, reliable work.
+            </p>
 
             <div className="prose prose-zinc dark:prose-invert max-w-none space-y-6 text-base leading-7 text-zinc-700 dark:text-zinc-300">
+              <h2 className="mt-0 text-xl font-semibold">About SaaSpertise</h2>
               <p>
                 SaaSpertise helps you build a reliable work stack\u2014the
                 productivity hardware, tools, and systems you can count on every
