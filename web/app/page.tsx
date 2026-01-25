@@ -133,18 +133,10 @@ export default function Home() {
                     SaaS Stack
                   </span>
                 </h1>
-                <p className="mb-10 text-pretty text-lg leading-8 text-slate-400 sm:text-xl">
+                <p className="mb-0 text-pretty text-lg leading-8 text-slate-400 sm:text-xl">
                   Compare tools, productivity hardware, and workflows before you
                   commit—so your setup supports focused, reliable work.
                 </p>
-                <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-                  <Link
-                    href="/gear"
-                    className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
-                  >
-                    Explore Reviews
-                  </Link>
-                </div>
               </div>
 
               <div className="relative">
@@ -265,16 +257,10 @@ export default function Home() {
                 <h2 className="mb-6 text-3xl font-extrabold tracking-tight sm:text-5xl">
                   Build a Smarter SaaS Stack
                 </h2>
-                <p className="mb-10 text-lg text-slate-400 sm:text-xl">
+                <p className="mb-0 text-lg text-slate-400 sm:text-xl">
                   Compare tools, productivity hardware, and workflows before you
-                  commit\u2014so your setup supports focused, reliable work.
+                  commit—so your setup supports focused, reliable work.
                 </p>
-                <Link
-                  href="/gear"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 px-10 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)]"
-                >
-                  Browse Reviews
-                </Link>
               </div>
             </div>
           </div>
