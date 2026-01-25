@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -127,17 +127,15 @@ export default function Home() {
               <div className="text-center lg:text-left">
                 <h1 className="mb-6 text-balance text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
                   <span className="bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent">
-                    Build Your Perfect{" "}
+                    Build a Smarter{" "}
                   </span>
                   <span className="bg-gradient-to-br from-indigo-500 via-pink-500 to-violet-500 bg-clip-text text-transparent">
-                    SaaS Work Stack
+                    SaaS Stack
                   </span>
                 </h1>
                 <p className="mb-10 text-pretty text-lg leading-8 text-slate-400 sm:text-xl">
-                  Discover productivity hardware, work stack tools, and the
-                  systems that keep founders and remote professionals moving.
-                  Practical picks and clear comparisons\u2014built for real-world
-                  workflows, not just software.
+                  Compare tools, productivity hardware, and workflows before you
+                  commit—so your setup supports focused, reliable work.
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
                   <Link
@@ -166,8 +164,8 @@ export default function Home() {
                         desc: "Mice, keyboards, monitor accessories, and desk gear that reduce friction during long work sessions.",
                       },
                       {
-                        title: "\u2699\uFE0F Workflow & Automation Tools",
-                        desc: "Tools that streamline daily tasks, automate repetitive work, and help teams focus on high-impact output.",
+                        title: "\u2699\uFE0F Workflow & Productivity Tools",
+                        desc: "Tools that streamline daily tasks and help teams focus on high-impact output.",
                       },
                       {
                         title: "\uD83D\uDD0C Connectivity & Power",
