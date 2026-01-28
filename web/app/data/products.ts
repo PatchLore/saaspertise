@@ -18,13 +18,12 @@ export const products: Product[] = [
     name: "ErgoLift Laptop Stand",
     category: "desk",
     shortDescription:
-      "An adjustable aluminum stand that improves posture and airflow.",
+      "Adjustable aluminum stand that raises laptops to eye level, improving posture and airflow while keeping desks clean, stable, and travel friendly.",
     longDescription:
       "The ErgoLift Laptop Stand raises your screen to eye level, reducing neck strain while keeping your desk clean and minimal. It’s lightweight, sturdy, and works well for both home and office setups.",
     pros: [
-      "Improves posture and ergonomics",
-      "Solid aluminum build",
-      "Folds flat for travel",
+      "Raises screens for healthier posture",
+      "Sturdy aluminum build that travels well",
     ],
     cons: [
       "No built-in cable management",
@@ -40,14 +39,12 @@ export const products: Product[] = [
     name: "Sony WH-1000XM6 Wireless Noise-Cancelling Headphones",
     category: "productivity",
     shortDescription:
-      "Industry-leading noise-cancelling headphones designed to help you focus, work, and take calls without distraction.",
+      "Flagship noise-cancelling headphones that create a quiet workspace, delivering clear calls, long battery life, and focus-friendly sound for busy daily environments.",
     longDescription:
       "The Sony WH-1000XM6 headphones are widely regarded as the gold standard for noise-cancelling headphones for work. Whether you’re in a busy home, a shared office, or travelling between meetings, they dramatically reduce background noise so you can stay focused.",
     pros: [
-      "Best-in-class active noise cancellation",
-      "Comfortable for long work sessions",
-      "Excellent call and microphone quality",
-      "Long battery life with fast charging",
+      "Best-in-class noise cancellation for focus",
+      "Comfortable fit with strong call quality",
     ],
     cons: [
       "Premium price compared to basic headphones",
@@ -63,14 +60,12 @@ export const products: Product[] = [
     name: "Elgato Stream Deck Neo",
     category: "productivity",
     shortDescription:
-      "A programmable shortcut controller that speeds up everyday tasks with one-tap actions.",
+      "Programmable shortcut controller that speeds routine actions with one-tap keys, helping teams launch apps, manage meetings, and stay on flow.",
     longDescription:
       "The Elgato Stream Deck Neo allows professionals to automate repetitive actions like launching apps, muting microphones, and starting meetings with a single button press.",
     pros: [
-      "Saves time on repetitive tasks",
-      "Highly customisable buttons",
-      "Integrates with popular work tools",
-      "Compact and desk-friendly",
+      "Custom keys streamline frequent tasks",
+      "Compact form with clear visual labels",
     ],
     cons: [
       "Requires setup time to get the most value",
@@ -85,14 +80,12 @@ export const products: Product[] = [
     name: "CUKTECH 100W GaN USB-C Charger",
     category: "mobile",
     shortDescription:
-      "A compact, high-power charger capable of fast-charging laptops, phones, and tablets simultaneously.",
+      "Compact GaN charger that powers laptops, phones, and tablets at once, reducing cable clutter while delivering fast, reliable charging on desks or travel.",
     longDescription:
       "The CUKTECH 100W GaN charger replaces multiple bulky chargers with a single compact unit, making it ideal for desks, travel, and remote work setups.",
     pros: [
-      "Powerful enough for laptops",
-      "Charges multiple devices at once",
-      "Compact and travel-friendly",
-      "Reduces cable clutter",
+      "High output for modern laptops",
+      "Multiple ports for daily carry",
     ],
     cons: [
       "Premium compared to basic chargers",
@@ -107,14 +100,12 @@ export const products: Product[] = [
     name: "Wireless Charging Mouse Pad",
     category: "desk",
     shortDescription:
-      "A desk mat that combines smooth mouse tracking with built-in wireless phone charging.",
+      "Desk mat with built-in wireless charging that keeps phones topped up while providing smooth mouse tracking and a cleaner, minimalist workspace.",
     longDescription:
       "This wireless charging mouse pad functions as a comfortable mouse surface while also wirelessly charging your phone throughout the day, helping reduce desk clutter.",
     pros: [
-      "Combines two desk essentials into one",
-      "Keeps phones charged passively",
-      "Reduces cable clutter",
-      "Clean, minimal desk aesthetic",
+      "Combines desk mat and charger",
+      "Reduces cable clutter and mess",
     ],
     cons: [
       "Wireless charging is slower than wired",
@@ -129,14 +120,12 @@ export const products: Product[] = [
     name: "Adjustable Laptop Stand",
     category: "desk",
     shortDescription:
-      "An adjustable laptop stand that raises your screen to eye level for better posture and comfort.",
+      "Adjustable stand that elevates laptops to eye level, improving posture and airflow while supporting external keyboard setups for comfortable, long work sessions.",
     longDescription:
       "An adjustable laptop stand improves posture by raising your laptop to eye level, reducing neck and shoulder strain during long work sessions.",
     pros: [
-      "Improves posture and ergonomics",
-      "Lightweight and portable",
-      "Better airflow for laptop cooling",
-      "Works well with external keyboards",
+      "Elevates screens for better alignment",
+      "Portable design with stable support",
     ],
     cons: [
       "Requires external keyboard for best ergonomics",
@@ -151,13 +140,12 @@ export const products: Product[] = [
     name: "Logitech MX Master 3S Wireless Performance Mouse",
     category: "desk",
     shortDescription:
-      "A premium, ergonomic mouse designed for fast, precise work across multiple devices.",
+      "Premium ergonomic mouse built for precision and multitasking, with fast scrolling, quiet clicks, and seamless switching across multiple devices daily.",
     longDescription:
       "The Logitech MX Master 3S is a comfortable, feature-rich mouse for modern work. It supports fast scrolling, precise tracking, and seamless switching between devices—ideal for long desk sessions and multi-monitor setups.",
     pros: [
-      "Comfortable ergonomic shape",
-      "Excellent scrolling and gesture controls",
-      "Reliable multi-device support",
+      "Comfortable shape for long sessions",
+      "Reliable multi-device control",
     ],
     cons: [
       "Premium price compared to basic mice",
@@ -172,13 +160,12 @@ export const products: Product[] = [
     name: "Elgato Stream Deck MK.2",
     category: "productivity",
     shortDescription:
-      "A programmable controller that turns common actions into single-tap shortcuts.",
+      "Programmable control pad that turns complex workflows into single-tap actions, ideal for creators and professionals managing apps, audio, and meetings.",
     longDescription:
       "The Elgato Stream Deck MK.2 helps streamline repetitive work by mapping workflows to tactile buttons. It's useful for creators and professionals who want quicker control of meetings, audio, apps, and routines.",
     pros: [
-      "Speeds up repetitive workflows",
-      "Highly customizable setup",
-      "Works well with common productivity tools",
+      "One-tap control for repeat tasks",
+      "Customizable keys with software support",
     ],
     cons: [
       "Takes time to configure well",
@@ -193,13 +180,12 @@ export const products: Product[] = [
     name: "BenQ ScreenBar Pro Monitor Light",
     category: "desk",
     shortDescription:
-      "A monitor-mounted light that improves desk lighting without screen glare.",
+      "Monitor-mounted light bar that brightens desks without screen glare, improving focus and comfort in low-light work settings and late sessions.",
     longDescription:
       "The BenQ ScreenBar Pro is designed to illuminate your workspace while reducing glare and reflections. It's a clean upgrade for monitor-based setups, especially for late-night work or low-light rooms.",
     pros: [
-      "Improves desk lighting without taking desk space",
-      "Reduces glare compared to traditional lamps",
-      "Clean, minimal look for monitor setups",
+      "Glare-free lighting for monitors",
+      "Keeps desks clear and minimal",
     ],
     cons: [
       "Premium price versus basic desk lamps",
@@ -214,13 +200,12 @@ export const products: Product[] = [
     name: "Anker 555 USB-C Hub (8-in-1)",
     category: "mobile",
     shortDescription:
-      "An 8-in-1 USB-C hub that expands ports for laptops and travel setups.",
+      "8-in-1 USB-C hub that expands ports for laptops, simplifying travel setups and hot-desking with reliable connectivity in one compact unit.",
     longDescription:
       "The Anker 555 USB-C Hub adds essential ports for modern laptops—useful for hot-desking, travel, and remote work. It's a practical way to connect external displays, storage, and peripherals with a single cable.",
     pros: [
-      "Adds multiple ports in one compact hub",
-      "Good for travel and flexible work setups",
-      "Helps reduce dongle clutter",
+      "Adds essential ports in one hub",
+      "Great for travel and hot desks",
     ],
     cons: [
       "Can run warm under heavy use",
@@ -235,13 +220,12 @@ export const products: Product[] = [
     name: "ASUS ZenScreen MB16AH Portable Monitor",
     category: "remote",
     shortDescription:
-      "A portable monitor that adds a second screen for travel and remote work.",
+      "Slim portable monitor that adds a second screen on the go, boosting productivity for travel days, client meetings, and remote work.",
     longDescription:
       "The ASUS ZenScreen MB16AH is a lightweight secondary display that makes remote work and travel days more productive. It's a simple way to regain multi-screen workflows when you're away from a full desk setup.",
     pros: [
-      "Enables multi-screen productivity anywhere",
-      "Compact and easy to travel with",
-      "Useful for meetings, spreadsheets, and research",
+      "Lightweight second screen for travel",
+      "Improves multitasking away from desk",
     ],
     cons: [
       "Not as bright as full-size monitors",

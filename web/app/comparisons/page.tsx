@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-
 import { Container } from "../components/Container";
+import { HeroSection } from "../components/HeroSection";
+import { PrimaryButton } from "../components/PrimaryButton";
+import { SurfaceCard } from "../components/SurfaceCard";
 import { comparisons } from "../data/comparisons";
 
 export const metadata: Metadata = {
@@ -13,37 +14,37 @@ export const metadata: Metadata = {
 export default function ComparisonsPage() {
   return (
     <div className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
-      <main className="py-16 sm:py-20">
-        <Container>
-          {/* Page intro */}
-          <section className="py-8 sm:py-12">
-            <div className="max-w-3xl">
-              <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                SaaS Comparisons
-              </h1>
-              <p className="mt-4 text-pretty text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                These are side-by-side comparisons for buyers choosing between tools.
-                Focused on pricing, features, performance, and real-world use cases.
-              </p>
-            </div>
-          </section>
+      <main className="pb-16 sm:pb-20">
+        <HeroSection
+          title="Compare Tools Side-by-Side"
+          subtitle="Side-by-side comparisons for buyers choosing between tools. Focused on pricing, features, performance, and real-world use cases."
+        />
 
+        <Container>
           {/* Comparison articles */}
           <div className="py-6 sm:py-8">
             <div className="grid gap-6 sm:gap-8">
               {comparisons.map((comparison) => (
-                <article
-                  key={comparison.slug}
-                  className="group rounded-2xl border border-black/[.08] bg-white p-6 transition-colors hover:bg-black/[.02] dark:border-white/[.145] dark:bg-black dark:hover:bg-[#1a1a1a] sm:p-8"
-                >
+                <SurfaceCard key={comparison.slug} className="sm:p-8">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="mb-2 flex items-center gap-3">
+                      <div className="mb-3 flex flex-wrap items-center gap-3">
                         <span className="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300">
                           Comparison
                         </span>
-                        <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                          {comparison.tools.join(" vs ")}
+                        <span className="inline-flex items-center rounded-full border border-black/[.08] bg-white/70 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-white/5 dark:text-zinc-300">
+                          {comparison.category}
+                        </span>
+                      </div>
+                      <div className="mb-4 flex flex-wrap items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                        <span className="rounded-full border border-black/[.08] bg-white/80 px-3 py-1 dark:border-white/[.12] dark:bg-white/5">
+                          {comparison.tools[0]}
+                        </span>
+                        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-900 text-xs text-white dark:bg-zinc-50 dark:text-zinc-900">
+                          VS
+                        </span>
+                        <span className="rounded-full border border-black/[.08] bg-white/80 px-3 py-1 dark:border-white/[.12] dark:bg-white/5">
+                          {comparison.tools[1]}
                         </span>
                       </div>
                       <h2 className="text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50 sm:text-2xl">
@@ -61,15 +62,23 @@ export default function ComparisonsPage() {
                     </span>
                   </div>
 
+                  <ul className="mt-5 grid gap-2 text-sm text-zinc-600 dark:text-zinc-400 sm:grid-cols-2">
+                    {comparison.highlights.map((highlight) => (
+                      <li key={highlight} className="flex items-start gap-2">
+                        <span className="mt-0.5 text-indigo-500" aria-hidden>
+                          •
+                        </span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+
                   <div className="mt-6">
-                    <Link
-                      href={`/comparisons/${comparison.slug}`}
-                      className="inline-flex items-center text-sm font-medium text-zinc-950 hover:underline dark:text-zinc-50"
-                    >
+                    <PrimaryButton href={`/comparisons/${comparison.slug}`}>
                       Read comparison
-                    </Link>
+                    </PrimaryButton>
                   </div>
-                </article>
+                </SurfaceCard>
               ))}
             </div>
           </div>
