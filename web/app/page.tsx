@@ -85,6 +85,7 @@ export default function Home() {
             {[
               { href: "#features", label: "Features" },
               { href: "/gear", label: "Reviews" },
+              { href: "/comparisons", label: "Comparisons" },
               { href: "/courses", label: "Courses" },
               { href: "#about", label: "About" },
             ].map((item) => (
