@@ -1,12 +1,21 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { DisclosureBanner } from "../components/DisclosureBanner";
 import { HeroSection } from "../components/HeroSection";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { SectionHeader } from "../components/SectionHeader";
 import { SurfaceCard } from "../components/SurfaceCard";
 import { products } from "../data/products";
+
+export const metadata: Metadata = {
+  title: "Product Reviews & Gear | SaaSpertise",
+  description:
+    "Independent reviews of productivity hardware and workflow tools for founders, consultants, and remote professionals.",
+};
 
 export default function GearPage() {
   const primaryButtonClasses =
@@ -45,6 +54,9 @@ export default function GearPage() {
   return (
     <div id="top" className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
       <main className="pb-16 sm:pb-20">
+        <Container>
+          <BackButton href="/" />
+        </Container>
         <HeroSection
           title={
             <>
@@ -58,10 +70,15 @@ export default function GearPage() {
           }
           subtitle="Independent reviews of productivity hardware and workflow tools for founders, consultants, and remote professionals who want reliable setups that support focused, repeatable work."
         >
-          <p className="text-sm italic leading-6 text-zinc-500 dark:text-zinc-400">
-            Some links on this page are affiliate links. If you make a purchase,
-            we may earn a small commission at no extra cost to you.
-          </p>
+          <div className="flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-zinc-300">
+            <span className="rounded-full border border-black/[.08] bg-white/70 px-3 py-1 font-medium dark:border-white/[.12] dark:bg-white/5">
+              Independently Reviewed
+            </span>
+            <span className="rounded-full border border-black/[.08] bg-white/70 px-3 py-1 font-medium dark:border-white/[.12] dark:bg-white/5">
+              Updated 2026
+            </span>
+          </div>
+          <DisclosureBanner />
         </HeroSection>
 
         <Container>
@@ -84,11 +101,14 @@ export default function GearPage() {
                     }
                   />
 
-                  <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {products
                       .filter((p) => p.category === section.category)
                       .map((product) => (
-                        <SurfaceCard key={product.slug} className="p-5">
+                        <SurfaceCard
+                          key={product.slug}
+                          className="flex h-full flex-col p-5"
+                        >
                           <div className="relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
                             <Image
                               src={product.image}
@@ -99,10 +119,10 @@ export default function GearPage() {
                           </div>
                           <div className="flex items-start justify-between gap-4">
                             <div>
-                              <div className="text-base font-semibold text-zinc-950 dark:text-zinc-50">
+                              <div className="line-clamp-2 text-base font-semibold text-zinc-950 dark:text-zinc-50">
                                 {product.name}
                               </div>
-                              <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                              <p className="mt-2 line-clamp-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                                 {product.shortDescription}
                               </p>
                             </div>
@@ -131,7 +151,7 @@ export default function GearPage() {
                             ))}
                           </ul>
 
-                          <div className="mt-5 flex flex-wrap items-center gap-3">
+                          <div className="mt-auto flex flex-wrap items-center gap-3 pt-5">
                             <PrimaryButton href={`/gear/${product.slug}`}>
                               View review
                             </PrimaryButton>

@@ -1,5 +1,7 @@
-import { Container } from "../components/Container";
 import Link from "next/link";
+
+import { BackButton } from "../components/BackButton";
+import { Container } from "../components/Container";
 
 export default function TermsPage() {
   return (
@@ -7,12 +9,7 @@ export default function TermsPage() {
       <main className="py-16 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <Link
-              href="/"
-              className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
-            >
-              ← Back to home
-            </Link>
+            <BackButton href="/" />
 
             <h1 className="mb-6 text-3xl font-semibold tracking-tight sm:text-4xl">
               Terms of Service
@@ -47,7 +44,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="mt-8 text-xl font-semibold">Disclaimer</h2>
                 <p>
-                  The materials on SaaSpertise are provided on an "as is" basis.
+                  The materials on SaaSpertise are provided on an “as is” basis.
                   We make no warranties, expressed or implied, and hereby
                   disclaim all other warranties including, without limitation,
                   implied warranties or conditions of merchantability, fitness

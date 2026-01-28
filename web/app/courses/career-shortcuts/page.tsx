@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
+import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 
 const PAYHIP_LAUNCH_URL = "https://payhip.com/b/XxSev";
+const LAST_UPDATED = "January 2026";
+
+export const metadata: Metadata = {
+  title: "47 Excel Shortcuts That Make You Look Senior at Work | SaaSpertise",
+  description:
+    "A concise, professional cheat sheet of practical Excel shortcuts used by senior analysts and managers. Built for speed, clarity, and reliable workflows.",
+};
 
 const outcomes = [
   "Work faster using practical shortcuts you can apply immediately",
@@ -25,6 +35,22 @@ export default function CareerShortcutsCoursePage() {
           {/* Hero */}
           <section className="py-8 sm:py-12">
             <div className="max-w-3xl">
+              <Breadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Courses", href: "/courses" },
+                  { label: "47 Excel Shortcuts", current: true },
+                ]}
+              />
+              <DisclosureBanner />
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+                <span className="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-semibold text-indigo-800">
+                  Course
+                </span>
+                <span>PDF download</span>
+                <span className="text-zinc-400">•</span>
+                <span>Last updated: {LAST_UPDATED}</span>
+              </div>
               <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
                 47 Excel Shortcuts That Make You Look Senior at Work
               </h1>

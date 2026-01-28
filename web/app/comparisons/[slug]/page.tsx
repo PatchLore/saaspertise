@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
+import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { comparisons } from "@/app/data/comparisons";
 
 type Props = {
@@ -41,31 +42,43 @@ export default async function ComparisonPage({ params }: Props) {
         <main className="py-16 sm:py-20">
           <Container>
             <div className="max-w-4xl">
-              <Link
-                href="/comparisons"
-                className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
-              >
-                ← Back to comparisons
-              </Link>
+              <Breadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Comparisons", href: "/comparisons" },
+                  { label: comparison.title, current: true },
+                ]}
+              />
+              <DisclosureBanner />
 
               <article className="prose prose-zinc dark:prose-invert max-w-none">
+                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+                  <span className="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-semibold text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300">
+                    Comparison
+                  </span>
+                  <span className="text-zinc-500 dark:text-zinc-400">
+                    {comparison.category}
+                  </span>
+                  <span className="text-zinc-400">•</span>
+                  <span>Last updated: {comparison.updatedAt}</span>
+                </div>
                 <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                   Instapage vs Unbounce (2026): Which Landing Page Builder Is Actually Better?
                 </h1>
 
                 <p className="mt-6 text-lg leading-8 text-zinc-700 dark:text-zinc-300">
-                  If you're choosing between Instapage and Unbounce, you're already past the beginner stage. Both tools are premium landing page builders designed to increase conversions — but they're built for different types of teams.
+                  If you’re choosing between Instapage and Unbounce, you’re already past the beginner stage. Both tools are premium landing page builders designed to increase conversions — but they’re built for different types of teams.
                 </p>
 
                 <p className="mt-4 text-lg leading-8 text-zinc-700 dark:text-zinc-300">
-                  In this comparison, I'll break down pricing, features, use cases, and real-world differences so you can decide which tool makes sense for your business in 2026.
+                  In this comparison, I’ll break down pricing, features, use cases, and real-world differences so you can decide which tool makes sense for your business in 2026.
                 </p>
 
                 <section className="mt-10">
                   <h2 className="text-2xl font-semibold tracking-tight">Quick Verdict (TL;DR)</h2>
                   <ul className="mt-4 space-y-2 text-zinc-700 dark:text-zinc-300">
                     <li>✅ Choose Instapage if you run paid ads, care about conversion rates, or want advanced personalisation and collaboration.</li>
-                    <li>✅ Choose Unbounce if you're a solo founder or small business focused on simple landing pages and A/B testing.</li>
+                    <li>✅ Choose Unbounce if you’re a solo founder or small business focused on simple landing pages and A/B testing.</li>
                   </ul>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
                     Instapage is more expensive — but for the right user, it often pays for itself.
@@ -93,7 +106,7 @@ export default async function ComparisonPage({ params }: Props) {
                     Instapage is a conversion-focused landing page platform built for marketers running paid traffic (Google Ads, Meta, LinkedIn).
                   </p>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                    Its strength isn't just page building — it's post-click optimisation, meaning everything that happens after someone clicks your ad.
+                  Its strength isn’t just page building — it’s post-click optimisation, meaning everything that happens after someone clicks your ad.
                   </p>
 
                   <h3 className="mt-6 text-xl font-semibold">Key Instapage Features</h3>
@@ -199,7 +212,7 @@ export default async function ComparisonPage({ params }: Props) {
                     <li>Includes enterprise-grade infrastructure</li>
                   </ul>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                    👉 Yes, it's expensive — but it's built for ROI, not hobby projects.
+                  👉 Yes, it’s expensive — but it’s built for ROI, not hobby projects.
                   </p>
 
                   <h3 className="mt-6 text-xl font-semibold">Unbounce Pricing</h3>
@@ -224,10 +237,10 @@ export default async function ComparisonPage({ params }: Props) {
                     <li>Page personalisation at scale</li>
                   </ul>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                    If you're spending £1,000+/month on ads, Instapage's conversion lift can easily justify the price.
+                  If you’re spending £1,000+/month on ads, Instapage’s conversion lift can easily justify the price.
                   </p>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                    Unbounce performs well — but it's less granular and more "one-size-fits-all."
+                  Unbounce performs well — but it’s less granular and more “one-size-fits-all.”
                   </p>
                 </section>
 
@@ -272,16 +285,16 @@ export default async function ComparisonPage({ params }: Props) {
 
                   <h3 className="mt-6 text-xl font-semibold">Choose Unbounce if:</h3>
                   <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700 dark:text-zinc-300">
-                    <li>You're a solo founder or freelancer</li>
+                  <li>You’re a solo founder or freelancer</li>
                     <li>You want a simpler setup</li>
-                    <li>You're not heavily ad-driven yet</li>
+                  <li>You’re not heavily ad-driven yet</li>
                   </ul>
                 </section>
 
                 <section className="mt-10">
                   <h2 className="text-2xl font-semibold tracking-tight">Final Thoughts</h2>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
-                    Instapage and Unbounce are both excellent tools — but they're not competitors for the same user.
+                  Instapage and Unbounce are both excellent tools — but they’re not competitors for the same user.
                   </p>
                   <p className="mt-4 text-zinc-700 dark:text-zinc-300">
                     If landing pages are directly tied to revenue, Instapage is the stronger long-term platform. If you just need fast pages without complexity, Unbounce does the job.

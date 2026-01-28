@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
 
 export default function AboutPage() {
@@ -8,12 +7,7 @@ export default function AboutPage() {
       <main className="py-16 sm:py-20">
         <Container>
           <div className="max-w-3xl">
-            <Link
-              href="/"
-              className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
-            >
-              ← Back to home
-            </Link>
+            <BackButton href="/" />
 
             <h1 className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl">
               Build a Smarter SaaS Stack

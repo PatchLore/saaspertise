@@ -268,57 +268,6 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer (mapped to #about for nav parity) */}
-      <footer
-        id="about"
-        className="border-t border-white/10 px-[5%] py-12 text-center text-slate-400"
-      >
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-8">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Learning
-            </span>
-            <Link
-              href="/courses"
-              className="transition-colors hover:text-indigo-500"
-            >
-              Courses
-            </Link>
-          </div>
-          <Link
-            href="/about"
-            className="transition-colors hover:text-indigo-500"
-          >
-            About
-          </Link>
-          <Link
-            href="/disclosure"
-            className="transition-colors hover:text-indigo-500"
-          >
-            Affiliate Disclosure
-          </Link>
-          <Link
-            href="/privacy"
-            className="transition-colors hover:text-indigo-500"
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            href="/terms"
-            className="transition-colors hover:text-indigo-500"
-          >
-            Terms of Service
-          </Link>
-          <Link
-            href="/contact"
-            className="transition-colors hover:text-indigo-500"
-          >
-            Contact
-          </Link>
-        </div>
-        <p>\u00A9 2026 SaaSpertise. All rights reserved.</p>
-      </footer>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

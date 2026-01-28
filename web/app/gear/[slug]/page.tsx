@@ -6,7 +6,9 @@ import { notFound } from "next/navigation";
 import path from "node:path";
 
 import { AffiliateLink } from "@/app/components/AffiliateLink";
+import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
+import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { products } from "@/app/data/products";
 
 type Props = {
@@ -78,72 +80,165 @@ export default async function ProductPage({ params }: Props) {
     ? requestedImage
     : fallbackImage;
   const unoptimized = resolvedImage.endsWith(".svg");
+  const categoryLabel =
+    {
+      desk: "Productivity Hardware",
+      productivity: "Workflow & Productivity Tools",
+      mobile: "Connectivity & Power",
+      remote: "Remote & Mobile Work",
+    }[product.category] ?? "Reviews";
+  const relatedProducts = products
+    .filter((item) => item.category === product.category && item.slug !== product.slug)
+    .slice(0, 3);
 
   return (
     <Container className="py-12">
-      <Link
-        href="/gear"
-        className="mb-8 inline-block text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
-      >
-        ← Back to all reviews
-      </Link>
-      <article className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-        {/* Image */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
-          <Image
-            src={resolvedImage}
-            alt={product.name}
-            fill
-            className="object-cover"
-            priority
-            unoptimized={unoptimized}
-          />
-        </div>
-
-        {/* Content */}
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">
-            {product.name}
-          </h1>
-
-          {product.priceRange && (
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-              Typical price: {product.priceRange}
-            </p>
-          )}
-
-          <p className="mt-6 text-lg leading-8 text-zinc-700 dark:text-zinc-300">
-            {product.longDescription}
-          </p>
-
-          <div className="mt-8">
-            <AffiliateLink href={product.affiliateUrl}>
-              Check price →
-            </AffiliateLink>
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Reviews", href: "/gear" },
+          { label: product.name, current: true },
+        ]}
+      />
+      <DisclosureBanner />
+      <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="space-y-10">
+          {/* Image */}
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+            <Image
+              src={resolvedImage}
+              alt={product.name}
+              fill
+              className="object-cover"
+              priority
+              unoptimized={unoptimized}
+            />
           </div>
-        </div>
-      </article>
 
-      {/* Pros / Cons */}
-      <section className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div>
-          <h2 className="text-lg font-semibold">What we like</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700 dark:text-zinc-300">
-            {product.pros.map((pro) => (
-              <li key={pro}>{pro}</li>
-            ))}
-          </ul>
+          {/* Content */}
+          <div>
+            <div className="mb-3 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300">
+                Review
+              </span>
+              <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                {categoryLabel}
+              </span>
+            </div>
+            <h1 className="text-3xl font-semibold tracking-tight">
+              {product.name}
+            </h1>
+            {product.priceRange && (
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                Typical price: {product.priceRange}
+              </p>
+            )}
+            <p className="mt-6 text-lg leading-8 text-zinc-700 dark:text-zinc-300">
+              {product.longDescription}
+            </p>
+          </div>
+
+          {/* Quick specs */}
+          <section className="rounded-2xl border border-black/[.08] bg-white p-6 dark:border-white/[.145] dark:bg-black">
+            <h2 className="text-lg font-semibold">Quick specs</h2>
+            <dl className="mt-4 grid grid-cols-1 gap-4 text-sm text-zinc-600 dark:text-zinc-400 sm:grid-cols-2">
+              <div>
+                <dt className="font-medium text-zinc-500">Category</dt>
+                <dd className="mt-1 text-zinc-900 dark:text-zinc-100">
+                  {categoryLabel}
+                </dd>
+              </div>
+              {product.priceRange && (
+                <div>
+                  <dt className="font-medium text-zinc-500">Price range</dt>
+                  <dd className="mt-1 text-zinc-900 dark:text-zinc-100">
+                    {product.priceRange}
+                  </dd>
+                </div>
+              )}
+              <div>
+                <dt className="font-medium text-zinc-500">Last updated</dt>
+                <dd className="mt-1 text-zinc-900 dark:text-zinc-100">
+                  {product.updatedAt}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-medium text-zinc-500">Best for</dt>
+                <dd className="mt-1 text-zinc-900 dark:text-zinc-100">
+                  Focused professional workflows
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          {/* Pros / Cons */}
+          <section className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div>
+              <h2 className="text-lg font-semibold">What we like</h2>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700 dark:text-zinc-300">
+                {product.pros.map((pro) => (
+                  <li key={pro}>{pro}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-semibold">What to consider</h2>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700 dark:text-zinc-300">
+                {product.cons.map((con) => (
+                  <li key={con}>{con}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          {/* Related products */}
+          {relatedProducts.length > 0 && (
+            <section className="pt-2">
+              <h2 className="text-lg font-semibold">You might also like</h2>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedProducts.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/gear/${item.slug}`}
+                    className="rounded-2xl border border-black/[.08] bg-white p-4 text-sm text-zinc-700 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/[.145] dark:bg-black dark:text-zinc-300"
+                  >
+                    <div className="font-semibold text-zinc-900 dark:text-zinc-50">
+                      {item.name}
+                    </div>
+                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-zinc-600 dark:text-zinc-400">
+                      {item.shortDescription}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
 
-        <div>
-          <h2 className="text-lg font-semibold">What to consider</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700 dark:text-zinc-300">
-            {product.cons.map((con) => (
-              <li key={con}>{con}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        {/* Sticky CTA */}
+        <aside className="lg:sticky lg:top-24">
+          <div className="rounded-2xl border border-black/[.08] bg-white p-6 shadow-sm dark:border-white/[.145] dark:bg-black">
+            <div className="text-sm font-medium text-zinc-500">Review summary</div>
+            <div className="mt-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+              {product.name}
+            </div>
+            {product.priceRange && (
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                Typical price: {product.priceRange}
+              </p>
+            )}
+            <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+              Independently reviewed. Updated {product.updatedAt}.
+            </p>
+            <div className="mt-6">
+              <AffiliateLink href={product.affiliateUrl}>
+                Check current price →
+              </AffiliateLink>
+            </div>
+          </div>
+        </aside>
+      </div>
     </Container>
   );
 }

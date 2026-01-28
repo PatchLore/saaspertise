@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
+
+import { BackButton } from "@/app/components/BackButton";
 import { Container } from "@/app/components/Container";
+import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { HeroSection } from "@/app/components/HeroSection";
 import { PrimaryButton } from "@/app/components/PrimaryButton";
 import { SurfaceCard } from "@/app/components/SurfaceCard";
 
 const PAYHIP_LAUNCH_URL = "https://payhip.com/b/XxSev";
+const COURSE_UPDATED = "January 2026";
 
 const products = [
   {
@@ -49,30 +54,49 @@ const benefits = [
   },
 ] as const;
 
+export const metadata: Metadata = {
+  title: "Courses & Downloads | SaaSpertise",
+  description:
+    "Practical learning resources designed for real professional work, with concise, high-signal guidance.",
+};
+
 export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-zinc-50 font-sans text-zinc-950 dark:bg-black dark:text-zinc-50">
       <main className="pb-16 sm:pb-20">
+        <Container>
+          <BackButton href="/" />
+          <DisclosureBanner />
+        </Container>
         <HeroSection
           title="Level Up Your Skills"
           subtitle="Practical learning resources designed for real professional work. Clear takeaways, modern workflows, and high-signal guidance."
-        />
+        >
+          <div className="flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-zinc-300">
+            <span className="rounded-full border border-black/[.08] bg-white/70 px-3 py-1 font-medium dark:border-white/[.12] dark:bg-white/5">
+              Updated 2026
+            </span>
+          </div>
+        </HeroSection>
 
         <Container>
           <section className="py-6 sm:py-8">
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {products.map((product) => (
-                <SurfaceCard key={product.title} className="relative">
+                <SurfaceCard key={product.title} className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div className="inline-flex items-center rounded-full border border-black/[.08] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:border-white/[.12] dark:bg-white/5 dark:text-zinc-300">
                         {product.format}
                       </div>
-                      <div className="mt-3 text-pretty text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+                      <div className="mt-3 line-clamp-2 text-pretty text-lg font-semibold text-zinc-950 dark:text-zinc-50">
                         {product.title}
                       </div>
                       <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                         {product.price} one-time
+                      </div>
+                      <div className="mt-2 text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                        Last updated {COURSE_UPDATED}
                       </div>
                     </div>
                     <span
@@ -83,7 +107,7 @@ export default function CoursesPage() {
                     </span>
                   </div>
 
-                  <p className="mt-4 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
+                  <p className="mt-4 line-clamp-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
                     {product.description}
                   </p>
                   <ul className="mt-4 space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
@@ -97,7 +121,7 @@ export default function CoursesPage() {
                     ))}
                   </ul>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <div className="mt-auto flex flex-wrap items-center gap-3 pt-6">
                     <PrimaryButton href={product.href}>View details</PrimaryButton>
                     <a
                       href={product.ctaHref}
