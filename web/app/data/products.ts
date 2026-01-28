@@ -18,7 +18,7 @@ export const products: Product[] = [
     name: "ErgoLift Laptop Stand",
     category: "desk",
     shortDescription:
-      "Adjustable aluminum stand that raises laptops to eye level, improving posture and airflow while keeping desks clean, stable, and travel friendly.",
+      "Adjustable aluminum stand that raises your laptop to eye level, improving posture and airflow while keeping your desk tidy and travel-ready.",
     longDescription:
       "The ErgoLift Laptop Stand raises your screen to eye level, reducing neck strain while keeping your desk clean and minimal. It’s lightweight, sturdy, and works well for both home and office setups.",
     pros: [
@@ -39,7 +39,7 @@ export const products: Product[] = [
     name: "Sony WH-1000XM6 Wireless Noise-Cancelling Headphones",
     category: "productivity",
     shortDescription:
-      "Flagship noise-cancelling headphones that create a quiet workspace, delivering clear calls, long battery life, and focus-friendly sound for busy daily environments.",
+      "Flagship noise-cancelling headphones that turn noisy homes or offices into a quiet workspace, with clear calls and all-day comfort for focused work.",
     longDescription:
       "The Sony WH-1000XM6 headphones are widely regarded as the gold standard for noise-cancelling headphones for work. Whether you’re in a busy home, a shared office, or travelling between meetings, they dramatically reduce background noise so you can stay focused.",
     pros: [
@@ -60,7 +60,7 @@ export const products: Product[] = [
     name: "Elgato Stream Deck Neo",
     category: "productivity",
     shortDescription:
-      "Programmable shortcut controller that speeds routine actions with one-tap keys, helping teams launch apps, manage meetings, and stay on flow.",
+      "Compact shortcut controller that maps everyday actions to one-tap keys, so you can launch apps, manage meetings, and speed through repetitive workflows.",
     longDescription:
       "The Elgato Stream Deck Neo allows professionals to automate repetitive actions like launching apps, muting microphones, and starting meetings with a single button press.",
     pros: [
@@ -80,7 +80,7 @@ export const products: Product[] = [
     name: "CUKTECH 100W GaN USB-C Charger",
     category: "mobile",
     shortDescription:
-      "Compact GaN charger that powers laptops, phones, and tablets at once, reducing cable clutter while delivering fast, reliable charging on desks or travel.",
+      "100W GaN USB-C charger that replaces multiple bricks with one compact unit, fast-charging laptops, phones, and tablets at your desk or on the road.",
     longDescription:
       "The CUKTECH 100W GaN charger replaces multiple bulky chargers with a single compact unit, making it ideal for desks, travel, and remote work setups.",
     pros: [
@@ -100,7 +100,7 @@ export const products: Product[] = [
     name: "Wireless Charging Mouse Pad",
     category: "desk",
     shortDescription:
-      "Desk mat with built-in wireless charging that keeps phones topped up while providing smooth mouse tracking and a cleaner, minimalist workspace.",
+      "Desk mat with integrated wireless charging that keeps your phone topped up while providing smooth mouse tracking and a cleaner, cable-light workspace.",
     longDescription:
       "This wireless charging mouse pad functions as a comfortable mouse surface while also wirelessly charging your phone throughout the day, helping reduce desk clutter.",
     pros: [
@@ -120,7 +120,7 @@ export const products: Product[] = [
     name: "Adjustable Laptop Stand",
     category: "desk",
     shortDescription:
-      "Adjustable stand that elevates laptops to eye level, improving posture and airflow while supporting external keyboard setups for comfortable, long work sessions.",
+      "Flexible laptop stand that lifts screens to eye level, improving posture and cooling while pairing cleanly with external keyboards on any desk.",
     longDescription:
       "An adjustable laptop stand improves posture by raising your laptop to eye level, reducing neck and shoulder strain during long work sessions.",
     pros: [
@@ -140,7 +140,7 @@ export const products: Product[] = [
     name: "Logitech MX Master 3S Wireless Performance Mouse",
     category: "desk",
     shortDescription:
-      "Premium ergonomic mouse built for precision and multitasking, with fast scrolling, quiet clicks, and seamless switching across multiple devices daily.",
+      "Premium ergonomic mouse built for precision work, with fast scrolling, quiet clicks, and seamless multi-device control across laptops and desktops.",
     longDescription:
       "The Logitech MX Master 3S is a comfortable, feature-rich mouse for modern work. It supports fast scrolling, precise tracking, and seamless switching between devices—ideal for long desk sessions and multi-monitor setups.",
     pros: [
@@ -160,7 +160,7 @@ export const products: Product[] = [
     name: "Elgato Stream Deck MK.2",
     category: "productivity",
     shortDescription:
-      "Programmable control pad that turns complex workflows into single-tap actions, ideal for creators and professionals managing apps, audio, and meetings.",
+      "Full-size Stream Deck that turns complex creator or meeting workflows into one-tap actions, with customizable keys and profiles for your favourite tools.",
     longDescription:
       "The Elgato Stream Deck MK.2 helps streamline repetitive work by mapping workflows to tactile buttons. It's useful for creators and professionals who want quicker control of meetings, audio, apps, and routines.",
     pros: [
@@ -180,7 +180,7 @@ export const products: Product[] = [
     name: "BenQ ScreenBar Pro Monitor Light",
     category: "desk",
     shortDescription:
-      "Monitor-mounted light bar that brightens desks without screen glare, improving focus and comfort in low-light work settings and late sessions.",
+      "Monitor-mounted light bar that brightens your desk without glare, improving visibility and comfort during late-night work or low-light home setups.",
     longDescription:
       "The BenQ ScreenBar Pro is designed to illuminate your workspace while reducing glare and reflections. It's a clean upgrade for monitor-based setups, especially for late-night work or low-light rooms.",
     pros: [
@@ -200,7 +200,7 @@ export const products: Product[] = [
     name: "Anker 555 USB-C Hub (8-in-1)",
     category: "mobile",
     shortDescription:
-      "8-in-1 USB-C hub that expands ports for laptops, simplifying travel setups and hot-desking with reliable connectivity in one compact unit.",
+      "8-in-1 USB-C hub that adds essential ports for displays, storage, and peripherals, simplifying hot-desking, travel rigs, and modern laptop-only setups.",
     longDescription:
       "The Anker 555 USB-C Hub adds essential ports for modern laptops—useful for hot-desking, travel, and remote work. It's a practical way to connect external displays, storage, and peripherals with a single cable.",
     pros: [
@@ -220,7 +220,7 @@ export const products: Product[] = [
     name: "ASUS ZenScreen MB16AH Portable Monitor",
     category: "remote",
     shortDescription:
-      "Slim portable monitor that adds a second screen on the go, boosting productivity for travel days, client meetings, and remote work.",
+      "15.6-inch portable monitor that restores dual-screen productivity on the road, making it easier to manage docs, calls, and research away from your main desk.",
     longDescription:
       "The ASUS ZenScreen MB16AH is a lightweight secondary display that makes remote work and travel days more productive. It's a simple way to regain multi-screen workflows when you're away from a full desk setup.",
     pros: [
