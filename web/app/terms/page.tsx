@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | SaaSpertise",
+  description:
+    "Terms of Service for using SaaSpertise.",
+  alternates: { canonical: `${SITE_URL}/terms` },
+};
 
 export default function TermsPage() {
   return (

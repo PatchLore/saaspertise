@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure | SaaSpertise",
   description:
     "How SaaSpertise uses affiliate links, maintains editorial independence, and complies with FTC disclosure guidelines.",
+  alternates: { canonical: `${SITE_URL}/disclosure` },
 };
 
 export default function DisclosurePage() {

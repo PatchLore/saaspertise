@@ -10,11 +10,13 @@ import { PrimaryButton } from "../components/PrimaryButton";
 import { SectionHeader } from "../components/SectionHeader";
 import { SurfaceCard } from "../components/SurfaceCard";
 import { products } from "../data/products";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Product Reviews & Gear | SaaSpertise",
   description:
     "Independent reviews of productivity hardware and workflow tools for founders, consultants, and remote professionals.",
+  alternates: { canonical: `${SITE_URL}/gear` },
 };
 
 export default function GearPage() {

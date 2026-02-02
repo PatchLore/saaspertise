@@ -6,10 +6,13 @@ import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
 import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { comparisons } from "@/app/data/comparisons";
+import { SITE_URL } from "@/lib/site";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return comparisons.map((comparison) => ({
@@ -26,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: comparison.title,
     description: comparison.excerpt,
+    alternates: { canonical: `${SITE_URL}/comparisons/${slug}` },
   };
 }
 

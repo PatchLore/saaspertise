@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
 import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { products } from "@/app/data/products";
+import { SITE_URL } from "@/lib/site";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${product.name} Review – SaaSpertise`,
     description: product.shortDescription,
+    alternates: { canonical: `${SITE_URL}/gear/${slug}` },
     openGraph: {
       title: `${product.name} Review`,
       description: product.shortDescription,

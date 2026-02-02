@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
+
 import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Contact Us | SaaSpertise",
+  description:
+    "Get in touch with SaaSpertise for questions, partnership opportunities, or feedback.",
+  alternates: { canonical: `${SITE_URL}/contact` },
+};
 
 export default function ContactPage() {
   return (

@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | SaaSpertise",
+  description:
+    "Privacy Policy for SaaSpertise. How we collect, use, and protect your information.",
+  alternates: { canonical: `${SITE_URL}/privacy` },
+};
 
 export default function PrivacyPage() {
   return (

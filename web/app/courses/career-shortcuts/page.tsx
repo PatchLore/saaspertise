@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/app/components/Breadcrumbs";
 import { Container } from "@/app/components/Container";
 import { DisclosureBanner } from "@/app/components/DisclosureBanner";
+import { SITE_URL } from "@/lib/site";
 
 const PAYHIP_LAUNCH_URL = "https://payhip.com/b/XxSev";
 const LAST_UPDATED = "January 2026";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "47 Excel Shortcuts That Make You Look Senior at Work | SaaSpertise",
   description:
     "A concise, professional cheat sheet of practical Excel shortcuts used by senior analysts and managers. Built for speed, clarity, and reliable workflows.",
+  alternates: { canonical: `${SITE_URL}/courses/career-shortcuts` },
 };
 
 const outcomes = [

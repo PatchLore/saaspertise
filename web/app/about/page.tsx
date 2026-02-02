@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
+
 import { BackButton } from "../components/BackButton";
 import { Container } from "../components/Container";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "About SaaSpertise",
+  description:
+    "SaaSpertise helps you build a reliable work stack—productivity hardware, tools, and systems for founders and remote professionals.",
+  alternates: { canonical: `${SITE_URL}/about` },
+};
 
 export default function AboutPage() {
   return (

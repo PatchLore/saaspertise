@@ -5,11 +5,13 @@ import { HeroSection } from "../components/HeroSection";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { SurfaceCard } from "../components/SurfaceCard";
 import { comparisons } from "../data/comparisons";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Best SaaS Comparisons (2026) | SaaSpertise",
   description:
     "In-depth, unbiased SaaS comparisons to help founders and marketers choose the right tools in 2026.",
+  alternates: { canonical: `${SITE_URL}/comparisons` },
 };
 
 export default function ComparisonsPage() {

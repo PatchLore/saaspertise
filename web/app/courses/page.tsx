@@ -6,6 +6,7 @@ import { DisclosureBanner } from "@/app/components/DisclosureBanner";
 import { HeroSection } from "@/app/components/HeroSection";
 import { PrimaryButton } from "@/app/components/PrimaryButton";
 import { SurfaceCard } from "@/app/components/SurfaceCard";
+import { SITE_URL } from "@/lib/site";
 
 const PAYHIP_LAUNCH_URL = "https://payhip.com/b/XxSev";
 const COURSE_UPDATED = "January 2026";
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
   title: "Courses & Downloads | SaaSpertise",
   description:
     "Practical learning resources designed for real professional work, with concise, high-signal guidance.",
+  alternates: { canonical: `${SITE_URL}/courses` },
 };
 
 export default function CoursesPage() {
